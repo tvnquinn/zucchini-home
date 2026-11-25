@@ -12,148 +12,260 @@
   <link rel="manifest" href="manifest.webmanifest">
   <title>Zucchini Home</title>
   <style>
-    :root { color-scheme: light; --bg: #faf5ed; --frame: #fffaf3; --ink: #3c3033; --muted: #88756c; --line: #d5bba9; }
+    :root { color-scheme: light; --bg: #faf5ed; --frame: #fffaf3; --ink: #3c3033; --muted: #6f5e55; --line: #d5bba9; --soft: #e6d6c8; --navy: #203653; --coin: #80543a; }
     * { box-sizing: border-box; }
     body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.5 ui-rounded, "Avenir Next", system-ui, sans-serif; }
-    main { width: 100%; max-width: 1560px; margin: auto; padding: 20px 16px; }
-    .workspace { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; align-items: start; }
-    #home-column, #task-column { min-width: 0; }
-    #tasks { margin-top: 0; }
-    .build-info { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 6px 10px; margin-left: auto; font-size: 11px; }
-    #update-build { font-size: 12px; font-weight: 650; min-height: 36px; }
-    .save-state { font-size: 12px; color: var(--muted); }
-    #room-view { margin: 10px 0 4px; gap: 6px; }
-    #rooms { margin: 6px 0 12px; }
-    #rooms #shop { font-weight: 650; }
-    @media (min-width: 1000px) {
-      .workspace { grid-template-columns: minmax(0, 1.6fr) minmax(330px, 1fr); }
-      #home-column, #task-column { align-self: start; }
-    }
-    @media (orientation: landscape) and (min-width: 640px) and (max-height: 540px) {
-      main { padding: 8px 12px; }
-      .workspace { grid-template-columns: minmax(0, 1.2fr) minmax(260px, 1fr); gap: 12px; }
-      header { margin-bottom: 6px; }
-    }
-    header { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px; }
-    header .muted { color: var(--muted); }
-    #menu-toggle { display: none; padding: 0; width: 44px; min-height: 44px; place-items: center; flex-shrink: 0; }
-    #menu-toggle svg { display: block; width: 22px; height: 22px; }
-    h1 { margin: 0; font-size: 24px; font-weight: 750; letter-spacing: -.5px; } h2 { font-size: 15px; margin: 0; }
+    html { -webkit-text-size-adjust: 100%; }
+    body { overflow-x: hidden; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+    main { width: 100%; max-width: 1440px; margin: auto; padding: 0 12px 16px; }
+    [hidden] { display: none !important; }
+    h1 { margin: 0; font-size: 19px; font-weight: 800; letter-spacing: -.3px; } h2 { font-size: 15px; font-weight: 800; margin: 0; }
     p { margin: 5px 0 12px; } .muted, #hud, small { color: var(--muted); }
-    .sound { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: 8px; color: var(--muted); font-size: 12px; }
-    .sound label { display: flex; align-items: center; gap: 6px; }
-    .sound input[type=range] { width: 90px; accent-color: var(--ink); }
-    .scene { position: relative; --scale: 1; max-width: 100%; margin: auto; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: center; }
-    .scene canvas { grid-column: 1 / -1; border-radius: 16px; box-shadow: 0 0 0 1px #d5bba970, 0 14px 36px #80543a12; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    button, input, select { font: inherit; color: var(--ink); background: var(--frame); border: 1px solid var(--line); border-radius: 10px; }
+    button { cursor: pointer; min-height: 36px; padding: 6px 10px; }
+    button:hover:enabled { background: #f1e7d9; border-color: #a8846f; }
+    button:disabled { opacity: .5; cursor: default; }
+    button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px solid #304b70; outline-offset: 3px; }
+    input, select { padding: 8px; min-height: 38px; min-width: 0; }
+    #focus, #add-task { background: var(--navy); color: var(--frame); border-color: var(--navy); font-weight: 800; }
+    #focus:hover:enabled, #add-task:hover:enabled { background: #304b70; border-color: #304b70; }
+
+    /* Header: title, room tabs (desktop), coins, then icon buttons. */
+    header { display: flex; align-items: center; gap: 8px; min-height: 56px; padding: 0 0 0 4px; }
+    #coins { margin-left: auto; font-size: 14px; font-weight: 800; border: 1px solid #c7ab8a; border-radius: 20px; padding: 5px 12px; background: var(--frame); color: var(--coin); white-space: nowrap; }
+    .head-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 44px; height: 44px; min-height: 44px; padding: 0; border-radius: 12px; font-weight: 700; flex-shrink: 0; }
+    .head-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+    #arrange, .head-btn .label { display: none; }
+    #arrange[aria-pressed="true"] { background: var(--navy); color: var(--frame); border-color: var(--navy); }
+    #room-view { display: none; }
+    #room-view button[aria-pressed="true"] { background: var(--navy); color: var(--frame); }
+
+    /* The scene: the canvas with pills laid over it. */
+    .scene { position: relative; max-width: 100%; margin: 0 auto; }
+    .scene canvas { border-radius: 16px; box-shadow: 0 0 0 1px #d5bba970, 0 14px 36px #80543a12; }
     /* The scene canvas is drawn nearest-neighbour at 2.5x; the browser smooths only the final downscale. */
     canvas { display: block; max-width: 100%; height: auto; background: #f6f0e5; }
     /* A finger on the scene scrolls the page until the view is zoomed in; then it pans the scene. */
     #screen { touch-action: pan-y; user-select: none; -webkit-user-select: none; }
     #screen.zoomed, #screen.arranging { touch-action: none; }
     @media (pointer: coarse) { #screen { touch-action: none; } }
+    #scene-tools { position: absolute; top: 10px; left: 10px; right: 10px; display: none; align-items: center; gap: 8px; pointer-events: none; }
+    #scene-tools > * { pointer-events: auto; }
+    #room-select { height: 36px; min-height: 36px; padding: 0 30px 0 12px; border-radius: 18px; font-size: 13px; font-weight: 700; appearance: none; -webkit-appearance: none;
+      background: var(--frame) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%233c3033' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center; }
+    #scene-tools .spacer { flex: 1; }
+    #scene-shop, #scene-more { display: none; border-radius: 22px; }
+    #scene-actions { position: absolute; left: 10px; bottom: 10px; display: flex; gap: 8px; }
+    #scene-actions button, #reset-view { height: 36px; border-radius: 18px; font-size: 13px; font-weight: 700; padding: 0 14px; background: var(--frame); }
+    #reset-view { position: absolute; right: 10px; bottom: 10px; }
+    #message { min-height: 20px; margin: 8px 4px 0; font-size: 12px; color: var(--muted); }
+    #error { color: #a94036; white-space: pre-wrap; } #error:empty { display: none; }
+    #recovery { margin: 8px 0; }
     .pose-review-banner { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 10px 0; padding: 10px 12px; border: 1px solid #cfab64; border-radius: 12px; background: #fff1cf; font-size: 13px; }
-    #fetch, #park-home { background: #fffaf3; }
+
+    /* The action bubble: a dark popover over the thing that was tapped. Its arrow points at it. */
+    #bubble { position: absolute; z-index: 5; left: 0; top: 0; width: max-content; max-width: min(300px, calc(100% - 8px)); padding: 7px 10px 8px; border-radius: 12px;
+      display: flex; flex-direction: column; gap: 5px; background: var(--ink); color: var(--frame); box-shadow: 0 6px 18px #3c303340; }
+    #bubble::after { content: ""; position: absolute; left: var(--arrow-x, 20px); bottom: -7px; margin-left: -7px; border: 7px solid transparent; border-bottom: 0; border-top-color: var(--ink); }
+    #bubble.below::after { bottom: auto; top: -7px; border: 7px solid transparent; border-top: 0; border-bottom-color: var(--ink); }
+    #bubble .bubble-title { font-size: 11px; font-weight: 700; color: #e9dccf; }
+    #bubble .bubble-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+    #bubble button { height: 28px; min-height: 28px; padding: 0 10px; border-radius: 14px; border: 1px solid #8a7a72; background: transparent; color: var(--frame); font-size: 12px; font-weight: 700; }
+    #bubble button:first-child { border: 0; background: var(--frame); color: var(--ink); font-weight: 800; }
+    #bubble button:hover:enabled { background: #5a4a4d; border-color: #8a7a72; }
+    #bubble button:first-child:hover:enabled { background: #f1e7d9; }
+
+    /* Cards and the focus panel. */
+    .card { border: 1px solid var(--soft); border-radius: 16px; padding: 12px; margin-top: 10px; background: var(--frame); }
+    .focus-row { display: flex; align-items: center; gap: 10px; }
+    #timer { font-size: 30px; line-height: 1.1; letter-spacing: -.5px; font-variant-numeric: tabular-nums; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 700; color: var(--navy); }
+    #focus { flex: 1; height: 48px; border-radius: 12px; font-size: 16px; }
+    #coins-side { display: none; font-size: 13px; font-weight: 800; border: 1px solid #c7ab8a; border-radius: 18px; padding: 4px 10px; background: var(--frame); color: var(--coin); white-space: nowrap; }
+    .focus-on { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 13px; color: var(--muted); }
+    #focus-task { flex: 1; height: 36px; border-radius: 10px; background: var(--bg); font-weight: 700; }
+    .section-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 0 4px; }
+    #task-count { font-size: 12px; }
+
+    /* Tasks: a box to tick, the title, and a focus tag or the reward. */
+    #tasks, #activities { margin-top: 12px; }
+    #task-list { list-style: none; padding: 0; margin: 6px 0; display: flex; flex-direction: column; gap: 6px; }
+    .task { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; min-height: 44px; padding: 0 6px 0 2px; border: 1px solid var(--soft); border-radius: 12px; background: var(--frame); }
+    .task.selected { border-color: var(--navy); }
+    .task.done { background: #f3ece2; color: var(--muted); }
+    .task .complete { width: 40px; height: 40px; min-height: 0; padding: 0; border: 0; background: none; display: grid; place-items: center; flex-shrink: 0; }
+    .task .complete::before { content: ""; width: 20px; height: 20px; border: 2px solid var(--navy); border-radius: 6px; background: var(--bg); display: grid; place-items: center; font-size: 14px; line-height: 1; color: var(--frame); }
+    .task.done .complete::before { content: "\2713"; background: var(--navy); }
+    .task .complete:hover:enabled { background: none; }
+    .task .title { flex: 1; min-width: 0; min-height: 36px; padding: 0 4px; border: 0; background: none; text-align: left; font-size: 14px; font-weight: 600; overflow-wrap: anywhere; border-radius: 8px; }
+    .task.selected .title { font-weight: 700; }
+    .task.done .title { text-decoration: line-through; color: var(--muted); cursor: default; }
+    .task .tag { font-size: 11px; font-weight: 800; color: var(--navy); background: #e4e9f1; border-radius: 10px; padding: 2px 8px; }
+    .task .reward { font-size: 12px; font-weight: 700; color: var(--coin); } .task.done .reward { color: var(--muted); }
+    .task .more { width: 36px; min-width: 0; min-height: 36px; padding: 0; border: 0; background: none; font-size: 18px; line-height: 1; color: var(--muted); }
+    .task .strip { flex: 1 0 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 0 4px 8px 6px; }
+    .task .strip small { flex: 1 0 100%; }
+    .task .strip button { font-size: 12px; min-height: 32px; padding: 3px 10px; }
+    .task .dreaded-toggle[aria-pressed="true"] { background: var(--navy); color: var(--frame); border-color: var(--navy); }
+    .task .edit-input { flex: 1; width: 0; margin: 4px 0 4px 6px; }
+    .task .edit-input ~ button { margin: 4px 0; }
+    #task-form { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+    #task-title { flex: 1; height: 44px; padding: 0 12px; border: 1px dashed #c7ab8a; border-radius: 12px; background: transparent; }
+    #add-task { height: 44px; min-width: 64px; padding: 0 16px; border-radius: 12px; border: 0; }
+    #empty-tasks { margin: 6px 4px; font-size: 13px; }
+
+    /* Activities: one-tap chips, and the full cards under More. */
+    #activity-row { display: flex; gap: 8px; overflow-x: auto; padding: 8px 0 2px; }
+    #activity-templates { display: contents; }
+    .chip { flex-shrink: 0; display: inline-flex; align-items: center; gap: 5px; height: 40px; padding: 0 14px; border-radius: 20px; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .chip .reward { color: var(--coin); }
+    #activity-more { margin-top: 8px; padding-top: 4px; border-top: 1px solid var(--soft); }
+    #task-help { font-size: 12px; margin: 6px 0; }
+    .activities { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
+    .activity { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; padding: 8px; border: 1px solid #d5bba980; border-radius: 12px; min-width: 0; }
+    .activity .unlock { font-size: 12px; color: var(--muted); } .activity .unlock .soon { border: 1px solid var(--line); border-radius: 8px; padding: 0 5px; margin-left: 4px; font-size: 11px; }
+    .activity .pin { display: none; font-size: 12px; min-height: 28px; padding: 2px 8px; } .editing-pins .activity .pin { display: inline-block; }
+    #edit-pins { font-size: 12px; min-height: 28px; padding: 2px 10px; } #edit-pins[aria-pressed="true"] { background: var(--navy); color: var(--frame); }
+    #pin-note:empty { display: none; }
+    .outing-visit { font-size: 12px; min-height: 36px; margin: 3px 0 0 4px; padding: 5px 8px; }
+
+    /* Outings. */
+    #outing-panel { display: flex; align-items: center; gap: 8px; margin: 8px 0 0; overflow-x: auto; }
+    #outing-panel h2 { font-size: 12px; font-weight: 700; color: var(--muted); margin: 0; white-space: nowrap; }
+    #outing-list { display: flex; gap: 8px; } #outing-list button { white-space: nowrap; border-radius: 18px; }
+    #outing-actions { padding: 12px; background: var(--frame); border: 1px solid var(--line); border-radius: 12px; margin: 8px 0; }
+    #outing-title { font-weight: 700; margin: 0; } #outing-progress { margin: 3px 0; font-weight: 600; } #outing-hint { margin: 5px 0 8px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+    .chips button[aria-pressed="true"] { background: var(--navy); color: var(--frame); }
     .arrange-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 10px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 12px; background: var(--frame); }
     .arrange-bar span { flex: 1 1 200px; font-size: 12px; color: var(--muted); }
-    #arrange[aria-pressed="true"] { background: #203653; color: #fffaf3; }
-    #arrange-drawer { display: none; margin-bottom: 10px; }
-    #reset-view { position: absolute; grid-area: 1 / 1 / 2 / -1; right: 8px; bottom: 8px; }
-    .focus-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-width: 0; }
-    #timer { font-size: 24px; line-height: 1.1; font-variant-numeric: tabular-nums; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 650; color: #203653; }
-    .scene.dark #timer { color: #203653; }
-    .scene button { font-size: 14px; padding: 6px 12px; min-height: 40px; }
-    #coins { grid-column: 2; grid-row: 2; justify-self: end; font-size: 14px; border: 1px solid #c7ab8a; border-radius: 20px; padding: 5px 12px; background: #fffaf3; color: #80543a; font-weight: 700; white-space: nowrap; }
-    button, input, select { font: inherit; color: var(--ink); background: var(--frame); border: 1px solid var(--line); border-radius: 9px; }
-    button { cursor: pointer; min-height: 36px; padding: 6px 10px; }
-    button:hover:enabled { background: #f1e7d9; border-color: #a8846f; }
-    #focus, #add-task { background: #203653; color: #fffaf3; border-color: #203653; font-weight: 650; }
-    #focus:hover:enabled, #add-task:hover:enabled { background: #304b70; }
-    button:disabled { opacity: .5; cursor: default; }
-    button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px solid #304b70; outline-offset: 3px; }
-    input, select { padding: 8px; min-height: 38px; min-width: 0; }
-    #message { min-height: 24px; margin-top: 18px; text-align: center; color: #6e5b4e; font-weight: 550; } #error { color: #a94036; white-space: pre-wrap; }
-    #recovery { margin: 8px 0; } [hidden] { display: none !important; }
-    section { border: 1px solid var(--line); border-radius: 16px; padding: 18px; margin-top: 14px; background: var(--frame); box-shadow: 0 6px 16px #80543a08; }
-    .section-head { display: flex; justify-content: space-between; gap: 8px; }
-    #task-form { display: flex; align-items: center; gap: 8px; } #task-title { flex: 1; }
-    .dreaded-check { display: flex; align-items: center; gap: 4px; white-space: nowrap; font-size: 13px; } .dreaded-check input { min-height: 0; }
-    .activities { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
-    .activity { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; padding: 8px; border: 1px solid #d5bba980; border-radius: 12px; min-width: 150px; }
-    .places-link { display: inline-block; color: #203653; font-weight: 600; text-decoration: none; background: #fffaf3; border: 1px solid var(--line); padding: 10px 16px; border-radius: 10px; margin: 6px 0; } .places-link:hover { background: #ece3d7; }
-    .outing-visit { font-size: 12px; min-height: 36px; margin: 3px 0 0 4px; padding: 5px 8px; } #outing-actions { padding:12px; background:var(--frame); border:1px solid var(--line); border-radius:12px; margin:8px 0; } #outing-title { font-weight:700; margin:0; } #outing-progress { margin:3px 0; font-weight:600; } #outing-hint { margin:5px 0 8px; } #outing-panel { margin:10px 0; } #outing-panel h2 { font-size:16px; margin:0 0 6px; } .activity .unlock { font-size: 12px; color: var(--muted); } .activity .unlock .soon { border: 1px solid var(--line); border-radius: 8px; padding: 0 5px; margin-left: 4px; font-size: 11px; }
-    .activity .pin { display: none; font-size: 12px; min-height: 28px; padding: 2px 8px; } .editing-pins .activity .pin { display: inline-block; }
-    #edit-pins { font-size: 12px; min-height: 28px; padding: 2px 10px; } #edit-pins[aria-pressed="true"] { background: #203653; color: #fffaf3; }
-    .activity-tools { display: flex; align-items: flex-start; gap: 8px; } .activity-tools details { margin-top: 0; flex: 1; min-width: 0; }
-    #pin-note:empty { display: none; }
-    #task-list { list-style: none; padding: 0; margin: 10px 0 0; }
-    .task { display: flex; align-items: center; gap: 8px; padding: 9px 0; border-top: 1px solid #d5bba960; }
-    .task-copy { flex: 1; overflow-wrap: anywhere; min-width: 0; } .task-copy small { display: block; }
-    .task.done .title { text-decoration: line-through; color: var(--muted); }
-    .task .edit-input { flex: 1; width: 0; }
-    .task .complete { width: 38px; flex-shrink: 0; padding: 5px; }
-    .task .dreaded-toggle { font-size: 12px; } .task .dreaded-toggle[aria-pressed="true"] { background: #203653; color: #fffaf3; }
-    .focus-task { display: flex; gap: 8px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
-    #focus-task { flex: 1; }
-    details { margin-top: 16px; } summary { cursor: pointer; padding: 5px 0; } .save-controls { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
-    .credit { margin: 14px 0 0; font-size: 11px; } .credit a { color: inherit; }
-    #hud { margin-top: 12px; font-size: 11px; } #dev { margin-top: 8px; }
-    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
-    .chips button[aria-pressed="true"] { background: #203653; color: #fffaf3; }
+
+    /* Shop and More: inline on desktop, a side drawer on phones. */
     #shop-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(190px,1fr)); gap: 10px; }
     .shop-card { border: 1px solid #d5bba980; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; align-items: start; gap: 5px; }
     .shop-card canvas { width: 80px; height: 64px; background: transparent; align-self: center; image-rendering: pixelated; image-rendering: crisp-edges; }
     .shop-card p { font-size: 12px; margin: 0; flex: 1; }
     .shop-actions { display: flex; gap: 6px; flex-wrap: wrap; }
-    #dev { padding: 12px; background: #f1e7d9; border-radius: 12px; } #dev small { display:block; }
-    #routine-buttons { margin-bottom: 0; }
-    .routine-picker { display: none; gap: 8px; } .routine-picker select { flex: 1; }
+    #shop-panel { margin-top: 14px; }
+    #shop-panel, #more-panel { border: 1px solid var(--line); border-radius: 16px; padding: 18px; background: var(--frame); box-shadow: 0 6px 16px #80543a08; }
+    .panel-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    #more-panel { position: fixed; z-index: 20; top: 72px; right: 28px; width: 360px; max-height: calc(100vh - 96px); overflow-y: auto; overscroll-behavior: contain; box-shadow: 0 14px 36px #3c303340; }
+    #more-panel > * + * { margin-top: 12px; }
+    #more-panel details { margin-top: 12px; } summary { cursor: pointer; padding: 5px 0; }
     #shop-backdrop { position: fixed; inset: 0; z-index: 19; background: #3c303373; }
-    @media (max-width: 520px) {
-      .activities { display: grid; grid-template-columns: 1fr 1fr; } .activity { min-width: 0; } .activity .pin { min-height: 44px; }
-      #task-form { flex-wrap: wrap; } #task-title { flex-basis: 100%; }
-      .task { flex-wrap: wrap; } .task-copy { flex: 1 1 60%; }
-      main { padding: 16px 8px; } section { padding: 12px; } .task { gap: 5px; } .task button { padding: 5px 7px; } header .muted { font-size: 10px; } h1 { font-size: 21px; } .build-info { max-width: 110px; line-height: 1.2; }
-      /* On a phone the in-scene controls would shrink below tap size, so they sit in a bar under the picture. */
-      .scene { display: grid; grid-template-columns: 1fr auto; gap: 8px; overflow: visible; background: none; box-shadow: none; border-radius: 0; }
-      .scene canvas { grid-column: 1 / -1; border-radius: 16px; box-shadow: 0 0 0 1px #d5bba970, 0 14px 36px #80543a12; }
-      .focus-controls, #coins { position: static; width: auto; }
-      .focus-controls { gap: 6px; }
-      #timer, .scene.dark #timer { font-size: 22px; color: #203653; }
-      .scene button { font-size: 14px; min-height: 44px; padding: 8px 12px; }
-      #coins { grid-column: 2; grid-row: 2; align-self: center; font-size: 13px; padding: 5px 12px; }
-      #reset-view { grid-area: 1 / 1 / 2 / -1; right: 8px; bottom: 8px; min-height: 44px; font-size: 13px; }
-      #routine-buttons { display: none; } .routine-picker { display: flex; }
-      #rooms button, #room-view button { min-height: 44px; }
-      #arrange-drawer { display: block; }
-      /* The shop is a side drawer here: same #shop-panel, slid in from the right. */
-      #menu-toggle { display: grid; }
-      #shop-panel { position: fixed; z-index: 20; top: 0; right: 0; bottom: 0; width: min(88vw, 380px); margin: 0; overflow-y: auto; overscroll-behavior: contain;
+    .sound { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; color: var(--muted); font-size: 12px; }
+    .sound label { display: flex; align-items: center; gap: 6px; }
+    .sound input[type=range] { width: 90px; accent-color: var(--ink); }
+    .places-link { display: inline-block; color: var(--navy); font-weight: 600; text-decoration: none; background: var(--frame); border: 1px solid var(--line); padding: 10px 16px; border-radius: 10px; } .places-link:hover { background: #ece3d7; }
+    .build-info { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 12px; }
+    #update-build { font-size: 12px; font-weight: 650; min-height: 36px; }
+    .save-state { font-size: 12px; color: var(--muted); }
+    .save-controls { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .credit { margin: 0; font-size: 11px; } .credit a { color: inherit; }
+    #hud { margin-top: 12px; font-size: 11px; } #dev { padding: 12px; background: #f1e7d9; border-radius: 12px; } #dev small { display: block; }
+    #trial-outings { margin: 0; }
+    body.drawer-open { overflow: hidden; }
+    @keyframes drawer-in { from { transform: translateX(100%); } }
+    @media (prefers-reduced-motion: reduce) { #shop-panel.open, #more-panel.open { animation: none; } }
+
+    /* Phones (anything under 1000px, and a phone on its side): the room picker sits over the scene and panels are drawers. */
+    @media (max-width: 999px) {
+      main { max-width: 640px; }
+      #scene-tools { display: flex; }
+      #shop span.label { display: none; }
+      #shop-panel, #more-panel { position: fixed; z-index: 20; top: 0; right: 0; bottom: 0; left: auto; width: min(88vw, 380px); max-height: none; margin: 0; overflow-y: auto; overscroll-behavior: contain;
         border-radius: 16px 0 0 16px; box-shadow: -10px 0 30px #3c303340;
         padding: calc(14px + env(safe-area-inset-top)) calc(12px + env(safe-area-inset-right)) calc(14px + env(safe-area-inset-bottom)) 12px; }
-      #shop-panel.open { animation: drawer-in .22s ease-out; }
+      #shop-panel.open, #more-panel.open { animation: drawer-in .22s ease-out; }
       #shop-grid { grid-template-columns: 1fr; }
-      body.drawer-open { overflow: hidden; }
+      #tasks, #activities { background: none; border: 0; padding: 0; margin-top: 10px; }
+      #activities h2 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+      #activity-row { padding: 0 0 6px; }
     }
-    @keyframes drawer-in { from { transform: translateX(100%); } }
-    @media (prefers-reduced-motion: reduce) { #shop-panel.open { animation: none; } }
-    @media (pointer: coarse) { button, select, input:not([type=range]) { min-height: 44px; } .task .complete { width: 44px; } input, select, textarea { font-size: 16px; } }
-    html { -webkit-text-size-adjust: 100%; } body { overflow-x: hidden; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+    @media (max-width: 520px) { h1 { font-size: 18px; } #coins { font-size: 13px; padding: 5px 10px; } .scene canvas { border-radius: 14px; } }
+
+    /* Desktop: room tabs in the header, the room beside a column of cards. */
+    @media (min-width: 1000px) {
+      main { padding: 20px 28px 28px; }
+      header { padding: 0; margin-bottom: 14px; gap: 12px 16px; flex-wrap: wrap; }
+      h1 { font-size: 24px; letter-spacing: -.4px; }
+      #room-view { display: flex; flex-wrap: wrap; gap: 4px; padding: 4px; margin: 0; border: 1px solid var(--soft); border-radius: 14px; background: var(--frame); }
+      #room-view button { height: 36px; min-height: 36px; padding: 0 14px; border: 0; border-radius: 10px; background: transparent; font-size: 14px; font-weight: 600; }
+      #room-view button[aria-pressed="true"] { background: var(--navy); color: var(--frame); font-weight: 700; }
+      #room-view button:hover:enabled { background: #f1e7d9; } #room-view button[aria-pressed="true"]:hover:enabled { background: var(--navy); }
+      #coins { font-size: 15px; padding: 8px 16px; border-radius: 22px; }
+      .head-btn { width: auto; padding: 0 14px; font-size: 14px; }
+      .head-btn .label, #arrange { display: inline-flex; }
+      #menu-toggle { width: 44px; padding: 0; }
+      .workspace { display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, 440px); gap: 20px; align-items: start; }
+      #home-column, #task-column { min-width: 0; }
+      .scene canvas { border-radius: 20px; }
+      #message { font-size: 13px; margin-top: 10px; }
+      .card { padding: 16px; border-radius: 18px; margin-top: 14px; }
+      #focus-card { margin-top: 0; }
+      #timer { font-size: 40px; letter-spacing: -1px; } #focus { height: 52px; border-radius: 14px; font-size: 17px; }
+      #tasks, #activities { margin-top: 14px; } h2 { font-size: 16px; }
+      #activity-row { flex-wrap: wrap; overflow: visible; } #activity-templates { display: contents; }
+      #activity-templates .chip { flex: 1 1 calc(50% - 4px); justify-content: space-between; height: 44px; border-radius: 12px; font-size: 14px; background: var(--bg); }
+      #activity-more-toggle { flex: 1 1 100%; justify-content: center; height: 36px; }
+    }
+
+    /* A phone on its side: a small scroll snaps the room to the top, Safari hides its bars and the room fills the screen height.
+       The iPhone keeps both side insets clear, so the column beside the room gets what is left (at least SIDE_MIN in main.js). */
+    @media (orientation: landscape) and (max-height: 540px) and (pointer: coarse) {
+      html { scroll-snap-type: y proximity; }
+      main { max-width: none; padding: 0 0 8px; }
+      header { min-height: 44px; padding: 0 12px; } h1 { font-size: 18px; }
+      .workspace { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; align-items: stretch; scroll-snap-align: start; }
+      /* The room stays pinned while the column beside it scrolls with the page, so any swipe there also hides Safari's bars. */
+      .scene { margin: 0; position: sticky; top: 0; }
+      .scene canvas { border-radius: 0; }
+      #scene-shop, #scene-more { display: inline-flex; }
+      #task-column { min-height: 100lvh; padding: 8px 4px 8px 0; display: flex; flex-direction: column; gap: 8px; }
+      #focus-card { display: flex; flex-direction: column; align-items: stretch; gap: 6px; margin: 0; padding: 0; border: 0; background: none; }
+      .focus-row { display: contents; }
+      #coins-side { display: block; align-self: center; font-size: 12px; padding: 2px 10px; }
+      #timer { font-size: 26px; letter-spacing: 0; text-align: center; }
+      #focus { height: 44px; font-size: 15px; padding: 0 6px; }
+      .focus-on { display: none; }
+      #tasks { margin: 0; padding: 8px; }
+      .task { gap: 4px; } .task .title { font-size: 12px; } .task .more, .task .reward { display: none; }
+      #task-form { flex-wrap: wrap; } #task-title { flex-basis: 100%; } #add-task { flex: 1; }
+      #activities { margin: 0; padding: 8px; }
+      #activity-row .chip { flex: 1 1 100%; justify-content: space-between; }
+    }
+    @media (pointer: coarse) { button, select, input:not([type=range]) { min-height: 44px; } #bubble button { min-height: 44px; } .task .more { width: 44px; } .task .complete { width: 44px; height: 44px; } input, select, textarea { font-size: 16px; } #activity-row .chip { min-height: 44px; } }
   </style>
 </head>
 <body>
   <main id="app">
-    <header><h1>Zucchini Home</h1><div class="build-info"><span id="build-version" class="muted">Loading…</span><button id="update-build" hidden>Update app</button></div>
-      <button id="menu-toggle" aria-label="Open shop" aria-expanded="false" aria-controls="shop-panel"><svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h16M3 11h16M3 16h16"/></svg></button>
+    <header>
+      <h1>Zucchini Home</h1>
+      <nav id="room-view" aria-label="View a room"></nav>
+      <output id="coins" aria-label="Coin balance">0 coins</output>
+      <button id="arrange" class="head-btn" aria-pressed="false" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M3 12h18M12 3l-3 3M12 3l3 3M12 21l-3-3M12 21l3-3M3 12l3-3M3 12l3 3M21 12l-3-3M21 12l-3 3"/></svg><span id="arrange-label" class="label">Arrange</span></button>
+      <button id="shop" class="head-btn" aria-label="Open shop" aria-expanded="false" aria-controls="shop-panel" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="label">Shop</span></button>
+      <button id="menu-toggle" class="head-btn" aria-label="More" aria-expanded="false" aria-controls="more-panel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </header>
     <div class="workspace">
     <div id="home-column">
     <div id="pose-review-banner" class="pose-review-banner" hidden><span>Pose review · normal movement is paused.</span><button id="resume-play">Resume play</button></div>
     <div class="scene" id="scene">
       <canvas id="screen" width="1200" height="800" aria-label="Zucchini's apartment"></canvas>
-      <div class="focus-controls"><output id="timer" aria-label="Focus time remaining">25:00</output><button id="focus" disabled>Start focus</button><button id="fetch" hidden>Play fetch</button><button id="park-home" hidden>Head home</button></div>
-      <output id="coins" aria-label="Coin balance">0 coins</output>
+      <div id="scene-tools">
+        <select id="room-select" aria-label="Room"></select>
+        <span class="spacer"></span>
+        <button id="scene-shop" class="head-btn" aria-label="Open shop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></button>
+        <button id="scene-more" class="head-btn" aria-label="More"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      </div>
+      <div id="scene-actions"><button id="fetch" hidden>Play fetch</button><button id="park-home" hidden>Head home</button></div>
       <button id="reset-view" hidden>Reset view</button>
+      <div id="bubble" hidden role="dialog" aria-label="Things to do"></div>
     </div>
+    <div id="message" role="status" aria-live="polite">Settling in…</div>
+    <div id="error" role="alert"></div>
+    <button id="recovery" hidden>Retry save</button>
+    <section id="outing-panel" hidden aria-label="Earned outings"><h2>Ready to visit</h2><div id="outing-list"></div></section>
     <section id="outing-actions" hidden aria-label="Outing activities">
       <p id="outing-title"></p><p id="outing-progress" role="status"></p><p id="outing-hint" class="muted"></p>
       <div class="chips"><button id="outing-primary">Explore</button><button id="outing-secondary" hidden>Rest</button></div>
@@ -162,69 +274,71 @@
       <span id="arrange-hint">Tap a piece, then drag or rotate it. Green means it fits; touch and hold to drag.</span>
       <button id="arrange-rotate" disabled>Rotate</button><button id="arrange-undo" disabled>Undo</button><button id="arrange-reset">Reset layout</button><button id="arrange-done">Done</button>
     </div>
-    <div class="sound" id="sound">
-      <button id="music-toggle">Play music</button>
-      <label>Music <input id="music-volume" type="range" min="0" max="1" step="0.05" value="0.3"></label>
-      <label>Effects <input id="effects-volume" type="range" min="0" max="1" step="0.05" value="0.35"></label>
-    </div>
-    <nav id="room-view" aria-label="View a room" class="chips"></nav>
-    <nav id="rooms" aria-label="Shop and arrange" class="chips"><button id="shop" disabled>Shop</button><button id="arrange" aria-pressed="false" disabled>Arrange</button></nav>
-    <a class="places-link" href="places/" target="_blank" rel="noopener">Places · arrange layouts <span aria-hidden="true">↗</span></a>
-    <section id="outing-panel" hidden aria-label="Earned outings"><h2>Ready to visit</h2><div class="chips" id="outing-list"></div></section>
-    <div id="trial-outings" class="chips" hidden><label>Try a destination <select id="trial-destination"><option value="neighborhood">Neighborhood</option><option value="agility">Agility course</option><option value="office">Office</option><option value="beach">Beach</option></select></label> <button id="trial-visit">Try outing</button> <small>Practice all four destinations without earning an invitation.</small></div>
-    <div id="message" role="status" aria-live="polite">Settling in…</div>
-    <div id="error" role="alert"></div>
-    <button id="recovery" hidden>Retry save</button>
-    <section id="routines" aria-labelledby="routines-heading" hidden>
-      <h2 id="routines-heading">Spend time with Zucchini</h2>
-      <p class="muted">She follows her own little routines. You can invite her to try an available activity, too.</p>
-      <div id="routine-buttons" class="chips" aria-label="Zucchini routines"></div>
-      <div class="routine-picker"><select id="routine-select" aria-label="Choose a routine"></select><button id="routine-go">Go</button></div>
-    </section>
     </div>
     <div id="task-column">
-    <section id="tasks" aria-labelledby="tasks-heading">
-      <div class="section-head"><h2 id="tasks-heading">A little progress</h2><small id="task-count">0 / 64 tasks</small></div>
-      <p class="muted" id="task-help">Make room for what you’d like to do today.</p>
-      <div id="activity-templates" class="activities" aria-label="Pinned activities"></div>
-      <div class="activity-tools"><details id="activity-more"><summary>More</summary><div id="activity-more-list" class="activities" aria-label="More activities"></div></details><button id="edit-pins" type="button" aria-pressed="false">Edit pins</button></div>
-      <p id="pin-note" class="muted" role="status"></p>
-      <form id="task-form"><input id="task-title" aria-label="New task" placeholder="Add a task…" autocomplete="off" required><label class="dreaded-check"><input type="checkbox" id="task-dreaded"> Dreaded</label><button id="add-task" disabled>Add task</button></form>
+    <section id="focus-card" class="card" aria-label="Focus">
+      <div class="focus-row"><output id="timer" aria-label="Focus time remaining">25:00</output><button id="focus" disabled>Start focus</button></div>
+      <output id="coins-side" aria-label="Coin balance">0 coins</output>
+      <div class="focus-on"><label for="focus-task">Focus on</label><select id="focus-task"><option value="0">Just focus</option></select></div>
+    </section>
+    <section id="tasks" class="card" aria-labelledby="tasks-heading">
+      <div class="section-head"><h2 id="tasks-heading">Today</h2><small id="task-count">0 of 0 done</small></div>
       <ul id="task-list" aria-label="Tasks"></ul>
       <p id="empty-tasks" class="muted">Your list is clear. Add something whenever you’re ready.</p>
-      <div class="focus-task"><label for="focus-task">Next focus:</label><select id="focus-task"><option value="0">Just focus</option></select></div>
+      <form id="task-form"><input id="task-title" aria-label="New task" placeholder="Add a task…" autocomplete="off" required><button id="add-task" disabled>Add</button></form>
     </section>
-    <details><summary>Save &amp; restore · <span id="save-state" class="save-state">Loading…</span></summary>
-      <p class="muted">Saved on this browser. Export a copy to keep or move your progress. Reloading resumes your focus; importing a backup interrupts an unfinished focus without coins.</p>
-      <p class="muted">On a phone, add this app to your Home Screen and use Export to keep a backup.</p>
-      <div class="save-controls"><button id="export" disabled>Export save</button><button id="import" disabled>Import save</button><button id="confirm-import" hidden>Restore this save</button><button id="cancel-import" hidden>Keep current progress</button></div>
-      <input id="import-file" type="file" accept=".zucchini,.zuzu,application/octet-stream" hidden>
-      <p id="import-preview" role="status"></p>
-      <p class="muted">Workouts from a file count once each: a run, pickleball or tennis match, or gym session pays its usual reward, and completed activities can unlock outings. Importing a file again never pays twice.</p>
-      <div class="save-controls"><button id="import-workouts" disabled>Import workouts</button></div>
-      <p class="muted">Imported workouts are counted separately from runs you log by hand.</p>
-      <input id="workouts-file" type="file" accept=".jsonl,.json,.txt,application/json,text/plain" hidden>
-      <p id="workout-summary" role="status"></p><p id="workout-detail" class="muted"></p>
-    </details>
+    <section id="activities" class="card" aria-labelledby="activities-heading">
+      <h2 id="activities-heading">Log an activity</h2>
+      <div id="activity-row" aria-label="Pinned activities"><div id="activity-templates"></div><button id="activity-more-toggle" class="chip" type="button" aria-expanded="false" aria-controls="activity-more">More</button></div>
+      <div id="activity-more" hidden>
+        <p class="muted" id="task-help">Make room for what you’d like to do today.</p>
+        <div id="activity-more-list" class="activities" aria-label="All activities"></div>
+        <button id="edit-pins" type="button" aria-pressed="false">Edit pins</button>
+        <p id="pin-note" class="muted" role="status"></p>
+      </div>
+    </section>
     </div>
     </div>
     <section id="shop-panel" aria-labelledby="shop-heading" hidden>
-      <div class="section-head"><h2 id="shop-heading">A home to grow into</h2><button id="close-shop">Close shop</button></div>
+      <div class="panel-head"><h2 id="shop-heading">A home to grow into</h2><button id="close-shop">Close shop</button></div>
       <nav id="shop-rooms" class="chips" aria-label="Shop by room"></nav>
       <p class="muted">Each piece has a place in your home. Store furniture whenever you’d like to clear some space; it stays yours.</p>
-      <button id="arrange-drawer">Arrange furniture</button>
       <div id="shop-grid"></div>
     </section>
+    <aside id="more-panel" aria-labelledby="more-heading" hidden>
+      <div class="panel-head"><h2 id="more-heading">More</h2><button id="close-more">Close</button></div>
+      <div class="sound" id="sound">
+        <button id="music-toggle">Play music</button>
+        <label>Music <input id="music-volume" type="range" min="0" max="1" step="0.05" value="0.3"></label>
+        <label>Effects <input id="effects-volume" type="range" min="0" max="1" step="0.05" value="0.35"></label>
+      </div>
+      <button id="arrange-drawer">Arrange furniture</button>
+      <div><a class="places-link" href="places/" target="_blank" rel="noopener">Places · arrange layouts <span aria-hidden="true">↗</span></a></div>
+      <details><summary>Save &amp; restore · <span id="save-state" class="save-state">Loading…</span></summary>
+        <p class="muted">Saved on this browser. Export a copy to keep or move your progress. Reloading resumes your focus; importing a backup interrupts an unfinished focus without coins.</p>
+        <p class="muted">On a phone, add this app to your Home Screen and use Export to keep a backup.</p>
+        <div class="save-controls"><button id="export" disabled>Export save</button><button id="import" disabled>Import save</button><button id="confirm-import" hidden>Restore this save</button><button id="cancel-import" hidden>Keep current progress</button></div>
+        <input id="import-file" type="file" accept=".zucchini,.zuzu,application/octet-stream" hidden>
+        <p id="import-preview" role="status"></p>
+        <p class="muted">Workouts from a file count once each: a run, pickleball or tennis match, or gym session pays its usual reward, and completed activities can unlock outings. Importing a file again never pays twice.</p>
+        <div class="save-controls"><button id="import-workouts" disabled>Import workouts</button></div>
+        <p class="muted">Imported workouts are counted separately from runs you log by hand.</p>
+        <input id="workouts-file" type="file" accept=".jsonl,.json,.txt,application/json,text/plain" hidden>
+        <p id="workout-summary" role="status"></p><p id="workout-detail" class="muted"></p>
+      </details>
+      <div class="build-info"><span id="build-version" class="muted">Loading…</span><button id="update-build" hidden>Update app</button></div>
+      <p class="credit muted"><small>Weather: <a href="https://open-meteo.com/" rel="noopener">Open-Meteo.com</a> (CC BY 4.0)</small></p>
+      <div id="trial-outings" class="chips" hidden><label>Try a destination <select id="trial-destination"><option value="neighborhood">Neighborhood</option><option value="agility">Agility course</option><option value="office">Office</option><option value="beach">Beach</option></select></label> <button id="trial-visit">Try outing</button> <small>Practice all four destinations without earning an invitation.</small></div>
+      <div id="dev" hidden><button id="fast-forward">Finish trial focus</button> <button id="furnish">Furnish everything</button><small> Trial sandbox · 5,000 sample coins · separate saved progress · add ?furnished to the address to start furnished</small>
+        <p><label>Pose review <select id="pose-review"><option value="">Play normally</option><option value="couch-sit">Zucchini + couch · sitting</option><option value="couch-nap">Zucchini + couch · sleeping</option><option value="bathtub">Zucchini + bathtub · shower</option><option value="balcony_hammock">Zucchini + hammock · sleeping</option><option value="covers-tuck">Bed covers · tucking in</option><option value="covers-sleep">Bed covers · sleeping</option><option value="covers-emerge">Bed covers · coming out</option><option value="sploot">Sploot</option><option value="tv">TV on / off</option><option value="balcony_grill">Grill open / closed</option></select></label>
+        <label>View <select id="pose-facing"><option value="SE">Front right</option><option value="SW">Front left</option><option value="NW">Back left</option><option value="NE">Back right</option></select></label></p>
+        <small id="pose-hint">Furnish everything first, then choose a pose. The review does not change saved progress.</small>
+      </div>
+    </aside>
     <div id="shop-backdrop" hidden></div>
-    <div id="dev" hidden><button id="fast-forward">Finish trial focus</button> <button id="furnish">Furnish everything</button><small> Trial sandbox · 5,000 sample coins · separate saved progress · add ?furnished to the address to start furnished</small>
-      <p><label>Pose review <select id="pose-review"><option value="">Play normally</option><option value="couch-sit">Zucchini + couch · sitting</option><option value="couch-nap">Zucchini + couch · sleeping</option><option value="bathtub">Zucchini + bathtub · shower</option><option value="balcony_hammock">Zucchini + hammock · sleeping</option><option value="covers-tuck">Bed covers · tucking in</option><option value="covers-sleep">Bed covers · sleeping</option><option value="covers-emerge">Bed covers · coming out</option><option value="sploot">Sploot</option><option value="tv">TV on / off</option><option value="balcony_grill">Grill open / closed</option></select></label>
-      <label>View <select id="pose-facing"><option value="SE">Front right</option><option value="SW">Front left</option><option value="NW">Back left</option><option value="NE">Back right</option></select></label></p>
-      <small id="pose-hint">Furnish everything first, then choose a pose. The review does not change saved progress.</small>
-    </div>
-    <p class="credit muted"><small>Weather: <a href="https://open-meteo.com/" rel="noopener">Open-Meteo.com</a> (CC BY 4.0)</small></p>
     <div id="hud" hidden></div>
   </main>
-  <script>globalThis.zucchiniRelease={"version":"13edc889231d","updateURL":"release.json","generatedBase":"assets/art-79eb92c018e8/","audioBase":"assets/audio-e65c82bd7384/","destinationsBase":"assets/destinations-cb1d4563e9ef/","atlasParts":7,"atlasLength":5882240,"audioChunks":{"music/room_lofi_01.mp3":14,"sfx/rain_window_loop.mp3":2}};</script>
-<script type="module" src="releases/13edc889231d/main.js"></script>
+  <script>globalThis.zucchiniRelease={"version":"f304bcf986f1","updateURL":"release.json","generatedBase":"assets/art-79eb92c018e8/","audioBase":"assets/audio-e65c82bd7384/","destinationsBase":"assets/destinations-cb1d4563e9ef/","atlasParts":7,"atlasLength":5882240,"audioChunks":{"music/room_lofi_01.mp3":14,"sfx/rain_window_loop.mp3":2}};</script>
+<script type="module" src="releases/f304bcf986f1/main.js"></script>
 </body>
 </html>
