@@ -210,29 +210,42 @@
       #activity-more-toggle { flex: 1 1 100%; justify-content: center; height: 36px; }
     }
 
-    /* A phone on its side: a small scroll snaps the room to the top, Safari hides its bars and the room fills the screen height.
-       The iPhone keeps both side insets clear, so the column beside the room gets what is left (at least SIDE_MIN in main.js). */
+    /* A phone on its side: the room is fixed at full screen height on the left and the page scrolls only the side pane, so any swipe
+       there hides Safari's bars without moving the room. The iPhone keeps both side insets clear, so the pane gets what is left
+       (at least SIDE_MIN in main.js); --room-w is the room's width, set by fitCanvas. */
     @media (orientation: landscape) and (max-height: 540px) and (pointer: coarse) {
-      html { scroll-snap-type: y proximity; }
-      main { max-width: none; padding: 0 0 8px; }
-      header { min-height: 44px; padding: 0 12px; } h1 { font-size: 18px; }
-      .workspace { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; align-items: stretch; scroll-snap-align: start; }
-      /* The room stays pinned while the column beside it scrolls with the page, so any swipe there also hides Safari's bars. */
-      .scene { margin: 0; position: sticky; top: 0; }
+      main { max-width: none; padding: 0; }
+      header { display: none; }
+      .workspace { display: block; }
+      #home-column { position: fixed; z-index: 1; top: 0; left: env(safe-area-inset-left); width: var(--room-w, 60vw); height: 100lvh; }
+      #home-column > :not(.scene, #arrange-bar, #outing-actions, #pose-review-banner) { display: none; }
+      .scene { margin: 0; }
       .scene canvas { border-radius: 0; }
+      /* Arrange and outing controls sit over the top of the room, which is always on screen. */
+      #arrange-bar, #outing-actions, #pose-review-banner { position: absolute; z-index: 2; top: 56px; left: 8px; right: 8px; margin: 0; padding: 6px 8px; font-size: 12px; }
+      #arrange-bar button, #outing-actions button { min-height: 32px; padding: 2px 8px; font-size: 12px; }
+      #outing-actions p { margin: 0; }
       #scene-shop, #scene-more { display: inline-flex; }
-      #task-column { min-height: 100lvh; padding: 8px 4px 8px 0; display: flex; flex-direction: column; gap: 8px; }
-      #focus-card { display: flex; flex-direction: column; align-items: stretch; gap: 6px; margin: 0; padding: 0; border: 0; background: none; }
+      #task-column { margin-left: calc(var(--room-w, 60vw) + 8px); min-height: 100lvh; padding: 6px 4px 24px 0; display: flex; flex-direction: column; gap: 6px; font-size: 12px; }
+      #task-column .card { margin: 0; padding: 6px; border-radius: 10px; }
+      #task-column button, #task-column select { min-height: 32px; font-size: 12px; }
+      #task-column input:not([type=checkbox]) { min-height: 32px; padding: 4px 8px; }  /* stays 16px so iOS does not zoom on focus */
+      #focus-card { display: flex; flex-direction: column; align-items: stretch; gap: 4px; border: 0; background: none; }
       .focus-row { display: contents; }
-      #coins-side { display: block; align-self: center; font-size: 12px; padding: 2px 10px; }
-      #timer { font-size: 26px; letter-spacing: 0; text-align: center; }
-      #focus { height: 44px; font-size: 15px; padding: 0 6px; }
+      #coins-side { display: block; align-self: center; font-size: 11px; padding: 1px 8px; }
+      #timer { font-size: 20px; letter-spacing: 0; text-align: center; }
+      #task-column #focus { min-height: 34px; height: 34px; font-size: 13px; padding: 0 6px; border-radius: 9px; }
       .focus-on { display: none; }
-      #tasks { margin: 0; padding: 8px; }
-      .task { gap: 4px; } .task .title { font-size: 12px; } .task .more, .task .reward { display: none; }
-      #task-form { flex-wrap: wrap; } #task-title { flex-basis: 100%; } #add-task { flex: 1; }
-      #activities { margin: 0; padding: 8px; }
-      #activity-row .chip { flex: 1 1 100%; justify-content: space-between; }
+      #tasks h2, #activities h2 { font-size: 12px; } #task-count { font-size: 10px; }
+      #task-list { margin: 2px 0; }
+      .task { gap: 4px; padding: 0; min-height: 34px; } .task .title { font-size: 11px; line-height: 1.25; padding: 2px 0; }
+      #task-column .task .complete { width: 26px; height: 26px; min-height: 26px; }
+      .task .more, .task .reward { display: none; } .task .tag { font-size: 9px; padding: 0 4px; }
+      #empty-tasks { font-size: 11px; margin: 2px 0; }
+      #task-form { flex-wrap: wrap; gap: 4px; } #task-title { flex-basis: 100%; } #add-task { flex: 1; }
+      #task-column #activity-row { flex-wrap: wrap; overflow: visible; gap: 4px; padding: 4px 0 0; } #activity-templates { display: contents; }
+      #task-column #activity-row .chip { flex: 1 1 100%; justify-content: space-between; min-height: 30px; height: auto; padding: 4px 8px; white-space: normal; overflow-wrap: anywhere; text-align: left; line-height: 1.15; border-radius: 10px; }
+      #activity-more { font-size: 11px; }
     }
     @media (pointer: coarse) { button, select, input:not([type=range]) { min-height: 44px; } #bubble button { min-height: 44px; } .task .more { width: 44px; } .task .complete { width: 44px; height: 44px; } input, select, textarea { font-size: 16px; } #activity-row .chip { min-height: 44px; } }
   </style>
@@ -338,7 +351,7 @@
     <div id="shop-backdrop" hidden></div>
     <div id="hud" hidden></div>
   </main>
-  <script>globalThis.zucchiniRelease={"version":"f304bcf986f1","updateURL":"release.json","generatedBase":"assets/art-79eb92c018e8/","audioBase":"assets/audio-e65c82bd7384/","destinationsBase":"assets/destinations-cb1d4563e9ef/","atlasParts":7,"atlasLength":5882240,"audioChunks":{"music/room_lofi_01.mp3":14,"sfx/rain_window_loop.mp3":2}};</script>
-<script type="module" src="releases/f304bcf986f1/main.js"></script>
+  <script>globalThis.zucchiniRelease={"version":"9da7fa9bd38e","updateURL":"release.json","generatedBase":"assets/art-79eb92c018e8/","audioBase":"assets/audio-e65c82bd7384/","destinationsBase":"assets/destinations-cb1d4563e9ef/","atlasParts":7,"atlasLength":5882240,"audioChunks":{"music/room_lofi_01.mp3":14,"sfx/rain_window_loop.mp3":2}};</script>
+<script type="module" src="releases/9da7fa9bd38e/main.js"></script>
 </body>
 </html>
