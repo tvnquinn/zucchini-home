@@ -18,7 +18,7 @@
     @media(max-width:760px){.scene-grid{grid-template-columns:1fr;gap:16px}.objects{grid-template-columns:repeat(3,minmax(0,1fr))}nav{flex-wrap:nowrap;overflow-x:auto;padding-bottom:3px;scrollbar-width:thin}nav button{flex-shrink:0}.object{min-height:88px}header{align-items:flex-start}}
   </style>
 </head>
-<body data-art-base="../assets/destinations-ee23556f9cb1/">
+<body data-art-base="../assets/destinations-6d1f5f666590/">
 <main>
   <header><h1>Zucchini’s places</h1><a id="back" href="../">← Home</a></header>
   <nav id="tabs" aria-label="Choose a destination"></nav>
@@ -42,10 +42,10 @@ const $=id=>document.getElementById(id), base=document.body.dataset.artBase;
 const canvas=$("screen"),ctx=canvas.getContext("2d"), images=new Map(), embedded=globalThis.zucchiniPlaceEmbedded;
 const descriptions={
   park:"The playable Run outing: trees, a bench, shrubs and a pond with reeds. Tap the trees or grass in the actual park to interact with Zuzu.",
-  neighborhood:"A quiet San Francisco block with Victorian houses, a lamp, mailbox, leafy tree, hydrant and railing.",
+  neighborhood:"A quiet San Francisco block with Victorian houses, curbside amenities and three street trees. The front steps remain clear.",
   beach:"Coastal views, an umbrella and chair, boardwalk, shells, driftwood and a sandcastle.",
-  office:"A full workstation with separate chair, mug, corgi badge, snack drawer and Zuzu’s tiny desk.",
-  agility:"Five agility obstacles in an open grass course: jump, tunnel, weave poles, ramp and hoop."
+  office:"A wall-aligned workstation with a chair facing the desk, mug and badge on the desktop, and a snack drawer and mini desk along the opposite wall.",
+  agility:"Follow the U-shaped course: jump, weave poles, tunnel, ramp and hoop."
 };
 const query=new URLSearchParams(location.search);
 if(query.get("from")==="trial") $("back").href="../trial/";

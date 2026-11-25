@@ -1,0 +1,1960 @@
+{
+  "schema": 1,
+  "viewport": [
+    480,
+    320
+  ],
+  "parkCamera": {
+    "scale": 2.2,
+    "offset": [
+      0,
+      -47.5
+    ]
+  },
+  "scenes": {
+    "park": {
+      "title": "Park",
+      "image": "park.png",
+      "background": [
+        0,
+        0,
+        480,
+        320
+      ],
+      "objects": {
+        "oak": {
+          "title": "Oak tree",
+          "frames": {
+            "SE": {
+              "rect": [
+                25,
+                327,
+                78,
+                73
+              ],
+              "anchor": [
+                39,
+                72
+              ]
+            },
+            "SW": {
+              "rect": [
+                153,
+                325,
+                78,
+                75
+              ],
+              "anchor": [
+                39,
+                74
+              ]
+            },
+            "NW": {
+              "rect": [
+                281,
+                327,
+                78,
+                73
+              ],
+              "anchor": [
+                39,
+                72
+              ]
+            },
+            "NE": {
+              "rect": [
+                409,
+                328,
+                78,
+                72
+              ],
+              "anchor": [
+                39,
+                71
+              ]
+            }
+          }
+        },
+        "maple": {
+          "title": "Maple tree",
+          "frames": {
+            "SE": {
+              "rect": [
+                26,
+                426,
+                76,
+                62
+              ],
+              "anchor": [
+                38,
+                61
+              ]
+            },
+            "SW": {
+              "rect": [
+                154,
+                422,
+                76,
+                66
+              ],
+              "anchor": [
+                38,
+                65
+              ]
+            },
+            "NW": {
+              "rect": [
+                282,
+                425,
+                76,
+                63
+              ],
+              "anchor": [
+                38,
+                62
+              ]
+            },
+            "NE": {
+              "rect": [
+                410,
+                427,
+                76,
+                61
+              ],
+              "anchor": [
+                38,
+                60
+              ]
+            }
+          }
+        },
+        "birch": {
+          "title": "Birch tree",
+          "frames": {
+            "SE": {
+              "rect": [
+                29,
+                505,
+                70,
+                75
+              ],
+              "anchor": [
+                35,
+                74
+              ]
+            },
+            "SW": {
+              "rect": [
+                157,
+                505,
+                70,
+                75
+              ],
+              "anchor": [
+                35,
+                74
+              ]
+            },
+            "NW": {
+              "rect": [
+                285,
+                507,
+                70,
+                73
+              ],
+              "anchor": [
+                35,
+                72
+              ]
+            },
+            "NE": {
+              "rect": [
+                413,
+                503,
+                70,
+                77
+              ],
+              "anchor": [
+                35,
+                76
+              ]
+            }
+          }
+        },
+        "shrub": {
+          "title": "Flowering shrub",
+          "frames": {
+            "SE": {
+              "rect": [
+                43,
+                592,
+                41,
+                30
+              ],
+              "anchor": [
+                20,
+                29
+              ]
+            },
+            "SW": {
+              "rect": [
+                171,
+                592,
+                42,
+                30
+              ],
+              "anchor": [
+                21,
+                29
+              ]
+            },
+            "NW": {
+              "rect": [
+                299,
+                592,
+                42,
+                30
+              ],
+              "anchor": [
+                21,
+                29
+              ]
+            },
+            "NE": {
+              "rect": [
+                426,
+                592,
+                44,
+                30
+              ],
+              "anchor": [
+                22,
+                29
+              ]
+            }
+          }
+        },
+        "bench": {
+          "title": "Park bench",
+          "frames": {
+            "SE": {
+              "rect": [
+                37,
+                634,
+                53,
+                52
+              ],
+              "anchor": [
+                26,
+                51
+              ]
+            },
+            "SW": {
+              "rect": [
+                166,
+                634,
+                51,
+                52
+              ],
+              "anchor": [
+                25,
+                51
+              ]
+            },
+            "NW": {
+              "rect": [
+                291,
+                634,
+                58,
+                52
+              ],
+              "anchor": [
+                29,
+                51
+              ]
+            },
+            "NE": {
+              "rect": [
+                420,
+                634,
+                56,
+                52
+              ],
+              "anchor": [
+                28,
+                51
+              ]
+            }
+          }
+        },
+        "reeds": {
+          "title": "Pond reeds & stones",
+          "frames": {
+            "SE": {
+              "rect": [
+                49,
+                700,
+                30,
+                27
+              ],
+              "anchor": [
+                15,
+                26
+              ]
+            },
+            "SW": {
+              "rect": [
+                177,
+                698,
+                30,
+                29
+              ],
+              "anchor": [
+                15,
+                28
+              ]
+            },
+            "NW": {
+              "rect": [
+                305,
+                700,
+                30,
+                27
+              ],
+              "anchor": [
+                15,
+                26
+              ]
+            },
+            "NE": {
+              "rect": [
+                433,
+                702,
+                30,
+                25
+              ],
+              "anchor": [
+                15,
+                24
+              ]
+            }
+          }
+        }
+      },
+      "placements": [
+        {
+          "object": "oak",
+          "x": 240.0,
+          "y": 106.68,
+          "scale": 0.88,
+          "facing": "SE"
+        },
+        {
+          "object": "maple",
+          "x": 303.36,
+          "y": 222.84,
+          "scale": 0.88,
+          "facing": "SE"
+        },
+        {
+          "object": "birch",
+          "x": 113.28,
+          "y": 191.16,
+          "scale": 0.88,
+          "facing": "SE"
+        },
+        {
+          "object": "shrub",
+          "x": 218.88,
+          "y": 138.36,
+          "scale": 0.88,
+          "facing": "SE"
+        },
+        {
+          "object": "shrub",
+          "x": 240.0,
+          "y": 212.28,
+          "scale": 0.88,
+          "facing": "SE"
+        },
+        {
+          "object": "shrub",
+          "x": 366.72,
+          "y": 212.28,
+          "scale": 0.88,
+          "facing": "SE"
+        },
+        {
+          "object": "bench",
+          "x": 292.8,
+          "y": 133.08,
+          "scale": 0.88,
+          "facing": "SE"
+        },
+        {
+          "object": "oak",
+          "x": 41,
+          "y": 137,
+          "scale": 0.69,
+          "facing": "SW",
+          "surface": false,
+          "decorative": true
+        },
+        {
+          "object": "birch",
+          "x": 440,
+          "y": 149,
+          "scale": 0.69,
+          "facing": "NE",
+          "surface": false,
+          "decorative": true
+        },
+        {
+          "object": "reeds",
+          "x": 375,
+          "y": 184,
+          "scale": 0.72,
+          "facing": "SW",
+          "surface": false,
+          "decorative": true
+        }
+      ],
+      "decor": [
+        {
+          "object": "oak",
+          "x": 41,
+          "y": 137,
+          "scale": 0.69,
+          "facing": "SW",
+          "surface": false,
+          "decorative": true
+        },
+        {
+          "object": "birch",
+          "x": 440,
+          "y": 149,
+          "scale": 0.69,
+          "facing": "NE",
+          "surface": false,
+          "decorative": true
+        },
+        {
+          "object": "reeds",
+          "x": 375,
+          "y": 184,
+          "scale": 0.72,
+          "facing": "SW",
+          "surface": false,
+          "decorative": true
+        }
+      ],
+      "dog": [
+        180,
+        226,
+        0.85
+      ]
+    },
+    "neighborhood": {
+      "title": "Neighborhood",
+      "image": "neighborhood.png",
+      "background": [
+        0,
+        0,
+        480,
+        320
+      ],
+      "objects": {
+        "lamp": {
+          "title": "Street lamp",
+          "frames": {
+            "SE": {
+              "rect": [
+                51,
+                338,
+                25,
+                68
+              ],
+              "anchor": [
+                12,
+                67
+              ]
+            },
+            "SW": {
+              "rect": [
+                179,
+                337,
+                25,
+                69
+              ],
+              "anchor": [
+                12,
+                68
+              ]
+            },
+            "NW": {
+              "rect": [
+                307,
+                337,
+                25,
+                69
+              ],
+              "anchor": [
+                12,
+                68
+              ]
+            },
+            "NE": {
+              "rect": [
+                435,
+                337,
+                25,
+                69
+              ],
+              "anchor": [
+                12,
+                68
+              ]
+            }
+          }
+        },
+        "mailbox": {
+          "title": "Mailbox",
+          "frames": {
+            "SE": {
+              "rect": [
+                47,
+                418,
+                33,
+                49
+              ],
+              "anchor": [
+                16,
+                48
+              ]
+            },
+            "SW": {
+              "rect": [
+                176,
+                418,
+                32,
+                49
+              ],
+              "anchor": [
+                16,
+                48
+              ]
+            },
+            "NW": {
+              "rect": [
+                304,
+                418,
+                32,
+                49
+              ],
+              "anchor": [
+                16,
+                48
+              ]
+            },
+            "NE": {
+              "rect": [
+                432,
+                418,
+                32,
+                49
+              ],
+              "anchor": [
+                16,
+                48
+              ]
+            }
+          }
+        },
+        "facade": {
+          "title": "Bay-window façade",
+          "frames": {
+            "SE": {
+              "rect": [
+                37,
+                479,
+                53,
+                75
+              ],
+              "anchor": [
+                26,
+                74
+              ]
+            },
+            "SW": {
+              "rect": [
+                165,
+                479,
+                54,
+                75
+              ],
+              "anchor": [
+                27,
+                74
+              ]
+            },
+            "NW": {
+              "rect": [
+                296,
+                479,
+                48,
+                75
+              ],
+              "anchor": [
+                24,
+                74
+              ]
+            },
+            "NE": {
+              "rect": [
+                423,
+                479,
+                50,
+                75
+              ],
+              "anchor": [
+                25,
+                74
+              ]
+            }
+          },
+          "note": "The complete houses already contain bay windows; this modular piece is available for future buildings."
+        },
+        "street_tree": {
+          "title": "Street tree",
+          "frames": {
+            "SE": {
+              "rect": [
+                33,
+                566,
+                62,
+                75
+              ],
+              "anchor": [
+                31,
+                74
+              ]
+            },
+            "SW": {
+              "rect": [
+                162,
+                566,
+                60,
+                75
+              ],
+              "anchor": [
+                30,
+                74
+              ]
+            },
+            "NW": {
+              "rect": [
+                291,
+                566,
+                58,
+                75
+              ],
+              "anchor": [
+                29,
+                74
+              ]
+            },
+            "NE": {
+              "rect": [
+                418,
+                566,
+                60,
+                75
+              ],
+              "anchor": [
+                30,
+                74
+              ]
+            }
+          }
+        },
+        "hydrant": {
+          "title": "Fire hydrant",
+          "frames": {
+            "SE": {
+              "rect": [
+                51,
+                701,
+                26,
+                40
+              ],
+              "anchor": [
+                13,
+                39
+              ]
+            },
+            "SW": {
+              "rect": [
+                179,
+                701,
+                25,
+                40
+              ],
+              "anchor": [
+                12,
+                39
+              ]
+            },
+            "NW": {
+              "rect": [
+                306,
+                701,
+                28,
+                40
+              ],
+              "anchor": [
+                14,
+                39
+              ]
+            },
+            "NE": {
+              "rect": [
+                435,
+                701,
+                26,
+                40
+              ],
+              "anchor": [
+                13,
+                39
+              ]
+            }
+          }
+        }
+      },
+      "placements": [
+        {
+          "object": "street_tree",
+          "x": 35,
+          "y": 220,
+          "scale": 0.81,
+          "facing": "SE",
+          "surface": false
+        },
+        {
+          "object": "street_tree",
+          "x": 435,
+          "y": 218,
+          "scale": 0.82,
+          "facing": "SW",
+          "surface": false
+        },
+        {
+          "object": "street_tree",
+          "x": 227,
+          "y": 285,
+          "scale": 0.83,
+          "facing": "NE",
+          "surface": false
+        },
+        {
+          "object": "mailbox",
+          "x": 143,
+          "y": 284,
+          "scale": 0.83,
+          "facing": "SW",
+          "surface": false
+        },
+        {
+          "object": "lamp",
+          "x": 304,
+          "y": 263,
+          "scale": 0.88,
+          "facing": "SE",
+          "surface": false
+        },
+        {
+          "object": "hydrant",
+          "x": 374,
+          "y": 246,
+          "scale": 0.83,
+          "facing": "SE",
+          "surface": false
+        }
+      ],
+      "dog": [
+        270,
+        217,
+        0.86
+      ]
+    },
+    "beach": {
+      "title": "Beach",
+      "image": "beach.png",
+      "background": [
+        0,
+        0,
+        480,
+        320
+      ],
+      "objects": {
+        "umbrella": {
+          "title": "Striped umbrella",
+          "frames": {
+            "SE": {
+              "rect": [
+                25,
+                323,
+                77,
+                81
+              ],
+              "anchor": [
+                38,
+                80
+              ]
+            },
+            "SW": {
+              "rect": [
+                153,
+                324,
+                77,
+                80
+              ],
+              "anchor": [
+                38,
+                79
+              ]
+            },
+            "NW": {
+              "rect": [
+                281,
+                321,
+                77,
+                83
+              ],
+              "anchor": [
+                38,
+                82
+              ]
+            },
+            "NE": {
+              "rect": [
+                409,
+                322,
+                77,
+                82
+              ],
+              "anchor": [
+                38,
+                81
+              ]
+            }
+          }
+        },
+        "chair": {
+          "title": "Beach chair",
+          "frames": {
+            "SE": {
+              "rect": [
+                34,
+                416,
+                59,
+                62
+              ],
+              "anchor": [
+                29,
+                61
+              ]
+            },
+            "SW": {
+              "rect": [
+                163,
+                416,
+                58,
+                62
+              ],
+              "anchor": [
+                29,
+                61
+              ]
+            },
+            "NW": {
+              "rect": [
+                290,
+                423,
+                60,
+                55
+              ],
+              "anchor": [
+                30,
+                54
+              ]
+            },
+            "NE": {
+              "rect": [
+                418,
+                424,
+                60,
+                54
+              ],
+              "anchor": [
+                30,
+                53
+              ]
+            }
+          }
+        },
+        "boardwalk": {
+          "title": "Boardwalk",
+          "frames": {
+            "SE": {
+              "rect": [
+                40,
+                490,
+                48,
+                33
+              ],
+              "anchor": [
+                24,
+                32
+              ]
+            },
+            "SW": {
+              "rect": [
+                168,
+                490,
+                47,
+                33
+              ],
+              "anchor": [
+                23,
+                32
+              ]
+            },
+            "NW": {
+              "rect": [
+                296,
+                490,
+                47,
+                33
+              ],
+              "anchor": [
+                23,
+                32
+              ]
+            },
+            "NE": {
+              "rect": [
+                423,
+                490,
+                49,
+                33
+              ],
+              "anchor": [
+                24,
+                32
+              ]
+            }
+          }
+        },
+        "driftwood": {
+          "title": "Driftwood & shells",
+          "frames": {
+            "SE": {
+              "rect": [
+                46,
+                535,
+                35,
+                24
+              ],
+              "anchor": [
+                17,
+                23
+              ]
+            },
+            "SW": {
+              "rect": [
+                174,
+                535,
+                35,
+                24
+              ],
+              "anchor": [
+                17,
+                23
+              ]
+            },
+            "NW": {
+              "rect": [
+                300,
+                535,
+                40,
+                24
+              ],
+              "anchor": [
+                20,
+                23
+              ]
+            },
+            "NE": {
+              "rect": [
+                428,
+                535,
+                40,
+                24
+              ],
+              "anchor": [
+                20,
+                23
+              ]
+            }
+          }
+        },
+        "sandcastle": {
+          "title": "Sandcastle",
+          "frames": {
+            "SE": {
+              "rect": [
+                41,
+                571,
+                45,
+                49
+              ],
+              "anchor": [
+                22,
+                48
+              ]
+            },
+            "SW": {
+              "rect": [
+                170,
+                571,
+                44,
+                49
+              ],
+              "anchor": [
+                22,
+                48
+              ]
+            },
+            "NW": {
+              "rect": [
+                297,
+                571,
+                45,
+                49
+              ],
+              "anchor": [
+                22,
+                48
+              ]
+            },
+            "NE": {
+              "rect": [
+                425,
+                571,
+                46,
+                49
+              ],
+              "anchor": [
+                23,
+                48
+              ]
+            }
+          }
+        }
+      },
+      "placements": [
+        {
+          "object": "umbrella",
+          "x": 129,
+          "y": 213,
+          "scale": 1.05,
+          "facing": "SE",
+          "surface": false
+        },
+        {
+          "object": "chair",
+          "x": 154,
+          "y": 233,
+          "scale": 0.92,
+          "facing": "NE",
+          "surface": false
+        },
+        {
+          "object": "boardwalk",
+          "x": 31,
+          "y": 308,
+          "scale": 0.92,
+          "facing": "SE",
+          "surface": false
+        },
+        {
+          "object": "boardwalk",
+          "x": 53,
+          "y": 297,
+          "scale": 0.92,
+          "facing": "SE",
+          "surface": false
+        },
+        {
+          "object": "boardwalk",
+          "x": 75,
+          "y": 286,
+          "scale": 0.92,
+          "facing": "SE",
+          "surface": false
+        },
+        {
+          "object": "boardwalk",
+          "x": 97,
+          "y": 275,
+          "scale": 0.92,
+          "facing": "SE",
+          "surface": false
+        },
+        {
+          "object": "boardwalk",
+          "x": 119,
+          "y": 264,
+          "scale": 0.92,
+          "facing": "SE",
+          "surface": false
+        },
+        {
+          "object": "sandcastle",
+          "x": 348,
+          "y": 209,
+          "scale": 0.9,
+          "facing": "SE",
+          "surface": false
+        },
+        {
+          "object": "driftwood",
+          "x": 418,
+          "y": 211,
+          "scale": 0.83,
+          "facing": "SW",
+          "surface": false
+        }
+      ],
+      "dog": [
+        262,
+        264,
+        0.88
+      ]
+    },
+    "office": {
+      "title": "Office",
+      "image": "office.png",
+      "background": [
+        0,
+        0,
+        480,
+        320
+      ],
+      "objects": {
+        "desk": {
+          "title": "Work desk",
+          "frames": {
+            "SE": {
+              "rect": [
+                15,
+                320,
+                97,
+                99
+              ],
+              "anchor": [
+                48,
+                98
+              ]
+            },
+            "SW": {
+              "rect": [
+                142,
+                320,
+                99,
+                99
+              ],
+              "anchor": [
+                49,
+                98
+              ]
+            },
+            "NW": {
+              "rect": [
+                269,
+                320,
+                102,
+                99
+              ],
+              "anchor": [
+                51,
+                98
+              ]
+            },
+            "NE": {
+              "rect": [
+                396,
+                320,
+                103,
+                99
+              ],
+              "anchor": [
+                51,
+                98
+              ]
+            }
+          }
+        },
+        "chair": {
+          "title": "Office chair",
+          "frames": {
+            "SE": {
+              "rect": [
+                41,
+                431,
+                46,
+                75
+              ],
+              "anchor": [
+                23,
+                74
+              ]
+            },
+            "SW": {
+              "rect": [
+                169,
+                431,
+                45,
+                75
+              ],
+              "anchor": [
+                22,
+                74
+              ]
+            },
+            "NW": {
+              "rect": [
+                296,
+                431,
+                48,
+                75
+              ],
+              "anchor": [
+                24,
+                74
+              ]
+            },
+            "NE": {
+              "rect": [
+                424,
+                431,
+                48,
+                75
+              ],
+              "anchor": [
+                24,
+                74
+              ]
+            }
+          }
+        },
+        "mug": {
+          "title": "Paw-print mug",
+          "frames": {
+            "SE": {
+              "rect": [
+                55,
+                521,
+                18,
+                15
+              ],
+              "anchor": [
+                9,
+                14
+              ]
+            },
+            "SW": {
+              "rect": [
+                183,
+                521,
+                18,
+                15
+              ],
+              "anchor": [
+                9,
+                14
+              ]
+            },
+            "NW": {
+              "rect": [
+                311,
+                521,
+                18,
+                15
+              ],
+              "anchor": [
+                9,
+                14
+              ]
+            },
+            "NE": {
+              "rect": [
+                439,
+                521,
+                18,
+                15
+              ],
+              "anchor": [
+                9,
+                14
+              ]
+            }
+          }
+        },
+        "lanyard": {
+          "title": "Corgi badge & lanyard",
+          "frames": {
+            "SE": {
+              "rect": [
+                53,
+                548,
+                22,
+                22
+              ],
+              "anchor": [
+                11,
+                21
+              ]
+            },
+            "SW": {
+              "rect": [
+                181,
+                548,
+                22,
+                22
+              ],
+              "anchor": [
+                11,
+                21
+              ]
+            },
+            "NW": {
+              "rect": [
+                308,
+                548,
+                24,
+                22
+              ],
+              "anchor": [
+                12,
+                21
+              ]
+            },
+            "NE": {
+              "rect": [
+                436,
+                548,
+                24,
+                22
+              ],
+              "anchor": [
+                12,
+                21
+              ]
+            }
+          }
+        },
+        "cabinet": {
+          "title": "Snack drawer",
+          "frames": {
+            "SE": {
+              "rect": [
+                37,
+                582,
+                53,
+                67
+              ],
+              "anchor": [
+                26,
+                66
+              ]
+            },
+            "SW": {
+              "rect": [
+                165,
+                582,
+                53,
+                67
+              ],
+              "anchor": [
+                26,
+                66
+              ]
+            },
+            "NW": {
+              "rect": [
+                295,
+                582,
+                50,
+                67
+              ],
+              "anchor": [
+                25,
+                66
+              ]
+            },
+            "NE": {
+              "rect": [
+                423,
+                582,
+                49,
+                67
+              ],
+              "anchor": [
+                24,
+                66
+              ]
+            }
+          }
+        },
+        "mini_desk": {
+          "title": "Zuzu’s mini desk",
+          "frames": {
+            "SE": {
+              "rect": [
+                32,
+                661,
+                64,
+                61
+              ],
+              "anchor": [
+                32,
+                60
+              ]
+            },
+            "SW": {
+              "rect": [
+                160,
+                661,
+                64,
+                61
+              ],
+              "anchor": [
+                32,
+                60
+              ]
+            },
+            "NW": {
+              "rect": [
+                288,
+                664,
+                64,
+                58
+              ],
+              "anchor": [
+                32,
+                57
+              ]
+            },
+            "NE": {
+              "rect": [
+                416,
+                665,
+                64,
+                57
+              ],
+              "anchor": [
+                32,
+                56
+              ]
+            }
+          }
+        }
+      },
+      "placements": [
+        {
+          "object": "desk",
+          "x": 151,
+          "y": 175,
+          "scale": 1.03,
+          "facing": "SW",
+          "surface": false
+        },
+        {
+          "object": "cabinet",
+          "x": 290,
+          "y": 150,
+          "scale": 0.9,
+          "facing": "SE",
+          "surface": false
+        },
+        {
+          "object": "mini_desk",
+          "x": 344,
+          "y": 179,
+          "scale": 0.94,
+          "facing": "SE",
+          "surface": false
+        },
+        {
+          "object": "chair",
+          "x": 183,
+          "y": 200,
+          "scale": 0.91,
+          "facing": "NE",
+          "surface": false
+        },
+        {
+          "object": "mug",
+          "x": 137,
+          "y": 138,
+          "scale": 0.93,
+          "facing": "SW",
+          "surface": true
+        },
+        {
+          "object": "lanyard",
+          "x": 163,
+          "y": 140,
+          "scale": 0.85,
+          "facing": "SE",
+          "surface": true
+        }
+      ],
+      "dog": [
+        270,
+        240,
+        0.87
+      ]
+    },
+    "agility": {
+      "title": "Agility course",
+      "image": "agility.png",
+      "background": [
+        0,
+        0,
+        480,
+        320
+      ],
+      "objects": {
+        "jump": {
+          "title": "Jump",
+          "frames": {
+            "SE": {
+              "rect": [
+                34,
+                320,
+                60,
+                57
+              ],
+              "anchor": [
+                30,
+                56
+              ]
+            },
+            "SW": {
+              "rect": [
+                161,
+                320,
+                61,
+                57
+              ],
+              "anchor": [
+                30,
+                56
+              ]
+            },
+            "NW": {
+              "rect": [
+                289,
+                320,
+                61,
+                57
+              ],
+              "anchor": [
+                30,
+                56
+              ]
+            },
+            "NE": {
+              "rect": [
+                417,
+                320,
+                61,
+                57
+              ],
+              "anchor": [
+                30,
+                56
+              ]
+            }
+          }
+        },
+        "weave": {
+          "title": "Weave poles",
+          "frames": {
+            "SE": {
+              "rect": [
+                36,
+                465,
+                56,
+                58
+              ],
+              "anchor": [
+                28,
+                57
+              ]
+            },
+            "SW": {
+              "rect": [
+                164,
+                465,
+                56,
+                58
+              ],
+              "anchor": [
+                28,
+                57
+              ]
+            },
+            "NW": {
+              "rect": [
+                292,
+                465,
+                55,
+                58
+              ],
+              "anchor": [
+                27,
+                57
+              ]
+            },
+            "NE": {
+              "rect": [
+                419,
+                465,
+                57,
+                58
+              ],
+              "anchor": [
+                28,
+                57
+              ]
+            }
+          }
+        },
+        "tunnel": {
+          "title": "Tunnel",
+          "frames": {
+            "SE": {
+              "rect": [
+                25,
+                389,
+                77,
+                64
+              ],
+              "anchor": [
+                38,
+                63
+              ]
+            },
+            "SW": {
+              "rect": [
+                153,
+                389,
+                78,
+                64
+              ],
+              "anchor": [
+                39,
+                63
+              ]
+            },
+            "NW": {
+              "rect": [
+                281,
+                389,
+                78,
+                64
+              ],
+              "anchor": [
+                39,
+                63
+              ]
+            },
+            "NE": {
+              "rect": [
+                408,
+                389,
+                80,
+                64
+              ],
+              "anchor": [
+                40,
+                63
+              ]
+            }
+          }
+        },
+        "ramp": {
+          "title": "A-frame ramp",
+          "frames": {
+            "SE": {
+              "rect": [
+                26,
+                540,
+                76,
+                62
+              ],
+              "anchor": [
+                38,
+                61
+              ]
+            },
+            "SW": {
+              "rect": [
+                154,
+                539,
+                76,
+                63
+              ],
+              "anchor": [
+                38,
+                62
+              ]
+            },
+            "NW": {
+              "rect": [
+                282,
+                538,
+                76,
+                64
+              ],
+              "anchor": [
+                38,
+                63
+              ]
+            },
+            "NE": {
+              "rect": [
+                410,
+                540,
+                76,
+                62
+              ],
+              "anchor": [
+                38,
+                61
+              ]
+            }
+          }
+        },
+        "hoop": {
+          "title": "Hoop",
+          "frames": {
+            "SE": {
+              "rect": [
+                36,
+                621,
+                56,
+                57
+              ],
+              "anchor": [
+                28,
+                56
+              ]
+            },
+            "SW": {
+              "rect": [
+                164,
+                620,
+                56,
+                58
+              ],
+              "anchor": [
+                28,
+                57
+              ]
+            },
+            "NW": {
+              "rect": [
+                292,
+                621,
+                56,
+                57
+              ],
+              "anchor": [
+                28,
+                56
+              ]
+            },
+            "NE": {
+              "rect": [
+                420,
+                620,
+                56,
+                58
+              ],
+              "anchor": [
+                28,
+                57
+              ]
+            }
+          }
+        }
+      },
+      "placements": [
+        {
+          "object": "jump",
+          "x": 111,
+          "y": 240,
+          "scale": 0.94,
+          "facing": "SW",
+          "surface": false
+        },
+        {
+          "object": "weave",
+          "x": 183,
+          "y": 196,
+          "scale": 0.94,
+          "facing": "SE",
+          "surface": false
+        },
+        {
+          "object": "tunnel",
+          "x": 263,
+          "y": 161,
+          "scale": 0.94,
+          "facing": "NE",
+          "surface": false
+        },
+        {
+          "object": "ramp",
+          "x": 344,
+          "y": 206,
+          "scale": 0.93,
+          "facing": "SW",
+          "surface": false
+        },
+        {
+          "object": "hoop",
+          "x": 393,
+          "y": 265,
+          "scale": 0.93,
+          "facing": "SE",
+          "surface": false
+        }
+      ],
+      "dog": [
+        65,
+        287,
+        0.88
+      ],
+      "course_order": [
+        "jump",
+        "weave",
+        "tunnel",
+        "ramp",
+        "hoop"
+      ]
+    }
+  },
+  "parkProps": {
+    "oak_back": "oak",
+    "maple_right": "maple",
+    "birch_front": "birch",
+    "bush_left": "shrub",
+    "bush_flowering": "shrub",
+    "bush_right": "shrub",
+    "bench": "bench"
+  },
+  "treat": {
+    "image": "treat.png",
+    "frames": {
+      "SE": {
+        "rect": [
+          3,
+          7,
+          30,
+          28
+        ],
+        "anchor": [
+          15,
+          27
+        ]
+      },
+      "SW": {
+        "rect": [
+          39,
+          7,
+          30,
+          28
+        ],
+        "anchor": [
+          15,
+          27
+        ]
+      },
+      "NW": {
+        "rect": [
+          75,
+          7,
+          30,
+          28
+        ],
+        "anchor": [
+          15,
+          27
+        ]
+      },
+      "NE": {
+        "rect": [
+          111,
+          7,
+          30,
+          28
+        ],
+        "anchor": [
+          15,
+          27
+        ]
+      }
+    },
+    "width": 30
+  },
+  "dog": {
+    "image": "zuzu.png",
+    "frames": [
+      [
+        0,
+        0,
+        72,
+        72
+      ],
+      [
+        72,
+        0,
+        72,
+        72
+      ],
+      [
+        144,
+        0,
+        72,
+        72
+      ],
+      [
+        216,
+        0,
+        72,
+        72
+      ]
+    ],
+    "anchor": [
+      36,
+      71
+    ],
+    "scale": 0.8
+  }
+}
