@@ -40,6 +40,8 @@
     #arrange[aria-pressed="true"] { background: var(--navy); color: var(--frame); border-color: var(--navy); }
     #room-view { display: none; }
     #room-view button[aria-pressed="true"] { background: var(--navy); color: var(--frame); }
+    #room-view .place-first { margin-left: 8px; }
+    #room-view button:disabled { opacity: .45; }
 
     /* The scene: the canvas with pills laid over it. */
     .scene { position: relative; max-width: 100%; margin: 0 auto; }
@@ -52,7 +54,8 @@
     @media (pointer: coarse) { #screen { touch-action: none; } }
     #scene-tools { position: absolute; top: 10px; left: 10px; right: 10px; display: none; align-items: center; gap: 8px; pointer-events: none; }
     #scene-tools > * { pointer-events: auto; }
-    #room-select { height: 36px; min-height: 36px; padding: 0 30px 0 12px; border-radius: 18px; font-size: 13px; font-weight: 700; appearance: none; -webkit-appearance: none;
+    /* A select is as wide as its longest option ("Neighborhood walk · log 20,000 steps"); the pill fits its own label instead. */
+    #room-select { field-sizing: content; max-width: 160px; text-overflow: ellipsis; height: 36px; min-height: 36px; padding: 0 30px 0 12px; border-radius: 18px; font-size: 13px; font-weight: 700; appearance: none; -webkit-appearance: none;
       background: var(--frame) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%233c3033' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center; }
     #scene-tools .spacer { flex: 1; }
     #scene-shop, #scene-more { display: none; border-radius: 22px; }
@@ -63,18 +66,6 @@
     #error { color: #a94036; white-space: pre-wrap; } #error:empty { display: none; }
     #recovery { margin: 8px 0; }
     .pose-review-banner { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 10px 0; padding: 10px 12px; border: 1px solid #cfab64; border-radius: 12px; background: #fff1cf; font-size: 13px; }
-
-    /* The action bubble: a dark popover over the thing that was tapped. Its arrow points at it. */
-    #bubble { position: absolute; z-index: 5; left: 0; top: 0; width: max-content; max-width: min(300px, calc(100% - 8px)); padding: 7px 10px 8px; border-radius: 12px;
-      display: flex; flex-direction: column; gap: 5px; background: var(--ink); color: var(--frame); box-shadow: 0 6px 18px #3c303340; }
-    #bubble::after { content: ""; position: absolute; left: var(--arrow-x, 20px); bottom: -7px; margin-left: -7px; border: 7px solid transparent; border-bottom: 0; border-top-color: var(--ink); }
-    #bubble.below::after { bottom: auto; top: -7px; border: 7px solid transparent; border-top: 0; border-bottom-color: var(--ink); }
-    #bubble .bubble-title { font-size: 11px; font-weight: 700; color: #e9dccf; }
-    #bubble .bubble-actions { display: flex; flex-wrap: wrap; gap: 6px; }
-    #bubble button { height: 28px; min-height: 28px; padding: 0 10px; border-radius: 14px; border: 1px solid #8a7a72; background: transparent; color: var(--frame); font-size: 12px; font-weight: 700; }
-    #bubble button:first-child { border: 0; background: var(--frame); color: var(--ink); font-weight: 800; }
-    #bubble button:hover:enabled { background: #5a4a4d; border-color: #8a7a72; }
-    #bubble button:first-child:hover:enabled { background: #f1e7d9; }
 
     /* Cards and the focus panel. */
     .card { border: 1px solid var(--soft); border-radius: 16px; padding: 12px; margin-top: 10px; background: var(--frame); }
@@ -187,10 +178,11 @@
     /* Desktop: room tabs in the header, the room beside a column of cards. */
     @media (min-width: 1000px) {
       main { padding: 20px 28px 28px; }
-      header { padding: 0; margin-bottom: 14px; gap: 12px 16px; flex-wrap: wrap; }
+      header { padding: 0; margin-bottom: 14px; gap: 12px 16px; flex-wrap: nowrap; } header h1 { flex-shrink: 0; }
       h1 { font-size: 24px; letter-spacing: -.4px; }
-      #room-view { display: flex; flex-wrap: wrap; gap: 4px; padding: 4px; margin: 0; border: 1px solid var(--soft); border-radius: 14px; background: var(--frame); }
-      #room-view button { height: 36px; min-height: 36px; padding: 0 14px; border: 0; border-radius: 10px; background: transparent; font-size: 14px; font-weight: 600; }
+      /* One row: when rooms and places outgrow the header, the tab bar scrolls sideways instead of pushing the buttons down. */
+      #room-view { display: flex; flex: 0 1 auto; min-width: 0; overflow-x: auto; scrollbar-width: none; -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); gap: 2px; padding: 4px; margin: 0; border: 1px solid var(--soft); border-radius: 14px; background: var(--frame); }
+      #room-view button { flex-shrink: 0; white-space: nowrap; height: 36px; min-height: 36px; padding: 0 12px; border: 0; border-radius: 10px; background: transparent; font-size: 14px; font-weight: 600; }
       #room-view button[aria-pressed="true"] { background: var(--navy); color: var(--frame); font-weight: 700; }
       #room-view button:hover:enabled { background: #f1e7d9; } #room-view button[aria-pressed="true"]:hover:enabled { background: var(--navy); }
       #coins { font-size: 15px; padding: 8px 16px; border-radius: 22px; }
@@ -247,7 +239,7 @@
       #task-column #activity-row .chip { flex: 1 1 100%; justify-content: space-between; min-height: 30px; height: auto; padding: 4px 8px; white-space: normal; overflow-wrap: anywhere; text-align: left; line-height: 1.15; border-radius: 10px; }
       #activity-more { font-size: 11px; }
     }
-    @media (pointer: coarse) { button, select, input:not([type=range]) { min-height: 44px; } #bubble button { min-height: 44px; } .task .more { width: 44px; } .task .complete { width: 44px; height: 44px; } input, select, textarea { font-size: 16px; } #activity-row .chip { min-height: 44px; } }
+    @media (pointer: coarse) { button, select, input:not([type=range]) { min-height: 44px; } .task .more { width: 44px; } .task .complete { width: 44px; height: 44px; } input, select, textarea { font-size: 16px; } #activity-row .chip { min-height: 44px; } }
   </style>
 </head>
 <body>
@@ -273,7 +265,6 @@
       </div>
       <div id="scene-actions"><button id="fetch" hidden>Play fetch</button><button id="park-home" hidden>Head home</button></div>
       <button id="reset-view" hidden>Reset view</button>
-      <div id="bubble" hidden role="dialog" aria-label="Things to do"></div>
     </div>
     <div id="message" role="status" aria-live="polite">Settling in…</div>
     <div id="error" role="alert"></div>
@@ -351,7 +342,7 @@
     <div id="shop-backdrop" hidden></div>
     <div id="hud" hidden></div>
   </main>
-  <script>globalThis.zucchiniRelease={"version":"82dc67fb8216","updateURL":"release.json","generatedBase":"../assets/art-79eb92c018e8/","audioBase":"../assets/audio-e65c82bd7384/","destinationsBase":"../assets/destinations-cb1d4563e9ef/","atlasParts":7,"atlasLength":5882240,"audioChunks":{"music/room_lofi_01.mp3":14,"sfx/rain_window_loop.mp3":2}};</script>
-<script type="module" src="../releases/82dc67fb8216/main.js"></script>
+  <script>globalThis.zucchiniRelease={"version":"2928cb8ce0e3","updateURL":"release.json","generatedBase":"../assets/art-79eb92c018e8/","audioBase":"../assets/audio-e65c82bd7384/","destinationsBase":"../assets/destinations-cb1d4563e9ef/","atlasParts":7,"atlasLength":5882240,"audioChunks":{"music/room_lofi_01.mp3":14,"sfx/rain_window_loop.mp3":2}};</script>
+<script type="module" src="../releases/2928cb8ce0e3/main.js"></script>
 </body>
 </html>
