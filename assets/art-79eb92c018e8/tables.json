@@ -1,0 +1,4869 @@
+{
+ "weather": {
+  "$comment": [
+   "Local weather and golden hour. The host fetches the current WMO weather_code for the fixed location below and passes the condition to the core.",
+   "No geolocation and nothing about the player is ever sent: only these coordinates and the request fields.",
+   "conditions are in core order (set_weather 0, 1, 2). wmo lists inclusive weather_code ranges per condition; any code not listed is the default condition.",
+   "Sunset is a build-time table (tools/sunset.py, NOAA algorithm) for the fixed location. Golden hour runs from before_minutes ahead of sunset to after_minutes past it.",
+   "visual colours are palette indices drawn in code as a stand-in until art: window and balcony are alpha overlays, streak is the rain line.",
+   "visual.<condition>.outside mixes the background around the house toward that colour; at night it is scaled down to 40%."
+  ],
+  "schema_version": 1,
+  "provider": {
+   "name": "Open-Meteo",
+   "url": "https://api.open-meteo.com/v1/forecast",
+   "licence": "CC BY 4.0",
+   "attribution_text": "Weather: Open-Meteo.com",
+   "attribution_url": "https://open-meteo.com/"
+  },
+  "location": {
+   "latitude": 37.7749,
+   "longitude": -122.4194
+  },
+  "request": {
+   "current": "weather_code"
+  },
+  "refresh_minutes": 60,
+  "default": "cloudy",
+  "conditions": [
+   "sunny",
+   "cloudy",
+   "rain"
+  ],
+  "wmo": {
+   "sunny": [
+    [
+     0,
+     1
+    ]
+   ],
+   "cloudy": [
+    [
+     2,
+     3
+    ],
+    [
+     45,
+     45
+    ],
+    [
+     48,
+     48
+    ]
+   ],
+   "rain": [
+    [
+     51,
+     67
+    ],
+    [
+     80,
+     82
+    ],
+    [
+     95,
+     99
+    ]
+   ]
+  },
+  "golden_hour": {
+   "before_minutes": 15,
+   "after_minutes": 5,
+   "fade_minutes": 4
+  },
+  "visual": {
+   "rain": {
+    "window": {
+     "colour": 28,
+     "alpha": 0.3
+    },
+    "balcony": {
+     "colour": 28,
+     "alpha": 0.1
+    },
+    "drops": {
+     "colour": 12,
+     "alpha": 0.8,
+     "per_1000_px2": 9,
+     "speed_px_s": 5
+    },
+    "puddles": {
+     "colour": 28,
+     "alpha": 0.32,
+     "count": 4,
+     "rx": 11,
+     "ry": 5
+    },
+    "ripples": {
+     "colour": 12,
+     "alpha": 0.85,
+     "period_ms": 1600,
+     "radius": 9
+    },
+    "outside": {
+     "colour": 28,
+     "alpha": 0.45
+    }
+   },
+   "sunny": {
+    "window": {
+     "colour": 12,
+     "alpha": 0.12
+    },
+    "outside": {
+     "colour": 8,
+     "alpha": 0.22
+    }
+   },
+   "golden": {
+    "window": {
+     "colour": 34,
+     "alpha": 0.4
+    },
+    "balcony": {
+     "colour": 34,
+     "alpha": 0.22
+    },
+    "outside": {
+     "colour": 34,
+     "alpha": 0.3
+    }
+   },
+   "cloudy": {
+    "outside": {
+     "colour": 17,
+     "alpha": 0.3
+    }
+   }
+  }
+ },
+ "dreams": {
+  "fade_ms": 600,
+  "interval_ms": [
+   180000,
+   300000
+  ],
+  "items": [
+   {
+    "id": "ball",
+    "icon": "ball"
+   },
+   {
+    "id": "birds",
+    "icon": "birds"
+   },
+   {
+    "id": "treat",
+    "icon": "treat"
+   },
+   {
+    "id": "bone",
+    "icon": "bone"
+   },
+   {
+    "id": "toy",
+    "icon": "toy"
+   }
+  ]
+ },
+ "park": {
+  "grid": {
+   "w": 10,
+   "h": 10
+  },
+  "outing_ms": 300000,
+  "props": [
+   {
+    "id": "oak_back",
+    "kind": "tree",
+    "variant": 0,
+    "x": 1,
+    "y": 1,
+    "w": 1,
+    "h": 1,
+    "blocks": true,
+    "sniff": true,
+    "sniff_x": 1,
+    "sniff_y": 2,
+    "sniff_face": 1,
+    "sx": 240,
+    "sy": 130
+   },
+   {
+    "id": "maple_right",
+    "kind": "tree",
+    "variant": 1,
+    "x": 8,
+    "y": 5,
+    "w": 1,
+    "h": 1,
+    "blocks": true,
+    "sniff": true,
+    "sniff_x": 8,
+    "sniff_y": 6,
+    "sniff_face": 1,
+    "sx": 312,
+    "sy": 262
+   },
+   {
+    "id": "birch_front",
+    "kind": "tree",
+    "variant": 2,
+    "x": 2,
+    "y": 8,
+    "w": 1,
+    "h": 1,
+    "blocks": true,
+    "sniff": true,
+    "sniff_x": 2,
+    "sniff_y": 9,
+    "sniff_face": 1,
+    "sx": 96,
+    "sy": 226
+   },
+   {
+    "id": "bush_left",
+    "kind": "bush",
+    "variant": 0,
+    "x": 2,
+    "y": 3,
+    "w": 1,
+    "h": 1,
+    "blocks": true,
+    "sniff": true,
+    "sniff_x": 2,
+    "sniff_y": 4,
+    "sniff_face": 1,
+    "sx": 216,
+    "sy": 166
+   },
+   {
+    "id": "bush_flowering",
+    "kind": "bush",
+    "variant": 1,
+    "x": 6,
+    "y": 6,
+    "w": 1,
+    "h": 1,
+    "blocks": true,
+    "sniff": true,
+    "sniff_x": 6,
+    "sniff_y": 7,
+    "sniff_face": 1,
+    "sx": 240,
+    "sy": 250
+   },
+   {
+    "id": "bush_right",
+    "kind": "bush",
+    "variant": 0,
+    "x": 9,
+    "y": 3,
+    "w": 1,
+    "h": 1,
+    "blocks": true,
+    "sniff": true,
+    "sniff_x": 9,
+    "sniff_y": 4,
+    "sniff_face": 1,
+    "sx": 384,
+    "sy": 250
+   },
+   {
+    "id": "bench",
+    "kind": "bench",
+    "variant": 0,
+    "x": 3,
+    "y": 1,
+    "w": 2,
+    "h": 1,
+    "blocks": true,
+    "sniff": false,
+    "sniff_x": -1,
+    "sniff_y": -1,
+    "sniff_face": 0,
+    "sx": 300,
+    "sy": 160
+   }
+  ],
+  "pond": [
+   [
+    6,
+    1
+   ],
+   [
+    7,
+    1
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    7,
+    2
+   ],
+   [
+    8,
+    2
+   ],
+   [
+    7,
+    3
+   ]
+  ],
+  "path": [
+   [
+    0,
+    6
+   ],
+   [
+    1,
+    6
+   ],
+   [
+    2,
+    6
+   ],
+   [
+    3,
+    6
+   ],
+   [
+    4,
+    6
+   ],
+   [
+    4,
+    5
+   ],
+   [
+    4,
+    4
+   ],
+   [
+    4,
+    3
+   ],
+   [
+    4,
+    2
+   ],
+   [
+    5,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    7,
+    4
+   ]
+  ]
+ },
+ "content_hash": "99DC861C",
+ "daynight": {
+  "$comment": [
+   "Local-clock day and night. Colours are palette indices (null = the home's own background colour).",
+   "Phases start at their time and run until the next start (the last wraps past midnight); neighbours cross-fade over blend_minutes centred on the boundary.",
+   "window picks the sky variant drawn in glass; balcony and room are alpha overlays; lamps is the glow strength 0-1."
+  ],
+  "schema_version": 1,
+  "blend_minutes": 40,
+  "phases": [
+   {
+    "id": "dawn",
+    "start": "06:00",
+    "window": "dusk",
+    "outside": 18,
+    "balcony": {
+     "colour": 24,
+     "alpha": 0.08
+    },
+    "room": {
+     "colour": 8,
+     "alpha": 0.02
+    },
+    "lamps": 0.3
+   },
+   {
+    "id": "day",
+    "start": "07:30",
+    "window": "day",
+    "outside": null,
+    "balcony": {
+     "colour": 21,
+     "alpha": 0
+    },
+    "room": {
+     "colour": 8,
+     "alpha": 0
+    },
+    "lamps": 0
+   },
+   {
+    "id": "dusk",
+    "start": "17:30",
+    "window": "dusk",
+    "outside": 4,
+    "balcony": {
+     "colour": 21,
+     "alpha": 0.18
+    },
+    "room": {
+     "colour": 7,
+     "alpha": 0.04
+    },
+    "lamps": 1
+   },
+   {
+    "id": "night",
+    "start": "19:30",
+    "window": "night",
+    "outside": 28,
+    "balcony": {
+     "colour": 21,
+     "alpha": 0.34
+    },
+    "room": {
+     "colour": 7,
+     "alpha": 0.05
+    },
+    "lamps": 1
+   }
+  ],
+  "string_lights": {
+   "items": [
+    "balcony_string_lights"
+   ]
+  }
+ },
+ "render_scale": 2.5,
+ "canvas": {
+  "w": 1200,
+  "h": 800
+ },
+ "focus_minutes": 25,
+ "focus_reward": 3,
+ "task_reward": 1,
+ "task_types": [
+  {
+   "id": "custom",
+   "title": "Small task",
+   "reward": 1
+  },
+  {
+   "id": "run",
+   "title": "Run",
+   "reward": 10
+  },
+  {
+   "id": "pickleball_tennis",
+   "title": "Pickleball/Tennis",
+   "reward": 5
+  },
+  {
+   "id": "gym",
+   "title": "Gym",
+   "reward": 15
+  },
+  {
+   "id": "office_day",
+   "title": "Office day",
+   "reward": 5
+  },
+  {
+   "id": "steps_20k",
+   "title": "20,000 steps",
+   "reward": 10
+  },
+  {
+   "id": "clean",
+   "title": "Clean",
+   "reward": 3
+  },
+  {
+   "id": "saw_zuzu",
+   "title": "Saw Zuzu",
+   "reward": 3
+  },
+  {
+   "id": "laundry",
+   "title": "Laundry",
+   "reward": 2
+  },
+  {
+   "id": "stretch",
+   "title": "Stretch",
+   "reward": 2
+  },
+  {
+   "id": "meditate",
+   "title": "Meditate",
+   "reward": 2
+  },
+  {
+   "id": "self_care",
+   "title": "Self-care",
+   "reward": 2
+  }
+ ],
+ "unlocks": [
+  {
+   "id": "park_outing",
+   "title": "Park outing",
+   "activity": 1,
+   "dreaded": false,
+   "scene": 1,
+   "revealed": true,
+   "grows": [
+    {
+     "counter": "uses",
+     "at": 3,
+     "title": "Pond with ducks"
+    },
+    {
+     "counter": "uses",
+     "at": 6,
+     "title": "A bench dog"
+    },
+    {
+     "counter": "uses",
+     "at": 10,
+     "title": "Fireflies on evening outings"
+    }
+   ]
+  },
+  {
+   "id": "playdate",
+   "title": "Playdate",
+   "activity": 2,
+   "dreaded": false,
+   "scene": 0,
+   "revealed": false,
+   "grows": [
+    {
+     "counter": "completions",
+     "at": 3,
+     "title": "A friend leaves a toy"
+    },
+    {
+     "counter": "completions",
+     "at": 5,
+     "title": "They nap together"
+    }
+   ]
+  },
+  {
+   "id": "obstacle_course",
+   "title": "Obstacle course",
+   "activity": 3,
+   "dreaded": false,
+   "scene": 0,
+   "revealed": false,
+   "grows": [
+    {
+     "counter": "completions",
+     "at": 2,
+     "title": "A second obstacle"
+    },
+    {
+     "counter": "completions",
+     "at": 3,
+     "title": "A third obstacle"
+    },
+    {
+     "counter": "completions",
+     "at": 4,
+     "title": "A fourth obstacle"
+    },
+    {
+     "counter": "completions",
+     "at": 5,
+     "title": "A fifth obstacle"
+    }
+   ]
+  },
+  {
+   "id": "welcome_home",
+   "title": "Big welcome home",
+   "activity": 4,
+   "dreaded": false,
+   "scene": 0,
+   "revealed": false,
+   "grows": [
+    {
+     "counter": "completions",
+     "at": 2,
+     "title": "Her mini desk"
+    },
+    {
+     "counter": "completions",
+     "at": 4,
+     "title": "A little chair"
+    },
+    {
+     "counter": "completions",
+     "at": 6,
+     "title": "A mug"
+    },
+    {
+     "counter": "completions",
+     "at": 8,
+     "title": "A lanyard"
+    },
+    {
+     "counter": "completions",
+     "at": 10,
+     "title": "A badge with her photo"
+    }
+   ]
+  },
+  {
+   "id": "robot_vacuum",
+   "title": "Robot vacuum visit",
+   "activity": 6,
+   "dreaded": false,
+   "scene": 0,
+   "revealed": false,
+   "grows": [
+    {
+     "counter": "completions",
+     "at": 5,
+     "title": "She stops barking"
+    },
+    {
+     "counter": "completions",
+     "at": 10,
+     "title": "She rides it"
+    }
+   ]
+  },
+  {
+   "id": "laundry_pile",
+   "title": "Warm laundry pile",
+   "activity": 8,
+   "dreaded": false,
+   "scene": 0,
+   "revealed": false,
+   "grows": [
+    {
+     "counter": "completions",
+     "at": 5,
+     "title": "The sock thief visits more"
+    }
+   ]
+  },
+  {
+   "id": "dog_yoga",
+   "title": "Dog yoga",
+   "activity": 9,
+   "dreaded": false,
+   "scene": 0,
+   "revealed": false,
+   "grows": [
+    {
+     "counter": "completions",
+     "at": 3,
+     "title": "A new pose"
+    },
+    {
+     "counter": "completions",
+     "at": 6,
+     "title": "Another new pose"
+    },
+    {
+     "counter": "completions",
+     "at": 9,
+     "title": "A third new pose"
+    }
+   ]
+  },
+  {
+   "id": "breathe_together",
+   "title": "Breathe together",
+   "activity": 10,
+   "dreaded": false,
+   "scene": 0,
+   "revealed": false,
+   "grows": []
+  },
+  {
+   "id": "spa_day",
+   "title": "Spa day",
+   "activity": 11,
+   "dreaded": false,
+   "scene": 0,
+   "revealed": false,
+   "grows": []
+  },
+  {
+   "id": "photo_frame",
+   "title": "Photo wall frame",
+   "activity": 7,
+   "dreaded": false,
+   "scene": 0,
+   "revealed": false,
+   "grows": []
+  },
+  {
+   "id": "neighborhood_walk",
+   "title": "Neighborhood walk",
+   "activity": 5,
+   "dreaded": false,
+   "scene": 0,
+   "revealed": false,
+   "grows": [
+    {
+     "counter": "completions",
+     "at": 3,
+     "title": "Neighbors wave"
+    },
+    {
+     "counter": "completions",
+     "at": 6,
+     "title": "A cat in a window"
+    },
+    {
+     "counter": "completions",
+     "at": 10,
+     "title": "A regular dog friend"
+    }
+   ]
+  },
+  {
+   "id": "balcony_frog",
+   "title": "Balcony frog",
+   "activity": -1,
+   "dreaded": true,
+   "scene": 0,
+   "revealed": false,
+   "grows": [
+    {
+     "counter": "completions",
+     "at": 3,
+     "title": "Frog figurines on a shelf"
+    }
+   ]
+  }
+ ],
+ "pinned_default": [
+  1,
+  2,
+  3,
+  4,
+  5
+ ],
+ "pinned_max": 6,
+ "viewport": {
+  "w": 480,
+  "h": 320
+ },
+ "floor": {
+  "w": 12,
+  "h": 13,
+  "tile_w": 48,
+  "tile_h": 24,
+  "origin": [
+   240,
+   94
+  ],
+  "wall_height": 84
+ },
+ "spawn": [
+  4.5,
+  6.5
+ ],
+ "facings": [
+  "NE",
+  "SE",
+  "NW",
+  "SW"
+ ],
+ "clips": [
+  {
+   "name": "idle",
+   "frames": 4,
+   "loop": true,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "idle_back",
+   "frames": 1,
+   "loop": true,
+   "stored": [
+    "NE"
+   ]
+  },
+  {
+   "name": "walk",
+   "frames": 6,
+   "loop": true,
+   "stored": [
+    "NE",
+    "SE"
+   ]
+  },
+  {
+   "name": "sleep",
+   "frames": 4,
+   "loop": true,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "couch_nap",
+   "frames": 4,
+   "loop": true,
+   "stored": [
+    "NE",
+    "SE",
+    "NW",
+    "SW"
+   ]
+  },
+  {
+   "name": "couch_enter",
+   "frames": 2,
+   "loop": false,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "couch_exit",
+   "frames": 2,
+   "loop": false,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "sit",
+   "frames": 4,
+   "loop": false,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "sniff",
+   "frames": 4,
+   "loop": true,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "wake",
+   "frames": 4,
+   "loop": false,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "drink",
+   "frames": 4,
+   "loop": true,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "happy",
+   "frames": 4,
+   "loop": false,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "run",
+   "frames": 4,
+   "loop": true,
+   "stored": [
+    "NE",
+    "SE"
+   ]
+  },
+  {
+   "name": "eat",
+   "frames": 4,
+   "loop": true,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "fetch",
+   "frames": 4,
+   "loop": true,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "sniff_plant",
+   "frames": 4,
+   "loop": true,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "watch_tv",
+   "frames": 4,
+   "loop": false,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "pick_toy",
+   "frames": 4,
+   "loop": false,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "deluxe_sleep",
+   "frames": 4,
+   "loop": true,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "bath_time",
+   "frames": 4,
+   "loop": true,
+   "stored": [
+    "NE",
+    "SE",
+    "NW",
+    "SW"
+   ]
+  },
+  {
+   "name": "window_watch",
+   "frames": 4,
+   "loop": false,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "outdoor_lounge",
+   "frames": 4,
+   "loop": true,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "treat_reaction",
+   "frames": 4,
+   "loop": false,
+   "stored": [
+    "SE"
+   ],
+   "hop": {
+    "height_px": 10,
+    "period_ms": 450
+   }
+  },
+  {
+   "name": "sneeze",
+   "frames": 4,
+   "loop": false,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "listen",
+   "frames": 4,
+   "loop": false,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "sploot",
+   "frames": 4,
+   "loop": true,
+   "stored": [
+    "NE",
+    "SE"
+   ]
+  },
+  {
+   "name": "sploot_enter",
+   "frames": 4,
+   "loop": false,
+   "stored": [
+    "NE",
+    "SE"
+   ]
+  },
+  {
+   "name": "sploot_exit",
+   "frames": 4,
+   "loop": false,
+   "stored": [
+    "NE",
+    "SE"
+   ]
+  },
+  {
+   "name": "stairs_up",
+   "frames": 6,
+   "loop": true,
+   "stored": [
+    "NE",
+    "SE"
+   ]
+  },
+  {
+   "name": "stairs_down",
+   "frames": 6,
+   "loop": true,
+   "stored": [
+    "NE",
+    "SE"
+   ]
+  },
+  {
+   "name": "groom_lean",
+   "frames": 4,
+   "loop": false,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "boof",
+   "frames": 4,
+   "loop": false,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "potty_circle",
+   "frames": 6,
+   "loop": true,
+   "stored": [
+    "NE",
+    "SE"
+   ]
+  },
+  {
+   "name": "potty_squat",
+   "frames": 4,
+   "loop": false,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "grass_kick",
+   "frames": 4,
+   "loop": false,
+   "stored": [
+    "SE"
+   ]
+  },
+  {
+   "name": "lie_listen",
+   "frames": 4,
+   "loop": false,
+   "stored": [
+    "SE"
+   ]
+  }
+ ],
+ "fixtures": [
+  {
+   "id": "kitchenette",
+   "x": 5,
+   "y": 0,
+   "w": 3,
+   "h": 1,
+   "layer": 1,
+   "blocks": true,
+   "sprite_w": 96,
+   "sprite_h": 108,
+   "anchor_x": 384,
+   "anchor_y": 202,
+   "room": 0
+  },
+  {
+   "id": "food_bowl",
+   "x": 0,
+   "y": 2,
+   "w": 1,
+   "h": 1,
+   "layer": 1,
+   "blocks": true,
+   "sprite_w": 48,
+   "sprite_h": 33,
+   "anchor_x": 192,
+   "anchor_y": 142,
+   "room": 0
+  },
+  {
+   "id": "water_bowl",
+   "x": 0,
+   "y": 7,
+   "w": 1,
+   "h": 1,
+   "layer": 1,
+   "blocks": true,
+   "sprite_w": 48,
+   "sprite_h": 33,
+   "anchor_x": 72,
+   "anchor_y": 202,
+   "room": 0
+  },
+  {
+   "id": "dog_bed",
+   "x": 5,
+   "y": 1,
+   "w": 2,
+   "h": 2,
+   "layer": 0,
+   "blocks": false,
+   "sprite_w": 96,
+   "sprite_h": 60,
+   "anchor_x": 336,
+   "anchor_y": 214,
+   "room": 0
+  },
+  {
+   "id": "front_door",
+   "x": 0,
+   "y": 4,
+   "w": 1,
+   "h": 2,
+   "layer": 2,
+   "blocks": false,
+   "sprite_w": 44,
+   "sprite_h": 92,
+   "anchor_x": 126,
+   "anchor_y": 160,
+   "room": 0
+  },
+  {
+   "id": "window",
+   "x": 0,
+   "y": 1,
+   "w": 1,
+   "h": 2,
+   "layer": 2,
+   "blocks": false,
+   "sprite_w": 56,
+   "sprite_h": 71,
+   "anchor_x": 200,
+   "anchor_y": 110,
+   "room": 0
+  },
+  {
+   "id": "bedroom_basic_bed",
+   "x": 9,
+   "y": 5,
+   "w": 3,
+   "h": 3,
+   "layer": 1,
+   "blocks": true,
+   "sprite_w": 144,
+   "sprite_h": 100,
+   "anchor_x": 336,
+   "anchor_y": 334,
+   "room": 1
+  },
+  {
+   "id": "bedside_table",
+   "x": 10,
+   "y": 4,
+   "w": 1,
+   "h": 1,
+   "layer": 1,
+   "blocks": true,
+   "sprite_w": 48,
+   "sprite_h": 49,
+   "anchor_x": 384,
+   "anchor_y": 286,
+   "room": 1
+  },
+  {
+   "id": "bathroom_sink",
+   "x": 8,
+   "y": 0,
+   "w": 2,
+   "h": 1,
+   "layer": 1,
+   "blocks": true,
+   "sprite_w": 72,
+   "sprite_h": 81,
+   "anchor_x": 444,
+   "anchor_y": 226,
+   "room": 2
+  },
+  {
+   "id": "toilet",
+   "x": 11,
+   "y": 3,
+   "w": 1,
+   "h": 1,
+   "layer": 1,
+   "blocks": true,
+   "sprite_w": 48,
+   "sprite_h": 52,
+   "anchor_x": 432,
+   "anchor_y": 286,
+   "room": 2
+  },
+  {
+   "id": "balcony_planter",
+   "x": 0,
+   "y": 11,
+   "w": 1,
+   "h": 2,
+   "layer": 1,
+   "blocks": true,
+   "sprite_w": 72,
+   "sprite_h": 66,
+   "anchor_x": -36,
+   "anchor_y": 262,
+   "room": 3
+  }
+ ],
+ "placements": [
+  {
+   "id": "left_wall_couch",
+   "x": 2,
+   "y": 4,
+   "w": 3,
+   "h": 1,
+   "layer": 1,
+   "blocks": true,
+   "sprite_w": 96,
+   "sprite_h": 81,
+   "anchor_x": 216,
+   "anchor_y": 214,
+   "room": 0,
+   "categories": [
+    "wall_left"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 0
+  },
+  {
+   "id": "play_spot",
+   "x": 3,
+   "y": 8,
+   "w": 1,
+   "h": 1,
+   "layer": 1,
+   "blocks": false,
+   "sprite_w": 48,
+   "sprite_h": 36,
+   "anchor_x": 120,
+   "anchor_y": 250,
+   "room": 0,
+   "categories": [
+    "floor_open"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": false,
+   "cross_rooms": false,
+   "item": 1
+  },
+  {
+   "id": "cozy_corner",
+   "x": 6,
+   "y": 7,
+   "w": 1,
+   "h": 1,
+   "layer": 1,
+   "blocks": false,
+   "sprite_w": 48,
+   "sprite_h": 72,
+   "anchor_x": 216,
+   "anchor_y": 274,
+   "room": 0,
+   "categories": [
+    "floor_corner"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": -1
+  },
+  {
+   "id": "rug_underlay",
+   "x": 3,
+   "y": 3,
+   "w": 2,
+   "h": 2,
+   "layer": 0,
+   "blocks": false,
+   "sprite_w": 96,
+   "sprite_h": 49,
+   "anchor_x": 240,
+   "anchor_y": 214,
+   "room": 0,
+   "categories": [
+    "rug"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": -1
+  },
+  {
+   "id": "centre_table",
+   "x": 3,
+   "y": 2,
+   "w": 1,
+   "h": 2,
+   "layer": 1,
+   "blocks": true,
+   "sprite_w": 72,
+   "sprite_h": 64,
+   "anchor_x": 252,
+   "anchor_y": 190,
+   "room": 0,
+   "categories": [
+    "table"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 8
+  },
+  {
+   "id": "media_wall",
+   "x": 1,
+   "y": 0,
+   "w": 2,
+   "h": 1,
+   "layer": 1,
+   "blocks": true,
+   "sprite_w": 72,
+   "sprite_h": 80,
+   "anchor_x": 276,
+   "anchor_y": 142,
+   "room": 0,
+   "categories": [
+    "media"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 13
+  },
+  {
+   "id": "botanical_wall",
+   "x": 1,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "layer": 2,
+   "blocks": false,
+   "sprite_w": 36,
+   "sprite_h": 42,
+   "anchor_x": 264,
+   "anchor_y": 130,
+   "room": 0,
+   "categories": [
+    "painting_a"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": {
+    "wall": "y",
+    "plane": 0,
+    "span": [
+     1.35,
+     2.65
+    ],
+    "bottom_px": 46,
+    "top_px": 82
+   },
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 5
+  },
+  {
+   "id": "abstract_wall",
+   "x": 3,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "layer": 2,
+   "blocks": false,
+   "sprite_w": 36,
+   "sprite_h": 42,
+   "anchor_x": 312,
+   "anchor_y": 154,
+   "room": 0,
+   "categories": [
+    "painting_b"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": {
+    "wall": "y",
+    "plane": 0,
+    "span": [
+     3.15,
+     4.45
+    ],
+    "bottom_px": 34,
+    "top_px": 70
+   },
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 24
+  },
+  {
+   "id": "landscape_wall",
+   "x": 0,
+   "y": 4,
+   "w": 1,
+   "h": 1,
+   "layer": 2,
+   "blocks": false,
+   "sprite_w": 44,
+   "sprite_h": 42,
+   "anchor_x": 144,
+   "anchor_y": 166,
+   "room": 0,
+   "categories": [
+    "painting_c"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": {
+    "wall": "x",
+    "plane": 0,
+    "span": [
+     8.6,
+     9.95
+    ],
+    "bottom_px": 56,
+    "top_px": 84
+   },
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 25
+  },
+  {
+   "id": "portrait_wall",
+   "x": 0,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "layer": 2,
+   "blocks": false,
+   "sprite_w": 36,
+   "sprite_h": 42,
+   "anchor_x": 240,
+   "anchor_y": 118,
+   "room": 0,
+   "categories": [
+    "painting_d"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": {
+    "wall": "y",
+    "plane": 0,
+    "span": [
+     0.1,
+     1.2
+    ],
+    "bottom_px": 40,
+    "top_px": 74
+   },
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 26
+  },
+  {
+   "id": "window_curtains",
+   "x": 0,
+   "y": 1,
+   "w": 1,
+   "h": 2,
+   "layer": 2,
+   "blocks": false,
+   "sprite_w": 72,
+   "sprite_h": 70,
+   "anchor_x": 198,
+   "anchor_y": 106,
+   "room": 0,
+   "categories": [
+    "curtains"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": false,
+   "cross_rooms": false,
+   "item": 7
+  },
+  {
+   "id": "kitchen_upgrade",
+   "x": 5,
+   "y": 0,
+   "w": 3,
+   "h": 1,
+   "layer": 1,
+   "blocks": false,
+   "sprite_w": 96,
+   "sprite_h": 108,
+   "anchor_x": 384,
+   "anchor_y": 202,
+   "room": 0,
+   "categories": [
+    "kitchenette"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": false,
+   "cross_rooms": false,
+   "item": 14
+  },
+  {
+   "id": "bookshelf",
+   "x": 3,
+   "y": 0,
+   "w": 2,
+   "h": 1,
+   "layer": 1,
+   "blocks": false,
+   "sprite_w": 72,
+   "sprite_h": 80,
+   "anchor_x": 324,
+   "anchor_y": 166,
+   "room": 0,
+   "categories": [
+    "bookshelf"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": -1
+  },
+  {
+   "id": "piano",
+   "x": 2,
+   "y": 0,
+   "w": 3,
+   "h": 1,
+   "layer": 1,
+   "blocks": false,
+   "sprite_w": 96,
+   "sprite_h": 81,
+   "anchor_x": 312,
+   "anchor_y": 166,
+   "room": 0,
+   "categories": [
+    "piano"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": -1
+  },
+  {
+   "id": "fireplace",
+   "x": 0,
+   "y": 7,
+   "w": 1,
+   "h": 3,
+   "layer": 1,
+   "blocks": false,
+   "sprite_w": 96,
+   "sprite_h": 81,
+   "anchor_x": 48,
+   "anchor_y": 226,
+   "room": 0,
+   "categories": [
+    "fireplace"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": -1
+  },
+  {
+   "id": "plant_small",
+   "x": 6,
+   "y": 7,
+   "w": 2,
+   "h": 2,
+   "layer": 1,
+   "blocks": false,
+   "sprite_w": 48,
+   "sprite_h": 72,
+   "anchor_x": 216,
+   "anchor_y": 252,
+   "room": 0,
+   "categories": [
+    "plant_small"
+   ],
+   "expanded": false,
+   "mount": {
+    "on": "dining_table",
+    "dx": 0,
+    "dy": -46
+   },
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": false,
+   "cross_rooms": false,
+   "item": 4
+  },
+  {
+   "id": "plant_large",
+   "x": 0,
+   "y": 6,
+   "w": 1,
+   "h": 1,
+   "layer": 1,
+   "blocks": true,
+   "sprite_w": 48,
+   "sprite_h": 72,
+   "anchor_x": 96,
+   "anchor_y": 190,
+   "room": 0,
+   "categories": [
+    "plant_large"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 10
+  },
+  {
+   "id": "floor_lamp",
+   "x": 5,
+   "y": 7,
+   "w": 1,
+   "h": 1,
+   "layer": 1,
+   "blocks": false,
+   "sprite_w": 48,
+   "sprite_h": 72,
+   "anchor_x": 192,
+   "anchor_y": 262,
+   "room": 0,
+   "categories": [
+    "floor_lamp"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": true,
+   "item": 6
+  },
+  {
+   "id": "toy_basket",
+   "x": 3,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "layer": 1,
+   "blocks": true,
+   "sprite_w": 48,
+   "sprite_h": 72,
+   "anchor_x": 312,
+   "anchor_y": 154,
+   "room": 0,
+   "categories": [
+    "toy_basket"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 11
+  },
+  {
+   "id": "dining_table",
+   "x": 6,
+   "y": 7,
+   "w": 2,
+   "h": 2,
+   "layer": 1,
+   "blocks": true,
+   "sprite_w": 96,
+   "sprite_h": 76,
+   "anchor_x": 216,
+   "anchor_y": 298,
+   "room": 0,
+   "categories": [
+    "dining_table"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 15
+  },
+  {
+   "id": "rug_large",
+   "x": 2,
+   "y": 2,
+   "w": 2,
+   "h": 2,
+   "layer": 0,
+   "blocks": false,
+   "sprite_w": 96,
+   "sprite_h": 49,
+   "anchor_x": 240,
+   "anchor_y": 190,
+   "room": 0,
+   "categories": [
+    "rug_large"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": true,
+   "item": 9
+  },
+  {
+   "id": "gallery_wall",
+   "x": 0,
+   "y": 6,
+   "w": 1,
+   "h": 1,
+   "layer": 2,
+   "blocks": false,
+   "sprite_w": 36,
+   "sprite_h": 42,
+   "anchor_x": 96,
+   "anchor_y": 190,
+   "room": 0,
+   "categories": [
+    "gallery_wall"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": {
+    "wall": "x",
+    "plane": 0,
+    "span": [
+     7.45,
+     8.45
+    ],
+    "bottom_px": 22,
+    "top_px": 50
+   },
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 17
+  },
+  {
+   "id": "seasonal_set",
+   "x": 0,
+   "y": 4,
+   "w": 1,
+   "h": 1,
+   "layer": 2,
+   "blocks": false,
+   "sprite_w": 36,
+   "sprite_h": 42,
+   "anchor_x": 144,
+   "anchor_y": 166,
+   "room": 0,
+   "categories": [
+    "seasonal_set"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": {
+    "wall": "x",
+    "plane": 0,
+    "span": [
+     8.7,
+     9.7
+    ],
+    "bottom_px": 22,
+    "top_px": 50
+   },
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 19
+  },
+  {
+   "id": "bay_window",
+   "x": 0,
+   "y": 1,
+   "w": 1,
+   "h": 2,
+   "layer": 2,
+   "blocks": false,
+   "sprite_w": 72,
+   "sprite_h": 70,
+   "anchor_x": 198,
+   "anchor_y": 106,
+   "room": 0,
+   "categories": [
+    "window"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": false,
+   "cross_rooms": false,
+   "item": 21
+  },
+  {
+   "id": "kitchen_shelves",
+   "x": 5,
+   "y": 0,
+   "w": 3,
+   "h": 1,
+   "layer": 2,
+   "blocks": false,
+   "sprite_w": 72,
+   "sprite_h": 48,
+   "anchor_x": 384,
+   "anchor_y": 202,
+   "room": 0,
+   "categories": [
+    "kitchen_shelves"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": {
+    "wall": "y",
+    "plane": 0,
+    "span": [
+     5.1,
+     7.9
+    ],
+    "bottom_px": 62,
+    "top_px": 82
+   },
+   "rest_split": null,
+   "movable": false,
+   "cross_rooms": false,
+   "item": 29
+  },
+  {
+   "id": "photo_couple_wall",
+   "x": 0,
+   "y": 7,
+   "w": 1,
+   "h": 2,
+   "layer": 2,
+   "blocks": false,
+   "sprite_w": 40,
+   "sprite_h": 32,
+   "anchor_x": 60,
+   "anchor_y": 214,
+   "room": 0,
+   "categories": [
+    "photo_couple"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": {
+    "wall": "x",
+    "plane": 0,
+    "span": [
+     7.0,
+     8.45
+    ],
+    "bottom_px": 56,
+    "top_px": 84
+   },
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 30
+  },
+  {
+   "id": "photo_him_wall",
+   "x": 0,
+   "y": 8,
+   "w": 1,
+   "h": 2,
+   "layer": 2,
+   "blocks": false,
+   "sprite_w": 24,
+   "sprite_h": 30,
+   "anchor_x": 36,
+   "anchor_y": 226,
+   "room": 0,
+   "categories": [
+    "photo_him"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": {
+    "wall": "x",
+    "plane": 0,
+    "span": [
+     6.1,
+     6.9
+    ],
+    "bottom_px": 56,
+    "top_px": 84
+   },
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 32
+  },
+  {
+   "id": "photo_her_wall",
+   "x": 4,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "layer": 2,
+   "blocks": false,
+   "sprite_w": 24,
+   "sprite_h": 30,
+   "anchor_x": 336,
+   "anchor_y": 166,
+   "room": 0,
+   "categories": [
+    "photo_her"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": {
+    "wall": "x",
+    "plane": 0,
+    "span": [
+     3.1,
+     3.95
+    ],
+    "bottom_px": 36,
+    "top_px": 62
+   },
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 31
+  },
+  {
+   "id": "living_record_player",
+   "x": 6,
+   "y": 4,
+   "w": 1,
+   "h": 1,
+   "layer": 1,
+   "blocks": true,
+   "sprite_w": 48,
+   "sprite_h": 54,
+   "anchor_x": 288,
+   "anchor_y": 238,
+   "room": 0,
+   "categories": [
+    "record_player"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 54
+  },
+  {
+   "id": "kitchen_treat_jar",
+   "x": 3,
+   "y": 2,
+   "w": 1,
+   "h": 2,
+   "layer": 1,
+   "blocks": false,
+   "sprite_w": 14,
+   "sprite_h": 18,
+   "anchor_x": 252,
+   "anchor_y": 164,
+   "room": 0,
+   "categories": [
+    "treat_jar"
+   ],
+   "expanded": false,
+   "mount": {
+    "on": "centre_table",
+    "dx": 0,
+    "dy": -26
+   },
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": false,
+   "cross_rooms": false,
+   "item": 52
+  },
+  {
+   "id": "living_leash",
+   "x": 0,
+   "y": 7,
+   "w": 1,
+   "h": 1,
+   "layer": 2,
+   "blocks": false,
+   "sprite_w": 14,
+   "sprite_h": 22,
+   "anchor_x": 72,
+   "anchor_y": 202,
+   "room": 0,
+   "categories": [
+    "leash_hook"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": {
+    "wall": "x",
+    "plane": 0,
+    "span": [
+     7.0,
+     7.4
+    ],
+    "bottom_px": 30,
+    "top_px": 52
+   },
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 53
+  },
+  {
+   "id": "bedroom_upgrade",
+   "x": 9,
+   "y": 5,
+   "w": 3,
+   "h": 3,
+   "layer": 1,
+   "blocks": false,
+   "sprite_w": 144,
+   "sprite_h": 100,
+   "anchor_x": 336,
+   "anchor_y": 334,
+   "room": 1,
+   "categories": [
+    "bed"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": false,
+   "cross_rooms": false,
+   "item": 33
+  },
+  {
+   "id": "bedroom_dresser",
+   "x": 10,
+   "y": 8,
+   "w": 2,
+   "h": 1,
+   "layer": 1,
+   "blocks": false,
+   "sprite_w": 72,
+   "sprite_h": 66,
+   "anchor_x": 300,
+   "anchor_y": 346,
+   "room": 1,
+   "categories": [
+    "dresser"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": -1
+  },
+  {
+   "id": "bedroom_mirror",
+   "x": 10,
+   "y": 8,
+   "w": 2,
+   "h": 1,
+   "layer": 1,
+   "blocks": false,
+   "sprite_w": 24,
+   "sprite_h": 30,
+   "anchor_x": 290,
+   "anchor_y": 306,
+   "room": 1,
+   "categories": [
+    "dresser_mirror"
+   ],
+   "expanded": false,
+   "mount": {
+    "on": "bedroom_dresser",
+    "dx": -10,
+    "dy": -40
+   },
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": false,
+   "cross_rooms": false,
+   "item": -1
+  },
+  {
+   "id": "bedroom_keepsake",
+   "x": 10,
+   "y": 8,
+   "w": 2,
+   "h": 1,
+   "layer": 1,
+   "blocks": false,
+   "sprite_w": 12,
+   "sprite_h": 14,
+   "anchor_x": 314,
+   "anchor_y": 310,
+   "room": 1,
+   "categories": [
+    "dresser_keepsake"
+   ],
+   "expanded": false,
+   "mount": {
+    "on": "bedroom_dresser",
+    "dx": 14,
+    "dy": -36
+   },
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": false,
+   "cross_rooms": false,
+   "item": -1
+  },
+  {
+   "id": "bedroom_lamp",
+   "x": 10,
+   "y": 4,
+   "w": 1,
+   "h": 1,
+   "layer": 1,
+   "blocks": false,
+   "sprite_w": 14,
+   "sprite_h": 18,
+   "anchor_x": 384,
+   "anchor_y": 256,
+   "room": 1,
+   "categories": [
+    "bedside_lamp"
+   ],
+   "expanded": false,
+   "mount": {
+    "on": "bedside_table",
+    "dx": 0,
+    "dy": -30
+   },
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": false,
+   "cross_rooms": false,
+   "item": 34
+  },
+  {
+   "id": "bedroom_laundry_basket",
+   "x": 11,
+   "y": 9,
+   "w": 1,
+   "h": 1,
+   "layer": 1,
+   "blocks": false,
+   "sprite_w": 48,
+   "sprite_h": 46,
+   "anchor_x": 288,
+   "anchor_y": 358,
+   "room": 1,
+   "categories": [
+    "laundry_basket"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": -1
+  },
+  {
+   "id": "luxury_dog_bed",
+   "x": 10,
+   "y": 8,
+   "w": 2,
+   "h": 2,
+   "layer": 1,
+   "blocks": false,
+   "sprite_w": 96,
+   "sprite_h": 68,
+   "anchor_x": 288,
+   "anchor_y": 358,
+   "room": 1,
+   "categories": [
+    "luxury_dog_bed"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": -1
+  },
+  {
+   "id": "bedroom_pet_stairs",
+   "x": 9,
+   "y": 8,
+   "w": 2,
+   "h": 1,
+   "layer": 1,
+   "blocks": true,
+   "sprite_w": 72,
+   "sprite_h": 54,
+   "anchor_x": 276,
+   "anchor_y": 334,
+   "room": 1,
+   "categories": [
+    "pet_stairs"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": false,
+   "cross_rooms": false,
+   "item": 50
+  },
+  {
+   "id": "bathroom_tub",
+   "x": 10,
+   "y": 0,
+   "w": 2,
+   "h": 2,
+   "layer": 1,
+   "blocks": true,
+   "sprite_w": 96,
+   "sprite_h": 76,
+   "anchor_x": 480,
+   "anchor_y": 262,
+   "room": 2,
+   "categories": [
+    "bathroom"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": [
+    [
+     14,
+     44
+    ],
+    [
+     84,
+     34
+    ]
+   ],
+   "movable": false,
+   "cross_rooms": false,
+   "item": 20
+  },
+  {
+   "id": "bathroom_vanity",
+   "x": 8,
+   "y": 0,
+   "w": 2,
+   "h": 1,
+   "layer": 1,
+   "blocks": false,
+   "sprite_w": 72,
+   "sprite_h": 81,
+   "anchor_x": 444,
+   "anchor_y": 226,
+   "room": 2,
+   "categories": [
+    "vanity"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": false,
+   "cross_rooms": false,
+   "item": 40
+  },
+  {
+   "id": "bathroom_mirror_wall",
+   "x": 8,
+   "y": 0,
+   "w": 2,
+   "h": 1,
+   "layer": 2,
+   "blocks": false,
+   "sprite_w": 28,
+   "sprite_h": 36,
+   "anchor_x": 444,
+   "anchor_y": 226,
+   "room": 2,
+   "categories": [
+    "bathroom_mirror"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": {
+    "wall": "y",
+    "plane": 0,
+    "span": [
+     8.35,
+     9.65
+    ],
+    "bottom_px": 52,
+    "top_px": 80
+   },
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 39
+  },
+  {
+   "id": "bathroom_towel_wall",
+   "x": 10,
+   "y": 0,
+   "w": 2,
+   "h": 1,
+   "layer": 2,
+   "blocks": false,
+   "sprite_w": 28,
+   "sprite_h": 22,
+   "anchor_x": 492,
+   "anchor_y": 250,
+   "room": 2,
+   "categories": [
+    "towel_rail"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": {
+    "wall": "y",
+    "plane": 0,
+    "span": [
+     10.3,
+     11.4
+    ],
+    "bottom_px": 58,
+    "top_px": 76
+   },
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 41
+  },
+  {
+   "id": "bathroom_soap",
+   "x": 8,
+   "y": 0,
+   "w": 2,
+   "h": 1,
+   "layer": 1,
+   "blocks": false,
+   "sprite_w": 16,
+   "sprite_h": 12,
+   "anchor_x": 459,
+   "anchor_y": 172,
+   "room": 2,
+   "categories": [
+    "soap_set"
+   ],
+   "expanded": false,
+   "mount": {
+    "on": "bathroom_vanity",
+    "dx": 15,
+    "dy": -54
+   },
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": false,
+   "cross_rooms": false,
+   "item": 42
+  },
+  {
+   "id": "bathroom_brush",
+   "x": 8,
+   "y": 0,
+   "w": 2,
+   "h": 1,
+   "layer": 1,
+   "blocks": false,
+   "sprite_w": 18,
+   "sprite_h": 8,
+   "anchor_x": 427,
+   "anchor_y": 172,
+   "room": 2,
+   "categories": [
+    "brush"
+   ],
+   "expanded": false,
+   "mount": {
+    "on": "bathroom_sink",
+    "dx": -17,
+    "dy": -54
+   },
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": false,
+   "cross_rooms": false,
+   "item": 51
+  },
+  {
+   "id": "balcony_hammock",
+   "x": 5,
+   "y": 10,
+   "w": 3,
+   "h": 2,
+   "layer": 1,
+   "blocks": true,
+   "sprite_w": 120,
+   "sprite_h": 100,
+   "anchor_x": 132,
+   "anchor_y": 334,
+   "room": 3,
+   "categories": [
+    "hammock"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 43
+  },
+  {
+   "id": "balcony_side_table",
+   "x": 8,
+   "y": 11,
+   "w": 1,
+   "h": 1,
+   "layer": 1,
+   "blocks": true,
+   "sprite_w": 48,
+   "sprite_h": 46,
+   "anchor_x": 168,
+   "anchor_y": 346,
+   "room": 3,
+   "categories": [
+    "side_table"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 44
+  },
+  {
+   "id": "balcony_lantern",
+   "x": 8,
+   "y": 11,
+   "w": 1,
+   "h": 1,
+   "layer": 1,
+   "blocks": false,
+   "sprite_w": 12,
+   "sprite_h": 18,
+   "anchor_x": 168,
+   "anchor_y": 322,
+   "room": 3,
+   "categories": [
+    "lantern"
+   ],
+   "expanded": false,
+   "mount": {
+    "on": "balcony_side_table",
+    "dx": 0,
+    "dy": -24
+   },
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": false,
+   "cross_rooms": false,
+   "item": 46
+  },
+  {
+   "id": "balcony_bistro",
+   "x": 3,
+   "y": 10,
+   "w": 2,
+   "h": 2,
+   "layer": 1,
+   "blocks": true,
+   "sprite_w": 96,
+   "sprite_h": 78,
+   "anchor_x": 72,
+   "anchor_y": 298,
+   "room": 3,
+   "categories": [
+    "bistro_set"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 48
+  },
+  {
+   "id": "balcony_railing_planters",
+   "x": 3,
+   "y": 12,
+   "w": 2,
+   "h": 1,
+   "layer": 2,
+   "blocks": false,
+   "sprite_w": 44,
+   "sprite_h": 30,
+   "anchor_x": 36,
+   "anchor_y": 310,
+   "room": 3,
+   "categories": [
+    "railing_planters"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": {
+    "wall": "y",
+    "plane": 13,
+    "span": [
+     3.0,
+     5.0
+    ],
+    "bottom_px": -4,
+    "top_px": 26,
+    "foreground": true
+   },
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 45
+  },
+  {
+   "id": "balcony_string_lights",
+   "x": 0,
+   "y": 10,
+   "w": 1,
+   "h": 3,
+   "layer": 2,
+   "blocks": false,
+   "sprite_w": 72,
+   "sprite_h": 24,
+   "anchor_x": -24,
+   "anchor_y": 262,
+   "room": 3,
+   "categories": [
+    "string_lights"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": {
+    "wall": "x",
+    "plane": 0,
+    "span": [
+     10.0,
+     13.0
+    ],
+    "bottom_px": 50,
+    "top_px": 72
+   },
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 47
+  },
+  {
+   "id": "balcony_grill",
+   "x": 10,
+   "y": 11,
+   "w": 2,
+   "h": 1,
+   "layer": 1,
+   "blocks": true,
+   "sprite_w": 72,
+   "sprite_h": 70,
+   "anchor_x": 228,
+   "anchor_y": 382,
+   "room": 3,
+   "categories": [
+    "grill"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 49
+  },
+  {
+   "id": "balcony_bird_feeder",
+   "x": 8,
+   "y": 12,
+   "w": 2,
+   "h": 1,
+   "layer": 2,
+   "blocks": false,
+   "sprite_w": 26,
+   "sprite_h": 36,
+   "anchor_x": 156,
+   "anchor_y": 370,
+   "room": 3,
+   "categories": [
+    "bird_feeder"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": {
+    "wall": "y",
+    "plane": 13,
+    "span": [
+     8.4,
+     9.6
+    ],
+    "bottom_px": -6,
+    "top_px": 30,
+    "foreground": true
+   },
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 55
+  },
+  {
+   "id": "balcony_grass",
+   "x": 1,
+   "y": 10,
+   "w": 2,
+   "h": 2,
+   "layer": 0,
+   "blocks": false,
+   "sprite_w": 96,
+   "sprite_h": 51,
+   "anchor_x": 24,
+   "anchor_y": 274,
+   "room": 3,
+   "categories": [
+    "fake_grass"
+   ],
+   "expanded": false,
+   "mount": null,
+   "wall_mount": null,
+   "rest_split": null,
+   "movable": true,
+   "cross_rooms": false,
+   "item": 56
+  }
+ ],
+ "points": [
+  {
+   "id": "bowls",
+   "room": 0,
+   "x": 256,
+   "y": 1843,
+   "face": 3,
+   "at": [
+    1.0,
+    7.2
+   ],
+   "owner": -1
+  },
+  {
+   "id": "window",
+   "room": 0,
+   "x": 384,
+   "y": 384,
+   "face": 2,
+   "at": [
+    1.5,
+    1.5
+   ],
+   "owner": -1
+  },
+  {
+   "id": "bed",
+   "room": 0,
+   "x": 1536,
+   "y": 512,
+   "face": 1,
+   "at": [
+    6.0,
+    2.0
+   ],
+   "owner": -1
+  },
+  {
+   "id": "couch_approach",
+   "room": 0,
+   "x": 640,
+   "y": 896,
+   "face": 0,
+   "at": [
+    2.5,
+    3.5
+   ],
+   "owner": 0
+  },
+  {
+   "id": "play",
+   "room": 0,
+   "x": 960,
+   "y": 2432,
+   "face": 1,
+   "at": [
+    3.75,
+    9.5
+   ],
+   "owner": 1
+  },
+  {
+   "id": "corner",
+   "room": 0,
+   "x": 1152,
+   "y": 896,
+   "face": 1,
+   "at": [
+    4.5,
+    3.5
+   ],
+   "owner": 2
+  },
+  {
+   "id": "table",
+   "room": 0,
+   "x": 1152,
+   "y": 640,
+   "face": 2,
+   "at": [
+    4.5,
+    2.5
+   ],
+   "owner": 4
+  },
+  {
+   "id": "media",
+   "room": 0,
+   "x": 640,
+   "y": 384,
+   "face": 2,
+   "at": [
+    2.5,
+    1.5
+   ],
+   "owner": 5
+  },
+  {
+   "id": "ball_chase",
+   "room": 0,
+   "x": 1472,
+   "y": 2432,
+   "face": 1,
+   "at": [
+    5.75,
+    9.5
+   ],
+   "owner": -1
+  },
+  {
+   "id": "small_plant",
+   "room": 0,
+   "x": 1408,
+   "y": 2176,
+   "face": 1,
+   "at": [
+    5.5,
+    8.5
+   ],
+   "owner": 15
+  },
+  {
+   "id": "large_plant",
+   "room": 0,
+   "x": 256,
+   "y": 1605,
+   "face": 3,
+   "at": [
+    1.0,
+    6.27
+   ],
+   "owner": 16
+  },
+  {
+   "id": "toy",
+   "room": 0,
+   "x": 837,
+   "y": 256,
+   "face": 1,
+   "at": [
+    3.27,
+    1.0
+   ],
+   "owner": 18
+  },
+  {
+   "id": "cushion",
+   "room": 0,
+   "x": 1408,
+   "y": 1920,
+   "face": 1,
+   "at": [
+    5.5,
+    7.5
+   ],
+   "owner": -1
+  },
+  {
+   "id": "entry",
+   "room": 0,
+   "x": 384,
+   "y": 1216,
+   "face": 2,
+   "at": [
+    1.5,
+    4.75
+   ],
+   "owner": -1
+  },
+  {
+   "id": "food",
+   "room": 0,
+   "x": 256,
+   "y": 563,
+   "face": 3,
+   "at": [
+    1.0,
+    2.2
+   ],
+   "owner": -1
+  },
+  {
+   "id": "door_wait",
+   "room": 0,
+   "x": 371,
+   "y": 1280,
+   "face": 2,
+   "at": [
+    1.45,
+    5.0
+   ],
+   "owner": -1
+  },
+  {
+   "id": "treat_spot",
+   "room": 0,
+   "x": 1152,
+   "y": 896,
+   "face": 2,
+   "at": [
+    4.5,
+    3.5
+   ],
+   "owner": 4
+  },
+  {
+   "id": "record_listen",
+   "room": 0,
+   "x": 1408,
+   "y": 1152,
+   "face": 1,
+   "at": [
+    5.5,
+    4.5
+   ],
+   "owner": 28
+  },
+  {
+   "id": "bed",
+   "room": 1,
+   "x": 2176,
+   "y": 1664,
+   "face": 1,
+   "at": [
+    8.5,
+    6.5
+   ],
+   "owner": 31
+  },
+  {
+   "id": "laundry",
+   "room": 1,
+   "x": 2944,
+   "y": 2176,
+   "face": 3,
+   "at": [
+    11.5,
+    8.5
+   ],
+   "owner": 36
+  },
+  {
+   "id": "luxury_bed",
+   "room": 1,
+   "x": 2432,
+   "y": 2432,
+   "face": 1,
+   "at": [
+    9.5,
+    9.5
+   ],
+   "owner": 37
+  },
+  {
+   "id": "stairs_foot",
+   "room": 1,
+   "x": 2560,
+   "y": 2406,
+   "face": 0,
+   "at": [
+    10.0,
+    9.4
+   ],
+   "owner": 38
+  },
+  {
+   "id": "bath",
+   "room": 2,
+   "x": 2432,
+   "y": 256,
+   "face": 1,
+   "at": [
+    9.5,
+    1.0
+   ],
+   "owner": 39
+  },
+  {
+   "id": "balcony_rest",
+   "room": 3,
+   "x": 640,
+   "y": 2944,
+   "face": 1,
+   "at": [
+    2.5,
+    11.5
+   ],
+   "owner": -1
+  },
+  {
+   "id": "hammock",
+   "room": 3,
+   "x": 1152,
+   "y": 3200,
+   "face": 1,
+   "at": [
+    4.5,
+    12.5
+   ],
+   "owner": 45
+  },
+  {
+   "id": "grill",
+   "room": 3,
+   "x": 2432,
+   "y": 2688,
+   "face": 1,
+   "at": [
+    9.5,
+    10.5
+   ],
+   "owner": 51
+  },
+  {
+   "id": "feeder_watch",
+   "room": 3,
+   "x": 2304,
+   "y": 3174,
+   "face": 3,
+   "at": [
+    9.0,
+    12.4
+   ],
+   "owner": 52
+  },
+  {
+   "id": "grass_spot",
+   "room": 3,
+   "x": 384,
+   "y": 2714,
+   "face": 1,
+   "at": [
+    1.5,
+    10.6
+   ],
+   "owner": 53
+  },
+  {
+   "id": "sunset_spot",
+   "room": 3,
+   "x": 1664,
+   "y": 3200,
+   "face": 1,
+   "at": [
+    6.5,
+    12.5
+   ],
+   "owner": -1
+  }
+ ],
+ "choices": [
+  "idle_here",
+  "wander",
+  "visit_bowls",
+  "visit_window"
+ ],
+ "items": [
+  {
+   "id": "couch",
+   "placement_id": "left_wall_couch",
+   "requires_item": -1,
+   "title": "Couch",
+   "price": 20,
+   "placement": 0,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": 4,
+   "ambient": null,
+   "active": true,
+   "comfort": 3,
+   "description": "Unlocks a new interaction."
+  },
+  {
+   "id": "ball",
+   "placement_id": "play_spot",
+   "requires_item": -1,
+   "title": "Ball",
+   "price": 15,
+   "placement": 1,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": 14,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "Unlocks a new interaction."
+  },
+  {
+   "id": "cushion",
+   "placement_id": "cozy_corner",
+   "requires_item": -1,
+   "title": "Cushion",
+   "price": 5,
+   "placement": 2,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": false,
+   "comfort": 1,
+   "description": "A cozy addition to the home."
+  },
+  {
+   "id": "rug_small",
+   "placement_id": "rug_underlay",
+   "requires_item": -1,
+   "title": "Rug Small",
+   "price": 10,
+   "placement": 3,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": false,
+   "comfort": 1,
+   "description": "A cozy addition to the home."
+  },
+  {
+   "id": "plant_small",
+   "placement_id": "plant_small",
+   "requires_item": 15,
+   "title": "Plant Small",
+   "price": 10,
+   "placement": 15,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": 15,
+   "ambient": null,
+   "active": true,
+   "comfort": 1,
+   "description": "Unlocks a new interaction."
+  },
+  {
+   "id": "wall_art",
+   "placement_id": "botanical_wall",
+   "requires_item": -1,
+   "title": "Botanical painting",
+   "price": 10,
+   "placement": 6,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "A cozy addition to the home."
+  },
+  {
+   "id": "floor_lamp",
+   "placement_id": "floor_lamp",
+   "requires_item": -1,
+   "title": "Floor Lamp",
+   "price": 20,
+   "placement": 17,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": "lamp_glow",
+   "active": true,
+   "comfort": 1,
+   "description": "Adds a soft warm glow."
+  },
+  {
+   "id": "curtains",
+   "placement_id": "window_curtains",
+   "requires_item": -1,
+   "title": "Curtains",
+   "price": 30,
+   "placement": 10,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 1,
+   "description": "A cozy addition to the home."
+  },
+  {
+   "id": "coffee_table",
+   "placement_id": "centre_table",
+   "requires_item": -1,
+   "title": "Coffee Table",
+   "price": 40,
+   "placement": 4,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 1,
+   "description": "A cozy addition to the home."
+  },
+  {
+   "id": "rug_large",
+   "placement_id": "rug_large",
+   "requires_item": -1,
+   "title": "Rug Large",
+   "price": 35,
+   "placement": 20,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 2,
+   "description": "A cozy addition to the home."
+  },
+  {
+   "id": "plant_large",
+   "placement_id": "plant_large",
+   "requires_item": -1,
+   "title": "Plant Large",
+   "price": 35,
+   "placement": 16,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 1,
+   "description": "A cozy addition to the home."
+  },
+  {
+   "id": "toy_basket",
+   "placement_id": "toy_basket",
+   "requires_item": -1,
+   "title": "Toy Basket",
+   "price": 50,
+   "placement": 18,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": 17,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "Unlocks a new interaction."
+  },
+  {
+   "id": "bookshelf",
+   "placement_id": "bookshelf",
+   "requires_item": -1,
+   "title": "Bookshelf",
+   "price": 60,
+   "placement": 12,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": false,
+   "comfort": 1,
+   "description": "A cozy addition to the home."
+  },
+  {
+   "id": "tv",
+   "placement_id": "media_wall",
+   "requires_item": -1,
+   "title": "Tv",
+   "price": 100,
+   "placement": 5,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": 16,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "Unlocks a new interaction."
+  },
+  {
+   "id": "kitchen_upgrade",
+   "placement_id": "kitchen_upgrade",
+   "requires_item": -1,
+   "title": "Kitchen Upgrade",
+   "price": 80,
+   "placement": 11,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "White base cabinets, a charcoal worktop and sink, built-in oven and a stainless refrigerator. No overhead cupboards."
+  },
+  {
+   "id": "dining_table",
+   "placement_id": "dining_table",
+   "requires_item": -1,
+   "title": "Dining Table",
+   "price": 70,
+   "placement": 19,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "A cozy addition to the home."
+  },
+  {
+   "id": "luxury_bed",
+   "placement_id": "luxury_dog_bed",
+   "requires_item": -1,
+   "title": "Luxury Bed",
+   "price": 150,
+   "placement": 37,
+   "required_room": 1,
+   "unlock_room": -1,
+   "clip": 18,
+   "ambient": null,
+   "active": false,
+   "comfort": 3,
+   "description": "A plush round bed of Zucchini's own, beside the human bed."
+  },
+  {
+   "id": "gallery_wall",
+   "placement_id": "gallery_wall",
+   "requires_item": -1,
+   "title": "Gallery Wall",
+   "price": 80,
+   "placement": 21,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 1,
+   "description": "A cozy addition to the home."
+  },
+  {
+   "id": "fireplace",
+   "placement_id": "fireplace",
+   "requires_item": -1,
+   "title": "Fireplace",
+   "price": 180,
+   "placement": 14,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": false,
+   "comfort": 3,
+   "description": "A cozy addition to the home."
+  },
+  {
+   "id": "seasonal_set",
+   "placement_id": "seasonal_set",
+   "requires_item": -1,
+   "title": "Seasonal Set",
+   "price": 60,
+   "placement": 22,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 1,
+   "description": "A cozy addition to the home."
+  },
+  {
+   "id": "bathtub",
+   "placement_id": "bathroom_tub",
+   "requires_item": -1,
+   "title": "Bathtub",
+   "price": 150,
+   "placement": 39,
+   "required_room": 2,
+   "unlock_room": -1,
+   "clip": 19,
+   "ambient": null,
+   "active": true,
+   "comfort": 1,
+   "description": "Unlocks a new interaction."
+  },
+  {
+   "id": "bay_window",
+   "placement_id": "bay_window",
+   "requires_item": -1,
+   "title": "Bay Window",
+   "price": 200,
+   "placement": 23,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": 20,
+   "ambient": null,
+   "active": true,
+   "comfort": 2,
+   "description": "Unlocks a new interaction."
+  },
+  {
+   "id": "piano",
+   "placement_id": "piano",
+   "requires_item": -1,
+   "title": "Piano",
+   "price": 180,
+   "placement": 13,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": false,
+   "comfort": 0,
+   "description": "A cozy addition to the home."
+  },
+  {
+   "id": "balcony",
+   "placement_id": null,
+   "requires_item": -1,
+   "title": "Balcony expansion",
+   "price": 400,
+   "placement": -1,
+   "required_room": 0,
+   "unlock_room": 3,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "Adds another place for Zucchini to explore."
+  },
+  {
+   "id": "painting_abstract",
+   "placement_id": "abstract_wall",
+   "requires_item": -1,
+   "title": "Abstract painting",
+   "price": 15,
+   "placement": 7,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "A cozy addition to the home."
+  },
+  {
+   "id": "painting_landscape",
+   "placement_id": "landscape_wall",
+   "requires_item": -1,
+   "title": "Landscape painting",
+   "price": 20,
+   "placement": 8,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "A cozy addition to the home."
+  },
+  {
+   "id": "painting_corgi",
+   "placement_id": "portrait_wall",
+   "requires_item": -1,
+   "title": "Corgi portrait",
+   "price": 25,
+   "placement": 9,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "A cozy addition to the home."
+  },
+  {
+   "id": "bathroom",
+   "placement_id": null,
+   "requires_item": -1,
+   "title": "Bathroom expansion",
+   "price": 250,
+   "placement": -1,
+   "required_room": 0,
+   "unlock_room": 2,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "Adds another place for Zucchini to explore."
+  },
+  {
+   "id": "bedroom",
+   "placement_id": null,
+   "requires_item": -1,
+   "title": "Bedroom expansion",
+   "price": 350,
+   "placement": -1,
+   "required_room": 0,
+   "unlock_room": 1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "Adds another place for Zucchini to explore."
+  },
+  {
+   "id": "kitchen_shelves",
+   "placement_id": "kitchen_shelves",
+   "requires_item": -1,
+   "title": "Kitchen shelves",
+   "price": 40,
+   "placement": 24,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "Open pale-oak shelves above the counter."
+  },
+  {
+   "id": "owner_photo_couple",
+   "placement_id": "photo_couple_wall",
+   "requires_item": -1,
+   "title": "Castle day photo",
+   "price": 30,
+   "placement": 25,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "A framed photo of Zucchini\u2019s humans."
+  },
+  {
+   "id": "owner_photo_her",
+   "placement_id": "photo_her_wall",
+   "requires_item": -1,
+   "title": "Her portrait",
+   "price": 20,
+   "placement": 27,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "A framed portrait of one of Zucchini\u2019s humans."
+  },
+  {
+   "id": "owner_photo_him",
+   "placement_id": "photo_him_wall",
+   "requires_item": -1,
+   "title": "His portrait",
+   "price": 20,
+   "placement": 26,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "A framed portrait of one of Zucchini\u2019s humans."
+  },
+  {
+   "id": "bedroom_bedding",
+   "placement_id": "bedroom_upgrade",
+   "requires_item": -1,
+   "title": "Sage bedding",
+   "price": 25,
+   "placement": 31,
+   "required_room": 1,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 2,
+   "description": "Cream duvet with a folded sage throw."
+  },
+  {
+   "id": "bedroom_lamp",
+   "placement_id": "bedroom_lamp",
+   "requires_item": -1,
+   "title": "Bedside lamp",
+   "price": 20,
+   "placement": 35,
+   "required_room": 1,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": "lamp_glow",
+   "active": true,
+   "comfort": 1,
+   "description": "A small mushroom lamp with a warm glow."
+  },
+  {
+   "id": "bedroom_dresser",
+   "placement_id": "bedroom_dresser",
+   "requires_item": -1,
+   "title": "Low dresser",
+   "price": 60,
+   "placement": 32,
+   "required_room": 1,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": false,
+   "comfort": 0,
+   "description": "A low pale-oak chest with room on top."
+  },
+  {
+   "id": "bedroom_mirror",
+   "placement_id": "bedroom_mirror",
+   "requires_item": 35,
+   "title": "Dresser mirror",
+   "price": 30,
+   "placement": 33,
+   "required_room": 1,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": false,
+   "comfort": 0,
+   "description": "An arched mirror for the dresser."
+  },
+  {
+   "id": "bedroom_laundry_basket",
+   "placement_id": "bedroom_laundry_basket",
+   "requires_item": -1,
+   "title": "Laundry basket",
+   "price": 15,
+   "placement": 36,
+   "required_room": 1,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": false,
+   "comfort": 0,
+   "description": "A woven basket she likes to sniff."
+  },
+  {
+   "id": "bedroom_keepsake",
+   "placement_id": "bedroom_keepsake",
+   "requires_item": 35,
+   "title": "Framed keepsake",
+   "price": 15,
+   "placement": 34,
+   "required_room": 1,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": false,
+   "comfort": 0,
+   "description": "A tiny portrait of Zucchini for the dresser."
+  },
+  {
+   "id": "bathroom_mirror",
+   "placement_id": "bathroom_mirror_wall",
+   "requires_item": -1,
+   "title": "Oval mirror",
+   "price": 25,
+   "placement": 41,
+   "required_room": 2,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "A pale-oak oval mirror above the sink."
+  },
+  {
+   "id": "bathroom_vanity",
+   "placement_id": "bathroom_vanity",
+   "requires_item": -1,
+   "title": "Vanity upgrade",
+   "price": 60,
+   "placement": 40,
+   "required_room": 2,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "An ivory vanity that replaces the pedestal sink."
+  },
+  {
+   "id": "bathroom_towel_rail",
+   "placement_id": "bathroom_towel_wall",
+   "requires_item": -1,
+   "title": "Towel rail",
+   "price": 15,
+   "placement": 42,
+   "required_room": 2,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 1,
+   "description": "A brushed-silver rail with a soft blue towel."
+  },
+  {
+   "id": "bathroom_soap_set",
+   "placement_id": "bathroom_soap",
+   "requires_item": 40,
+   "title": "Soap set",
+   "price": 10,
+   "placement": 43,
+   "required_room": 2,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "A pump bottle and soap dish for the vanity."
+  },
+  {
+   "id": "balcony_hammock",
+   "placement_id": "balcony_hammock",
+   "requires_item": -1,
+   "title": "Canvas hammock",
+   "price": 100,
+   "placement": 45,
+   "required_room": 3,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 2,
+   "description": "A cream canvas hammock on a curved oak stand."
+  },
+  {
+   "id": "balcony_side_table",
+   "placement_id": "balcony_side_table",
+   "requires_item": -1,
+   "title": "Round side table",
+   "price": 25,
+   "placement": 46,
+   "required_room": 3,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "A small round teak table."
+  },
+  {
+   "id": "balcony_railing_planters",
+   "placement_id": "balcony_railing_planters",
+   "requires_item": -1,
+   "title": "Railing planters",
+   "price": 35,
+   "placement": 49,
+   "required_room": 3,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 1,
+   "description": "Trailing greenery and cream blossoms on the railing."
+  },
+  {
+   "id": "balcony_lantern",
+   "placement_id": "balcony_lantern",
+   "requires_item": 44,
+   "title": "Balcony lantern",
+   "price": 20,
+   "placement": 47,
+   "required_room": 3,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": "lamp_glow",
+   "active": true,
+   "comfort": 1,
+   "description": "A charcoal lantern with a soft amber glow."
+  },
+  {
+   "id": "balcony_string_lights",
+   "placement_id": "balcony_string_lights",
+   "requires_item": -1,
+   "title": "String lights",
+   "price": 45,
+   "placement": 50,
+   "required_room": 3,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 1,
+   "description": "Warm bulbs strung along the railing."
+  },
+  {
+   "id": "balcony_bistro_set",
+   "placement_id": "balcony_bistro",
+   "requires_item": -1,
+   "title": "Bistro set",
+   "price": 80,
+   "placement": 48,
+   "required_room": 3,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 1,
+   "description": "A little teak table with two folding chairs."
+  },
+  {
+   "id": "balcony_grill",
+   "placement_id": "balcony_grill",
+   "requires_item": -1,
+   "title": "Balcony grill",
+   "price": 70,
+   "placement": 51,
+   "required_room": 3,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "A little charcoal grill on the deck. She likes to sniff around it."
+  },
+  {
+   "id": "pet_stairs",
+   "placement_id": "bedroom_pet_stairs",
+   "requires_item": -1,
+   "title": "Pet stairs",
+   "price": 30,
+   "placement": 38,
+   "required_room": 1,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 1,
+   "description": "Three soft steps up to the bed. Bed naps need them."
+  },
+  {
+   "id": "brush",
+   "placement_id": "bathroom_brush",
+   "requires_item": -1,
+   "title": "Grooming brush",
+   "price": 25,
+   "placement": 44,
+   "required_room": 2,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "Drag across her for a gentle brushing."
+  },
+  {
+   "id": "treat_jar",
+   "placement_id": "kitchen_treat_jar",
+   "requires_item": 8,
+   "title": "Treat jar",
+   "price": 30,
+   "placement": 29,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "Tap the jar for a treat. Free, with a short wait between treats."
+  },
+  {
+   "id": "leash_hook",
+   "placement_id": "living_leash",
+   "requires_item": -1,
+   "title": "Leash on a hook",
+   "price": 35,
+   "placement": 30,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 0,
+   "description": "Tap the leash and she runs to the door to wait."
+  },
+  {
+   "id": "record_player",
+   "placement_id": "living_record_player",
+   "requires_item": -1,
+   "title": "Record player",
+   "price": 70,
+   "placement": 28,
+   "required_room": 0,
+   "unlock_room": -1,
+   "clip": 35,
+   "ambient": null,
+   "active": true,
+   "comfort": 1,
+   "description": "Tap its note to play the room music. She lies nearby while it plays."
+  },
+  {
+   "id": "bird_feeder",
+   "placement_id": "balcony_bird_feeder",
+   "requires_item": -1,
+   "title": "Bird feeder",
+   "price": 45,
+   "placement": 52,
+   "required_room": 3,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 1,
+   "description": "Small birds visit it now and then, and she boofs at them."
+  },
+  {
+   "id": "balcony_grass",
+   "placement_id": "balcony_grass",
+   "requires_item": -1,
+   "title": "Fake grass patch",
+   "price": 25,
+   "placement": 53,
+   "required_room": 3,
+   "unlock_room": -1,
+   "clip": -1,
+   "ambient": null,
+   "active": true,
+   "comfort": 1,
+   "description": "A little green patch she visits now and then."
+  }
+ ],
+ "rooms": [
+  {
+   "id": "apartment",
+   "title": "Living room",
+   "blocked": 237703830355906847053602357472,
+   "approach_only": 38685626227668133624152064,
+   "unlock_item": -1,
+   "floor_mask": 82772439297961794283387252837970175,
+   "bounds": [
+    0,
+    0,
+    8,
+    10
+   ]
+  },
+  {
+   "id": "bedroom",
+   "title": "Bedroom",
+   "blocked": 69341571294391263842191540224,
+   "approach_only": 0,
+   "unlock_item": 28,
+   "floor_mask": 1246455556486954078620155860211466240,
+   "bounds": [
+    8,
+    4,
+    4,
+    6
+   ]
+  },
+  {
+   "id": "bathroom",
+   "title": "Bathroom",
+   "blocked": 140737488356096,
+   "approach_only": 0,
+   "unlock_item": 27,
+   "floor_mask": 263947230908160,
+   "bounds": [
+    8,
+    0,
+    4,
+    4
+   ]
+  },
+  {
+   "id": "balcony",
+   "title": "Balcony",
+   "blocked": 22306189716401358156951132266367269797363712,
+   "approach_only": 0,
+   "unlock_item": 23,
+   "floor_mask": 91343852331852204391945386171863881668215439360,
+   "bounds": [
+    0,
+    10,
+    12,
+    3
+   ]
+  }
+ ],
+ "sequences": [
+  {
+   "id": "accomplished",
+   "title": "A little celebration",
+   "room": 255,
+   "free": false,
+   "offers": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "required_item": -1,
+   "start": 0,
+   "count": 4,
+   "trigger": 3,
+   "cooldown_ms": 0,
+   "drink_bonus": 0,
+   "avg_ms": 6457,
+   "outdoor": false
+  },
+  {
+   "id": "sit_sniff",
+   "title": "Sit and sniff",
+   "room": 255,
+   "free": true,
+   "offers": [
+    1,
+    0,
+    5,
+    0,
+    0,
+    0
+   ],
+   "required_item": -1,
+   "start": 4,
+   "count": 3,
+   "trigger": 0,
+   "cooldown_ms": 90000,
+   "drink_bonus": 0,
+   "avg_ms": 9915,
+   "outdoor": false
+  },
+  {
+   "id": "drink",
+   "title": "Visit the bowls",
+   "room": 0,
+   "free": true,
+   "offers": [
+    0,
+    0,
+    0,
+    1,
+    0,
+    4
+   ],
+   "required_item": -1,
+   "start": 7,
+   "count": 3,
+   "trigger": 0,
+   "cooldown_ms": 180000,
+   "drink_bonus": 0,
+   "avg_ms": 8516,
+   "outdoor": false
+  },
+  {
+   "id": "bed_nap",
+   "title": "Settle into bed",
+   "room": 0,
+   "free": true,
+   "offers": [
+    8,
+    0,
+    0,
+    4,
+    0,
+    0
+   ],
+   "required_item": -1,
+   "start": 10,
+   "count": 3,
+   "trigger": 0,
+   "cooldown_ms": 120000,
+   "drink_bonus": 0,
+   "avg_ms": 33366,
+   "outdoor": false
+  },
+  {
+   "id": "zoomies",
+   "title": "A little burst of energy",
+   "room": 255,
+   "free": true,
+   "offers": [
+    0,
+    9,
+    0,
+    0,
+    0,
+    0
+   ],
+   "required_item": -1,
+   "start": 13,
+   "count": 3,
+   "trigger": 0,
+   "cooldown_ms": 90000,
+   "drink_bonus": 0,
+   "avg_ms": 4665,
+   "outdoor": false
+  },
+  {
+   "id": "fetch",
+   "title": "Play with the ball",
+   "room": 0,
+   "free": true,
+   "offers": [
+    0,
+    8,
+    0,
+    0,
+    3,
+    0
+   ],
+   "required_item": 1,
+   "start": 16,
+   "count": 6,
+   "trigger": 0,
+   "cooldown_ms": 90000,
+   "drink_bonus": 0,
+   "avg_ms": 3350,
+   "outdoor": false
+  },
+  {
+   "id": "plant",
+   "title": "Sniff the plant",
+   "room": 0,
+   "free": true,
+   "offers": [
+    0,
+    0,
+    6,
+    0,
+    0,
+    0
+   ],
+   "required_item": 4,
+   "start": 22,
+   "count": 2,
+   "trigger": 0,
+   "cooldown_ms": 90000,
+   "drink_bonus": 0,
+   "avg_ms": 9332,
+   "outdoor": false
+  },
+  {
+   "id": "large_plant",
+   "title": "Inspect the tall plant",
+   "room": 0,
+   "free": true,
+   "offers": [
+    0,
+    0,
+    6,
+    1,
+    0,
+    0
+   ],
+   "required_item": 10,
+   "start": 24,
+   "count": 2,
+   "trigger": 0,
+   "cooldown_ms": 90000,
+   "drink_bonus": 0,
+   "avg_ms": 7582,
+   "outdoor": false
+  },
+  {
+   "id": "toy",
+   "title": "Pick a toy",
+   "room": 0,
+   "free": true,
+   "offers": [
+    0,
+    6,
+    3,
+    0,
+    0,
+    0
+   ],
+   "required_item": 11,
+   "start": 26,
+   "count": 4,
+   "trigger": 0,
+   "cooldown_ms": 90000,
+   "drink_bonus": 0,
+   "avg_ms": 9681,
+   "outdoor": false
+  },
+  {
+   "id": "tv",
+   "title": "Watch a little TV",
+   "room": 0,
+   "free": true,
+   "offers": [
+    2,
+    0,
+    5,
+    0,
+    4,
+    0
+   ],
+   "required_item": 13,
+   "start": 30,
+   "count": 3,
+   "trigger": 0,
+   "cooldown_ms": 120000,
+   "drink_bonus": 0,
+   "avg_ms": 17033,
+   "outdoor": false
+  },
+  {
+   "id": "cushion",
+   "title": "Rest by the cushion",
+   "room": 0,
+   "free": true,
+   "offers": [
+    6,
+    0,
+    0,
+    5,
+    0,
+    0
+   ],
+   "required_item": 2,
+   "start": 33,
+   "count": 3,
+   "trigger": 0,
+   "cooldown_ms": 120000,
+   "drink_bonus": 0,
+   "avg_ms": 26950,
+   "outdoor": false
+  },
+  {
+   "id": "bedroom_nap",
+   "title": "Nap in the bedroom",
+   "room": 1,
+   "free": true,
+   "offers": [
+    8,
+    0,
+    0,
+    5,
+    0,
+    0
+   ],
+   "required_item": 50,
+   "start": 36,
+   "count": 5,
+   "trigger": 0,
+   "cooldown_ms": 180000,
+   "drink_bonus": 0,
+   "avg_ms": 34566,
+   "outdoor": false
+  },
+  {
+   "id": "deluxe_nap",
+   "title": "Enjoy the soft bed",
+   "room": 1,
+   "free": true,
+   "offers": [
+    9,
+    0,
+    0,
+    8,
+    0,
+    0
+   ],
+   "required_item": 16,
+   "start": 41,
+   "count": 2,
+   "trigger": 0,
+   "cooldown_ms": 180000,
+   "drink_bonus": 0,
+   "avg_ms": 35700,
+   "outdoor": false
+  },
+  {
+   "id": "bath",
+   "title": "Splash in the bathtub",
+   "room": 2,
+   "free": true,
+   "offers": [
+    0,
+    0,
+    1,
+    8,
+    0,
+    0
+   ],
+   "required_item": 20,
+   "start": 43,
+   "count": 3,
+   "trigger": 0,
+   "cooldown_ms": 180000,
+   "drink_bonus": 0,
+   "avg_ms": 12016,
+   "outdoor": false
+  },
+  {
+   "id": "balcony",
+   "title": "Lounge outside",
+   "room": 3,
+   "free": true,
+   "offers": [
+    3,
+    0,
+    4,
+    6,
+    0,
+    0
+   ],
+   "required_item": -1,
+   "start": 46,
+   "count": 3,
+   "trigger": 0,
+   "cooldown_ms": 180000,
+   "drink_bonus": 0,
+   "avg_ms": 35699,
+   "outdoor": true
+  },
+  {
+   "id": "bay_window",
+   "title": "Watch the bay window",
+   "room": 0,
+   "free": true,
+   "offers": [
+    5,
+    0,
+    6,
+    3,
+    0,
+    0
+   ],
+   "required_item": 21,
+   "start": 49,
+   "count": 2,
+   "trigger": 0,
+   "cooldown_ms": 120000,
+   "drink_bonus": 0,
+   "avg_ms": 14700,
+   "outdoor": false
+  },
+  {
+   "id": "hammock_nap",
+   "title": "Nap in the hammock",
+   "room": 3,
+   "free": true,
+   "offers": [
+    7,
+    0,
+    0,
+    7,
+    0,
+    0
+   ],
+   "required_item": 43,
+   "start": 51,
+   "count": 2,
+   "trigger": 0,
+   "cooldown_ms": 180000,
+   "drink_bonus": 0,
+   "avg_ms": 29866,
+   "outdoor": true
+  },
+  {
+   "id": "laundry_sniff",
+   "title": "Sniff the laundry",
+   "room": 1,
+   "free": true,
+   "offers": [
+    0,
+    0,
+    6,
+    0,
+    0,
+    0
+   ],
+   "required_item": 37,
+   "start": 53,
+   "count": 2,
+   "trigger": 0,
+   "cooldown_ms": 90000,
+   "drink_bonus": 0,
+   "avg_ms": 7000,
+   "outdoor": false
+  },
+  {
+   "id": "grill_sniff",
+   "title": "Sniff the grill",
+   "room": 3,
+   "free": true,
+   "offers": [
+    0,
+    0,
+    5,
+    0,
+    0,
+    0
+   ],
+   "required_item": 49,
+   "start": 55,
+   "count": 2,
+   "trigger": 0,
+   "cooldown_ms": 90000,
+   "drink_bonus": 0,
+   "avg_ms": 7000,
+   "outdoor": true
+  },
+  {
+   "id": "sploot",
+   "title": "Sploot",
+   "room": 255,
+   "free": true,
+   "offers": [
+    3,
+    0,
+    0,
+    5,
+    0,
+    0
+   ],
+   "required_item": -1,
+   "start": 57,
+   "count": 3,
+   "trigger": 0,
+   "cooldown_ms": 120000,
+   "drink_bonus": 0,
+   "avg_ms": 21600,
+   "outdoor": false
+  },
+  {
+   "id": "door_wait",
+   "title": "Wait by the door",
+   "room": 0,
+   "free": true,
+   "offers": [
+    0,
+    0,
+    0,
+    0,
+    6,
+    3
+   ],
+   "required_item": -1,
+   "start": 60,
+   "count": 5,
+   "trigger": 0,
+   "cooldown_ms": 300000,
+   "drink_bonus": 0,
+   "avg_ms": 18700,
+   "outdoor": false
+  },
+  {
+   "id": "treat_jar",
+   "title": "Treat time",
+   "room": 0,
+   "free": false,
+   "offers": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "required_item": 52,
+   "start": 65,
+   "count": 3,
+   "trigger": 1,
+   "cooldown_ms": 180000,
+   "drink_bonus": 0,
+   "avg_ms": 4849,
+   "outdoor": false
+  },
+  {
+   "id": "leash",
+   "title": "Walk time",
+   "room": 0,
+   "free": false,
+   "offers": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "required_item": 53,
+   "start": 68,
+   "count": 8,
+   "trigger": 1,
+   "cooldown_ms": 60000,
+   "drink_bonus": 0,
+   "avg_ms": 23233,
+   "outdoor": false
+  },
+  {
+   "id": "lie_listen",
+   "title": "Listen to the record player",
+   "room": 0,
+   "free": true,
+   "offers": [
+    4,
+    0,
+    0,
+    6,
+    3,
+    0
+   ],
+   "required_item": 54,
+   "start": 76,
+   "count": 2,
+   "trigger": 2,
+   "cooldown_ms": 90000,
+   "drink_bonus": 0,
+   "avg_ms": 15700,
+   "outdoor": false
+  },
+  {
+   "id": "bird_watch",
+   "title": "Watch the birds",
+   "room": 3,
+   "free": false,
+   "offers": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "required_item": 55,
+   "start": 78,
+   "count": 4,
+   "trigger": 3,
+   "cooldown_ms": 0,
+   "drink_bonus": 0,
+   "avg_ms": 8050,
+   "outdoor": true
+  },
+  {
+   "id": "brush",
+   "title": "Brushing",
+   "room": 2,
+   "free": false,
+   "offers": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "required_item": 51,
+   "start": 82,
+   "count": 2,
+   "trigger": 3,
+   "cooldown_ms": 0,
+   "drink_bonus": 0,
+   "avg_ms": 1500,
+   "outdoor": false
+  },
+  {
+   "id": "grass_potty",
+   "title": "Visit the grass",
+   "room": 3,
+   "free": true,
+   "offers": [
+    0,
+    0,
+    4,
+    1,
+    0,
+    0
+   ],
+   "required_item": 56,
+   "start": 84,
+   "count": 5,
+   "trigger": 0,
+   "cooldown_ms": 900000,
+   "drink_bonus": 3,
+   "avg_ms": 9350,
+   "outdoor": true
+  },
+  {
+   "id": "pet",
+   "title": "A pat",
+   "room": 0,
+   "free": false,
+   "offers": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "required_item": -1,
+   "start": 89,
+   "count": 2,
+   "trigger": 3,
+   "cooldown_ms": 0,
+   "drink_bonus": 0,
+   "avg_ms": 2483,
+   "outdoor": false
+  },
+  {
+   "id": "welcome_home",
+   "title": "Welcome home",
+   "room": 0,
+   "free": false,
+   "offers": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "required_item": -1,
+   "start": 91,
+   "count": 4,
+   "trigger": 3,
+   "cooldown_ms": 0,
+   "drink_bonus": 0,
+   "avg_ms": 9300,
+   "outdoor": false
+  },
+  {
+   "id": "golden_balcony",
+   "title": "Watch the sunset from the balcony",
+   "room": 3,
+   "free": false,
+   "offers": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "required_item": -1,
+   "start": 95,
+   "count": 2,
+   "trigger": 3,
+   "cooldown_ms": 0,
+   "drink_bonus": 0,
+   "avg_ms": 1500700,
+   "outdoor": true
+  },
+  {
+   "id": "golden_window",
+   "title": "Watch the sunset from the window",
+   "room": 0,
+   "free": false,
+   "offers": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "required_item": -1,
+   "start": 97,
+   "count": 2,
+   "trigger": 3,
+   "cooldown_ms": 0,
+   "drink_bonus": 0,
+   "avg_ms": 1500700,
+   "outdoor": false
+  },
+  {
+   "id": "under_covers",
+   "title": "Get under the covers",
+   "room": 1,
+   "free": true,
+   "offers": [
+    8,
+    0,
+    0,
+    8,
+    0,
+    0
+   ],
+   "required_item": 50,
+   "start": 99,
+   "count": 6,
+   "trigger": 0,
+   "cooldown_ms": 240000,
+   "drink_bonus": 0,
+   "avg_ms": 40000,
+   "outdoor": false
+  },
+  {
+   "id": "bird_chase",
+   "title": "Chase the birds",
+   "room": 3,
+   "free": false,
+   "offers": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "required_item": 55,
+   "start": 105,
+   "count": 4,
+   "trigger": 3,
+   "cooldown_ms": 0,
+   "drink_bonus": 0,
+   "avg_ms": 3800,
+   "outdoor": true
+  }
+ ],
+ "sounds": [
+  "bird_chirp",
+  "boof_single",
+  "boof_double",
+  "brush_stroke",
+  "treat_catch",
+  "grass_kick",
+  "leash_jingle",
+  "needle_drop",
+  "ball_bounce",
+  "settle"
+ ],
+ "interactions": {
+  "touch_cooldown_ms": 4000,
+  "welcome_gap_minutes": 30,
+  "fetch_window_ms": 300000,
+  "fetch_throws": 4,
+  "fetch_flight_ms": 700,
+  "feeder_visit_ms": 14000,
+  "drink_memory_ms": 120000,
+  "groom_hold_ms": 700,
+  "groom_max_ms": 6000,
+  "bird_shoo_ms": 1400,
+  "bird_shoo_rise_px": 34,
+  "bird_shoo_drift_px": 48,
+  "go_sniff_ms": 2400,
+  "go_sit_ms": 3000,
+  "go_sniff_weight": 3,
+  "go_sit_weight": 1
+ },
+ "static_blocked": [
+  [
+   0,
+   2
+  ],
+  [
+   0,
+   3
+  ],
+  [
+   0,
+   7
+  ],
+  [
+   0,
+   8
+  ],
+  [
+   0,
+   11
+  ],
+  [
+   0,
+   12
+  ],
+  [
+   1,
+   3
+  ],
+  [
+   1,
+   8
+  ],
+  [
+   5,
+   0
+  ],
+  [
+   6,
+   0
+  ],
+  [
+   7,
+   0
+  ],
+  [
+   8,
+   0
+  ],
+  [
+   9,
+   0
+  ],
+  [
+   9,
+   5
+  ],
+  [
+   9,
+   6
+  ],
+  [
+   9,
+   7
+  ],
+  [
+   10,
+   4
+  ],
+  [
+   10,
+   5
+  ],
+  [
+   10,
+   6
+  ],
+  [
+   10,
+   7
+  ],
+  [
+   11,
+   3
+  ],
+  [
+   11,
+   4
+  ],
+  [
+   11,
+   5
+  ],
+  [
+   11,
+   6
+  ],
+  [
+   11,
+   7
+  ]
+ ]
+}
