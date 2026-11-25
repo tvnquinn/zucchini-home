@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f7f0e7">
+  <title>Zucchini’s places</title>
+  <style>
+    :root{color:#382d2e;background:#f7f0e7;font-family:system-ui,-apple-system,sans-serif;font-size:16px}
+    *{box-sizing:border-box}body{margin:0}main{max-width:1080px;margin:auto;padding:20px max(14px,env(safe-area-inset-left)) 30px}header{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}h1{font-size:clamp(24px,4vw,32px);margin:0;letter-spacing:-.04em}
+    a{color:#203653;font-weight:650;text-decoration:none}a:hover{text-decoration:underline}
+    nav{display:flex;gap:7px;flex-wrap:wrap;margin:18px 0 12px}button{font:inherit;cursor:pointer;color:inherit;border:1px solid #d9c5b2;background:#fffaf3;border-radius:10px;padding:10px 13px;min-height:44px;font-size:14px;font-weight:600}button[aria-pressed=true]{background:#203653;color:white;border-color:#203653}button:focus-visible,a:focus-visible{outline:3px solid #b57c45;outline-offset:3px}
+    .scene-grid{display:grid;grid-template-columns:minmax(0,1fr) 248px;gap:22px;align-items:start}
+    .scene{min-width:0}canvas#screen{display:block;width:100%;height:auto;aspect-ratio:3/2;background:#e8e0d1;border-radius:14px;image-rendering:pixelated;box-shadow:0 12px 28px #80543a20}
+    .scene-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 10px}h2{font-size:21px;margin:0;letter-spacing:-.02em}.status{font-size:12px;color:#685b51;background:#eee4d7;border-radius:20px;padding:5px 10px;font-weight:650}
+    p{line-height:1.45;color:#716158;margin:10px 0;font-size:14px}.objects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.object{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:100px;padding:7px 4px;font-size:12px;text-align:center}.object canvas{width:64px;height:62px;image-rendering:pixelated}
+    .object[aria-pressed=true]{background:#e6ddcf;color:#382d2e;border-color:#997d63}.object[aria-pressed=true] canvas{background:transparent}#note{min-height:42px}.description{margin-top:6px}
+    @media(max-width:760px){.scene-grid{grid-template-columns:1fr;gap:16px}.objects{grid-template-columns:repeat(3,minmax(0,1fr))}nav{flex-wrap:nowrap;overflow-x:auto;padding-bottom:3px;scrollbar-width:thin}nav button{flex-shrink:0}.object{min-height:88px}header{align-items:flex-start}}
+  </style>
+</head>
+<body data-art-base="../assets/destinations-ee23556f9cb1/">
+<main>
+  <header><h1>Zucchini’s places</h1><a id="back" href="../">← Home</a></header>
+  <nav id="tabs" aria-label="Choose a destination"></nav>
+  <div class="scene-grid">
+    <section class="scene">
+      <div class="scene-heading"><h2 id="title">Loading places…</h2><span class="status" id="status"></span></div>
+      <canvas id="screen" width="480" height="320" role="img" aria-label="Destination layout"></canvas>
+      <p class="description" id="description">Explore the furnished layouts. This preview does not spend an activity invitation.</p>
+      <p id="error" role="alert"></p>
+    </section>
+    <aside>
+      <h2>Scene objects</h2>
+      <p>Tap an object to see where it sits.</p>
+      <div id="objects" class="objects"></div>
+      <p id="note" aria-live="polite"></p>
+    </aside>
+  </div>
+</main>
+<script type="module">
+const $=id=>document.getElementById(id), base=document.body.dataset.artBase;
+const canvas=$("screen"),ctx=canvas.getContext("2d"), images=new Map(), embedded=globalThis.zucchiniPlaceEmbedded;
+const descriptions={
+  park:"The playable Run outing: trees, a bench, shrubs and a pond with reeds. Tap the trees or grass in the actual park to interact with Zuzu.",
+  neighborhood:"A quiet San Francisco block with Victorian houses, a lamp, mailbox, leafy tree, hydrant and railing.",
+  beach:"Coastal views, an umbrella and chair, boardwalk, shells, driftwood and a sandcastle.",
+  office:"A full workstation with separate chair, mug, corgi badge, snack drawer and Zuzu’s tiny desk.",
+  agility:"Five agility obstacles in an open grass course: jump, tunnel, weave poles, ramp and hoop."
+};
+const query=new URLSearchParams(location.search);
+if(query.get("from")==="trial") $("back").href="../trial/";
+let manifest,scene,atlas,dog,selection=null,revision=0;
+const getImage=async name=>{
+  if(!images.has(name)){
+    const promise=new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=reject;img.src=embedded?.images[name]??base+name;});
+    images.set(name,promise);
+    promise.catch(()=>images.delete(name));
+  }
+  return images.get(name);
+};
+function draw(now){
+  if(!scene||!atlas||!dog)return;
+  ctx.imageSmoothingEnabled=false;
+  ctx.drawImage(atlas,...scene.background,0,0,480,320);
+  const layers=scene.placements.map(p=>{
+    const f=scene.objects[p.object].frames[p.facing], [,,w,h]=f.rect;
+    return {p,f,src:atlas,z:p.y+(p.surface?50:0),box:[p.x-f.anchor[0]*p.scale,p.y-f.anchor[1]*p.scale,w*p.scale,h*p.scale]};
+  });
+  const [x,y,scale]=scene.dog, sc=scale*manifest.dog.scale;
+  const frame=manifest.dog.frames[Math.floor(now/400)%manifest.dog.frames.length];
+  layers.push({f:{rect:frame},src:dog,z:y,box:[x-manifest.dog.anchor[0]*sc,y-manifest.dog.anchor[1]*sc,frame[2]*sc,frame[3]*sc]});
+  layers.sort((a,b)=>a.z-b.z);
+  for(const layer of layers)ctx.drawImage(layer.src,...layer.f.rect,...layer.box);
+  if(selection){
+    ctx.strokeStyle="#fffaf3";ctx.lineWidth=2;ctx.setLineDash([4,4]);
+    for(const l of layers)if(l.p?.object===selection)ctx.strokeRect(l.box[0]-2,l.box[1]-2,l.box[2]+4,l.box[3]+4);
+    ctx.setLineDash([]);
+  }
+}
+function pick(id){
+  selection=selection===id?null:id;
+  for(const b of $("objects").children)b.setAttribute("aria-pressed",String(b.dataset.object===selection));
+  const o=scene.objects[selection];$("note").textContent=o?(o.note||o.title):"";
+}
+function objectButtons(){
+  $("objects").replaceChildren();
+  for(const [id,obj] of Object.entries(scene.objects)){
+    const button=document.createElement("button");button.className="object";button.dataset.object=id;button.setAttribute("aria-pressed","false");
+    const thumb=document.createElement("canvas");thumb.width=64;thumb.height=62;
+    const c=thumb.getContext("2d"),r=obj.frames.SE.rect,scale=Math.min(58/r[2],54/r[3]);
+    c.imageSmoothingEnabled=false;c.drawImage(atlas,...r,(64-r[2]*scale)/2,(62-r[3]*scale)/2,r[2]*scale,r[3]*scale);
+    const label=document.createElement("span");label.textContent=obj.title;
+    button.append(thumb,label);button.onclick=()=>pick(id);$("objects").append(button);
+  }
+}
+async function show(id){
+  const token=++revision,s=manifest.scenes[id];if(!s)return;
+  try{
+    const image=await getImage(s.image);
+    if(token!==revision)return;
+    scene=s;atlas=image;selection=null;$("note").textContent="";$("error").textContent="";
+    $("title").textContent=s.title;$("status").textContent=id==="park"?"Playable after a run":"Layout preview";
+    $("description").textContent=descriptions[id];
+    canvas.setAttribute("aria-label",s.title+" with Zucchini and all placed scenery");
+    for(const b of $("tabs").children)b.setAttribute("aria-pressed",String(b.dataset.scene===id));
+    objectButtons();draw(performance.now());
+  }catch{if(token===revision)$("error").textContent="Could not load this scene. Tap its name to retry.";}
+}
+async function main(){
+  if(embedded)manifest=embedded.manifest;
+  else {const r=await fetch(base+"destinations.json");if(!r.ok)throw Error("Could not load the places.");manifest=await r.json();}
+  if(manifest.schema!==1)throw Error("Unsupported places layout.");
+  dog=await getImage(manifest.dog.image);
+  for(const [id,s] of Object.entries(manifest.scenes)){
+    const b=document.createElement("button");b.dataset.scene=id;b.textContent=s.title;b.setAttribute("aria-pressed","false");b.onclick=()=>show(id);$("tabs").append(b);
+  }
+  await show(manifest.scenes[query.get("scene")]?query.get("scene"):"park");
+  const frame=now=>{draw(now);requestAnimationFrame(frame);};requestAnimationFrame(frame);
+}
+main().catch(e=>$("error").textContent=e.message);
+</script>
+</body>
+</html>

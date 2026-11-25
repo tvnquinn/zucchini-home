@@ -79,6 +79,7 @@
     .dreaded-check { display: flex; align-items: center; gap: 4px; white-space: nowrap; font-size: 13px; } .dreaded-check input { min-height: 0; }
     .activities { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
     .activity { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; padding: 8px; border: 1px solid #d5bba980; border-radius: 12px; min-width: 150px; }
+    .places-link { display: inline-block; color: #203653; font-weight: 600; text-decoration: none; background: #fffaf3; border: 1px solid var(--line); padding: 10px 16px; border-radius: 10px; margin: 6px 0; } .places-link:hover { background: #ece3d7; }
     .activity .unlock { font-size: 12px; color: var(--muted); } .activity .unlock .soon { border: 1px solid var(--line); border-radius: 8px; padding: 0 5px; margin-left: 4px; font-size: 11px; }
     .activity .pin { display: none; font-size: 12px; min-height: 28px; padding: 2px 8px; } .editing-pins .activity .pin { display: inline-block; }
     #edit-pins { font-size: 12px; min-height: 28px; padding: 2px 10px; } #edit-pins[aria-pressed="true"] { background: #203653; color: #fffaf3; }
@@ -164,6 +165,7 @@
     </div>
     <nav id="room-view" aria-label="View a room" class="chips"></nav>
     <nav id="rooms" aria-label="Shop and arrange" class="chips"><button id="shop" disabled>Shop</button><button id="arrange" aria-pressed="false" disabled>Arrange</button></nav>
+    <a class="places-link" href="../places/?from=trial" target="_blank" rel="noopener">Places <span aria-hidden="true">↗</span></a>
     <div id="message" role="status" aria-live="polite">Settling in…</div>
     <div id="error" role="alert"></div>
     <button id="recovery" hidden>Retry save</button>
@@ -216,8 +218,7 @@
     <p class="credit muted"><small>Weather: <a href="https://open-meteo.com/" rel="noopener">Open-Meteo.com</a> (CC BY 4.0)</small></p>
     <div id="hud" hidden></div>
   </main>
-  <script>globalThis.zucchiniRelease={"version":"7c78d99c8247","updateURL":"release.json","generatedBase":"../assets/art-a8dd05d0bc63/","audioBase":"../assets/audio-e65c82bd7384/","atlasParts":7,"atlasLength":5882240,"audioChunks":{"music/room_lofi_01.mp3":14,"sfx/rain_window_loop.mp3":2}};</script>
-<script type="module" src="../releases/7c78d99c8247/main.js"></script>
+  <script>globalThis.zucchiniRelease={"version":"263db874891b","updateURL":"release.json","generatedBase":"../assets/art-a8dd05d0bc63/","audioBase":"../assets/audio-e65c82bd7384/","destinationsBase":"../assets/destinations-ee23556f9cb1/","atlasParts":7,"atlasLength":5882240,"audioChunks":{"music/room_lofi_01.mp3":14,"sfx/rain_window_loop.mp3":2}};</script>
+<script type="module" src="../releases/263db874891b/main.js"></script>
 </body>
 </html>
-
