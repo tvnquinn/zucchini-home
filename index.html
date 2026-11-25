@@ -80,7 +80,7 @@
     .activities { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
     .activity { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; padding: 8px; border: 1px solid #d5bba980; border-radius: 12px; min-width: 150px; }
     .places-link { display: inline-block; color: #203653; font-weight: 600; text-decoration: none; background: #fffaf3; border: 1px solid var(--line); padding: 10px 16px; border-radius: 10px; margin: 6px 0; } .places-link:hover { background: #ece3d7; }
-    .activity .unlock { font-size: 12px; color: var(--muted); } .activity .unlock .soon { border: 1px solid var(--line); border-radius: 8px; padding: 0 5px; margin-left: 4px; font-size: 11px; }
+    .outing-visit { font-size: 12px; min-height: 36px; margin: 3px 0 0 4px; padding: 5px 8px; } #outing-actions { padding:12px; background:var(--frame); border:1px solid var(--line); border-radius:12px; margin:8px 0; } #outing-title { font-weight:700; margin:0; } #outing-progress { margin:3px 0; font-weight:600; } #outing-hint { margin:5px 0 8px; } #outing-panel { margin:10px 0; } #outing-panel h2 { font-size:16px; margin:0 0 6px; } .activity .unlock { font-size: 12px; color: var(--muted); } .activity .unlock .soon { border: 1px solid var(--line); border-radius: 8px; padding: 0 5px; margin-left: 4px; font-size: 11px; }
     .activity .pin { display: none; font-size: 12px; min-height: 28px; padding: 2px 8px; } .editing-pins .activity .pin { display: inline-block; }
     #edit-pins { font-size: 12px; min-height: 28px; padding: 2px 10px; } #edit-pins[aria-pressed="true"] { background: #203653; color: #fffaf3; }
     .activity-tools { display: flex; align-items: flex-start; gap: 8px; } .activity-tools details { margin-top: 0; flex: 1; min-width: 0; }
@@ -154,6 +154,10 @@
       <output id="coins" aria-label="Coin balance">0 coins</output>
       <button id="reset-view" hidden>Reset view</button>
     </div>
+    <section id="outing-actions" hidden aria-label="Outing activities">
+      <p id="outing-title"></p><p id="outing-progress" role="status"></p><p id="outing-hint" class="muted"></p>
+      <div class="chips"><button id="outing-primary">Explore</button><button id="outing-secondary" hidden>Rest</button></div>
+    </section>
     <div id="arrange-bar" class="arrange-bar" hidden>
       <span id="arrange-hint">Tap a piece, then drag or rotate it. Green means it fits; touch and hold to drag.</span>
       <button id="arrange-rotate" disabled>Rotate</button><button id="arrange-undo" disabled>Undo</button><button id="arrange-reset">Reset layout</button><button id="arrange-done">Done</button>
@@ -165,7 +169,9 @@
     </div>
     <nav id="room-view" aria-label="View a room" class="chips"></nav>
     <nav id="rooms" aria-label="Shop and arrange" class="chips"><button id="shop" disabled>Shop</button><button id="arrange" aria-pressed="false" disabled>Arrange</button></nav>
-    <a class="places-link" href="places/" target="_blank" rel="noopener">Places <span aria-hidden="true">↗</span></a>
+    <a class="places-link" href="places/" target="_blank" rel="noopener">Places · arrange layouts <span aria-hidden="true">↗</span></a>
+    <section id="outing-panel" hidden aria-label="Earned outings"><h2>Ready to visit</h2><div class="chips" id="outing-list"></div></section>
+    <div id="trial-outings" class="chips" hidden><label>Try a destination <select id="trial-destination"><option value="neighborhood">Neighborhood</option><option value="agility">Agility course</option><option value="office">Office</option><option value="beach">Beach</option></select></label> <button id="trial-visit">Try outing</button> <small>Practice all four destinations without earning an invitation.</small></div>
     <div id="message" role="status" aria-live="polite">Settling in…</div>
     <div id="error" role="alert"></div>
     <button id="recovery" hidden>Retry save</button>
@@ -194,7 +200,7 @@
       <div class="save-controls"><button id="export" disabled>Export save</button><button id="import" disabled>Import save</button><button id="confirm-import" hidden>Restore this save</button><button id="cancel-import" hidden>Keep current progress</button></div>
       <input id="import-file" type="file" accept=".zucchini,.zuzu,application/octet-stream" hidden>
       <p id="import-preview" role="status"></p>
-      <p class="muted">Workouts from a file count once each: a run, pickleball or tennis match, or gym session pays its usual reward, and a run also unlocks one pending park outing. Importing a file again never pays twice.</p>
+      <p class="muted">Workouts from a file count once each: a run, pickleball or tennis match, or gym session pays its usual reward, and completed activities can unlock outings. Importing a file again never pays twice.</p>
       <div class="save-controls"><button id="import-workouts" disabled>Import workouts</button></div>
       <p class="muted">Imported workouts are counted separately from runs you log by hand.</p>
       <input id="workouts-file" type="file" accept=".jsonl,.json,.txt,application/json,text/plain" hidden>
@@ -218,7 +224,7 @@
     <p class="credit muted"><small>Weather: <a href="https://open-meteo.com/" rel="noopener">Open-Meteo.com</a> (CC BY 4.0)</small></p>
     <div id="hud" hidden></div>
   </main>
-  <script>globalThis.zucchiniRelease={"version":"485a3dc3a59d","updateURL":"release.json","generatedBase":"assets/art-a8dd05d0bc63/","audioBase":"assets/audio-e65c82bd7384/","destinationsBase":"assets/destinations-cb1d4563e9ef/","atlasParts":7,"atlasLength":5882240,"audioChunks":{"music/room_lofi_01.mp3":14,"sfx/rain_window_loop.mp3":2}};</script>
-<script type="module" src="releases/485a3dc3a59d/main.js"></script>
+  <script>globalThis.zucchiniRelease={"version":"dcc0a8d60507","updateURL":"release.json","generatedBase":"assets/art-a8dd05d0bc63/","audioBase":"assets/audio-e65c82bd7384/","destinationsBase":"assets/destinations-cb1d4563e9ef/","atlasParts":7,"atlasLength":5882240,"audioChunks":{"music/room_lofi_01.mp3":14,"sfx/rain_window_loop.mp3":2}};</script>
+<script type="module" src="releases/dcc0a8d60507/main.js"></script>
 </body>
 </html>

@@ -40,9 +40,10 @@
   </div>
 </main>
 <script type="module">
-import {placeLayoutKey,readPlaceLayouts,placeFacings,placeBox,placeAnchorValid,placeMovable,resolvePlaceLayout,placePlacementValid,placeTransforms} from "../releases/b4ddc58072e4/places_layout.js";
+import {placeLayoutKey,readPlaceLayouts,placeFacings,placeBox,placeAnchorValid,placeMovable,resolvePlaceLayout,placePlacementValid,placeTransforms} from "../releases/01515be907a1/places_layout.js";
 const $=id=>document.getElementById(id), base=document.body.dataset.artBase;
 const canvas=$("screen"),ctx=canvas.getContext("2d"), images=new Map(), embedded=globalThis.zucchiniPlaceEmbedded;
+const accessNotes={park:"Run",neighborhood:"20,000 steps",beach:"All three workout types",office:"Office day",agility:"Gym"};
 const descriptions={
   park:"The playable Run outing: keep the native bench and sniffing spots in place; move decorative trees and reeds or rotate the objects.",
   neighborhood:"A quiet San Francisco block with Victorian houses, curbside amenities and three street trees. The front steps remain clear.",
@@ -209,8 +210,8 @@ async function show(id){
     scene=s;sceneId=id;atlas=image;selection=null;assetSelection=null;drag=null;$("arrange").disabled=false;
     placements=resolvePlaceLayout(s,readPlaceLayouts(localStorage,trial)[id]);
     $("note").textContent="";$("error").textContent="";
-    $("title").textContent=s.title;$("status").textContent=id==="park"?"Playable after a run":"Layout preview";
-    $("description").textContent=descriptions[id];
+    $("title").textContent=s.title;$("status").textContent="Playable · "+accessNotes[id];
+    $("description").textContent=descriptions[id]+" Arrange the layout here; visit it in the game under Ready to visit once earned.";
     canvas.setAttribute("aria-label",s.title+" with Zucchini and all placed scenery");
     for(const b of $("tabs").children)b.setAttribute("aria-pressed",String(b.dataset.scene===id));
     objectButtons();updateControls();draw(performance.now());
