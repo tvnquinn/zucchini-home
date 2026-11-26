@@ -151,6 +151,9 @@
     .build-info { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 12px; }
     #update-build { font-size: 12px; font-weight: 650; min-height: 36px; }
     .save-state { font-size: 12px; color: var(--muted); }
+    #sync-panel { margin: 10px 0 14px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+    #sync-panel p { margin: 6px 0 0; } .sync-code { font-family: ui-monospace, Menlo, monospace; word-break: break-all; user-select: all; }
+    #sync-code-input { min-height: 40px; padding: 0 10px; font: inherit; flex: 1 1 200px; }
     .save-controls { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
     .credit { margin: 0; font-size: 11px; } .credit a { color: inherit; }
     #hud { margin-top: 12px; font-size: 11px; } #dev { padding: 12px; background: #f1e7d9; border-radius: 12px; } #dev small { display: block; }
@@ -318,9 +321,26 @@
       </div>
       <button id="arrange-drawer">Arrange furniture</button>
       <div><a class="places-link" href="places/" target="_blank" rel="noopener">Places · arrange layouts <span aria-hidden="true">↗</span></a></div>
-      <details><summary>Save &amp; restore · <span id="save-state" class="save-state">Loading…</span></summary>
+      <details id="save-details"><summary>Save &amp; restore · <span id="save-state" class="save-state">Loading…</span></summary>
         <p class="muted">Saved on this browser. Export a copy to keep or move your progress. Reloading resumes your focus; importing a backup interrupts an unfinished focus without coins.</p>
         <p class="muted">On a phone, add this app to your Home Screen and use Export to keep a backup.</p>
+        <div id="sync-panel">
+          <strong>Sync between devices</strong> <span id="sync-state" class="save-state" role="status"></span>
+          <p id="sync-help" class="muted">Keep one home on your phone and desktop. No account: a private code links your devices. Your saves are also stored on a sync server, under that code only.</p>
+          <div id="sync-setup" class="save-controls"><button id="sync-on">Turn on sync</button><button id="sync-join">Join with a code</button></div>
+          <form id="sync-join-form" class="save-controls" hidden><input id="sync-code-input" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Sync code" aria-label="Sync code"><button type="submit" id="sync-join-go">Join</button><button type="button" id="sync-join-cancel">Cancel</button></form>
+          <div id="sync-active" hidden>
+            <div class="save-controls"><button id="sync-copy">Copy link for another device</button><button id="sync-show">Show code</button><button id="sync-off">Turn off sync on this device</button></div>
+            <p id="sync-code-text" class="muted sync-code" hidden></p>
+          </div>
+          <div id="sync-conflict" hidden role="alert">
+            <p>Both devices have new progress. Which one do you want to keep?</p>
+            <p id="sync-conflict-mine"></p><p id="sync-conflict-theirs"></p>
+            <div class="save-controls"><button id="sync-keep-mine">Keep this device's</button><button id="sync-keep-theirs">Use the other device's</button></div>
+            <p class="muted">The copy you don't keep is replaced.</p>
+          </div>
+          <p id="sync-message" class="muted" role="status"></p>
+        </div>
         <div class="save-controls"><button id="export" disabled>Export save</button><button id="import" disabled>Import save</button><button id="confirm-import" hidden>Restore this save</button><button id="cancel-import" hidden>Keep current progress</button></div>
         <input id="import-file" type="file" accept=".zucchini,.zuzu,application/octet-stream" hidden>
         <p id="import-preview" role="status"></p>
@@ -342,7 +362,7 @@
     <div id="shop-backdrop" hidden></div>
     <div id="hud" hidden></div>
   </main>
-  <script>globalThis.zucchiniRelease={"version":"4ce964c19b98","updateURL":"release.json","generatedBase":"assets/art-79eb92c018e8/","audioBase":"assets/audio-e65c82bd7384/","destinationsBase":"assets/destinations-cb1d4563e9ef/","atlasParts":7,"atlasLength":5882240,"audioChunks":{"music/room_lofi_01.mp3":14,"sfx/rain_window_loop.mp3":2}};</script>
-<script type="module" src="releases/4ce964c19b98/main.js"></script>
+  <script>globalThis.zucchiniRelease={"version":"eb635057031a","updateURL":"release.json","generatedBase":"assets/art-a9e34e15b637/","audioBase":"assets/audio-e65c82bd7384/","destinationsBase":"assets/destinations-cb1d4563e9ef/","atlasParts":7,"atlasLength":5882240,"audioChunks":{"music/room_lofi_01.mp3":14,"sfx/rain_window_loop.mp3":2},"syncURL":"https://zucchini-sync.zucchini-sync.workers.dev"};</script>
+<script type="module" src="releases/eb635057031a/main.js"></script>
 </body>
 </html>
