@@ -58,7 +58,7 @@
     #room-select { field-sizing: content; max-width: 160px; text-overflow: ellipsis; height: 36px; min-height: 36px; padding: 0 30px 0 12px; border-radius: 18px; font-size: 13px; font-weight: 700; appearance: none; -webkit-appearance: none;
       background: var(--frame) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%233c3033' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center; }
     #scene-tools .spacer { flex: 1; }
-    #scene-shop, #scene-more { display: none; border-radius: 22px; }
+    #scene-shop, #scene-games, #scene-more { display: none; border-radius: 22px; }
     #antic-prompt{position:absolute;left:10px;right:10px;top:54px;gap:8px;justify-content:center;z-index:3}#antic-prompt:not([hidden]){display:flex}
     #antic-prompt button{flex:1;max-width:200px;min-height:44px;border-radius:22px;font-size:15px;font-weight:700;background:var(--frame)}
     #scene-actions { position: absolute; left: 10px; bottom: 10px; display: flex; gap: 8px; }
@@ -178,6 +178,35 @@
     .book-cell.unfound { color: var(--muted); } .book-name { text-align: center; font-weight: 650; }
     .book-count { position: absolute; top: 4px; right: 6px; font-weight: 700; font-size: 12px; }
     #book-detail { min-height: 2.6em; margin: 0; } #book-summary, #book-place-count { margin: 0; font-weight: 600; }
+    /* Games: a shelf like the treasure book, and a full-screen view with the canvas centred under a top bar. */
+    body.games-open { overflow: hidden; }
+    #games-backdrop { position: fixed; inset: 0; z-index: 30; background: #3c303373; }
+    #games-panel { position: fixed; z-index: 31; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(94vw, 520px); max-height: 88vh; overflow-y: auto; overscroll-behavior: contain; padding: 16px; background: var(--frame); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 14px 36px #3c303340; }
+    #games-panel > * + * { margin-top: 10px; } #games-panel p { margin: 0; }
+    #games-list { display: grid; gap: 8px; }
+    .game-row { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid var(--soft); border-radius: 12px; }
+    .game-text { flex: 1; min-width: 0; } .game-text h3 { margin: 0; font-size: 15px; } .game-text p { margin: 2px 0 0; font-size: 13px; } .game-best { color: var(--muted); font-weight: 600; }
+    .game-play { flex: none; min-width: 72px; min-height: 44px; border-radius: 22px; font-weight: 700; }
+    #game-view { position: fixed; inset: 0; z-index: 40; display: flex; flex-direction: column; background: var(--bg); touch-action: none; user-select: none; -webkit-user-select: none; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+    #game-bar { flex: none; height: 52px; display: flex; align-items: center; gap: 12px; padding: 0 12px; }
+    #game-title { font-size: 15px; white-space: nowrap; } #game-hud { flex: 1; min-width: 0; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    #game-close { min-height: 40px; padding: 0 14px; border-radius: 20px; }
+    #game-stage { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
+    #game-canvas { display: block; touch-action: none; image-rendering: pixelated; background: #cfe3c0; border-radius: 14px; box-shadow: 0 6px 16px #80543a22; }
+    #game-card { position: absolute; z-index: 1; left: 50%; top: 52%; transform: translate(-50%, -50%); width: min(88vw, 360px); max-height: 80%; overflow-y: auto; padding: 14px 16px; text-align: center; background: var(--frame); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 14px 36px #3c303340; touch-action: auto; }
+    #game-card p { margin: 4px 0; } #game-card h2 { font-size: 17px; }
+    #game-card-flag { font-weight: 800; color: var(--coin); } #game-card-score { font-size: 24px; font-weight: 800; } #game-card-note { font-size: 11px; }
+    .game-actions { display: flex; gap: 8px; justify-content: center; margin-top: 10px; flex-wrap: wrap; } .game-actions button { min-height: 44px; padding: 0 18px; border-radius: 22px; font-weight: 700; }
+    #game-start { background: var(--ink); color: #fff; }
+    @media (max-height: 420px) { #game-bar { height: 44px; } #game-card { padding: 8px 12px; max-height: 94%; } #game-card p { margin: 2px 0; } #game-card-score { font-size: 20px; } .game-actions { margin-top: 6px; } }
+    /* A phone on its side: the game takes the full height and the bar moves into the side margins. */
+    @media (orientation: landscape) and (max-height: 500px) and (min-aspect-ratio: 2/1) {
+      #game-bar { position: absolute; inset: env(safe-area-inset-top) calc(env(safe-area-inset-right) + 8px) auto calc(env(safe-area-inset-left) + 8px); height: auto; padding: 8px 0; align-items: flex-start; pointer-events: none; z-index: 2; }
+      #game-bar > * { pointer-events: auto; }
+      #game-title { display: block; width: 17vw; white-space: normal; font-size: 14px; }
+      #game-hud { position: absolute; top: 34px; left: 0; width: 17vw; flex: none; text-align: left; white-space: normal; font-size: 13px; }
+      #game-close { margin-left: auto; }
+    }
     body.drawer-open { overflow: hidden; }
     @keyframes drawer-in { from { transform: translateX(100%); } }
     @media (prefers-reduced-motion: reduce) { #shop-panel.open, #more-panel.open { animation: none; } }
@@ -186,7 +215,7 @@
     @media (max-width: 999px) {
       main { max-width: 640px; }
       #scene-tools { display: flex; }
-      #shop span.label { display: none; }
+      #shop span.label, #games-open span.label { display: none; }
       #shop-panel, #more-panel { position: fixed; z-index: 20; top: 0; right: 0; bottom: 0; left: auto; width: min(88vw, 380px); max-height: none; margin: 0; overflow-y: auto; overscroll-behavior: contain;
         border-radius: 16px 0 0 16px; box-shadow: -10px 0 30px #3c303340;
         padding: calc(14px + env(safe-area-inset-top)) calc(12px + env(safe-area-inset-right)) calc(14px + env(safe-area-inset-bottom)) 12px; }
@@ -196,7 +225,7 @@
       #activities h2 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
       #activity-row { padding: 0 0 6px; }
     }
-    @media (max-width: 520px) { h1 { font-size: 18px; } #coins { font-size: 13px; padding: 5px 10px; } .scene canvas { border-radius: 14px; } }
+    @media (max-width: 520px) { h1 { font-size: 17px; white-space: nowrap; } header { gap: 6px; } header .head-btn { width: 40px; }  #coins { font-size: 13px; padding: 5px 10px; } .scene canvas { border-radius: 14px; } }
 
     /* Desktop: room tabs in the header, the room beside a column of cards. */
     @media (min-width: 1000px) {
@@ -241,7 +270,7 @@
       #arrange-bar button, #outing-actions button { min-height: 32px; padding: 2px 8px; font-size: 12px; }
       #outing-actions p { margin: 0; }
       #antic-prompt { top: auto; bottom: 56px; }
-      #scene-shop, #scene-more { display: inline-flex; }
+      #scene-shop, #scene-games, #scene-more { display: inline-flex; }
       #task-column { margin-left: calc(var(--room-w, 60vw) + 8px); min-height: 100lvh; padding: 6px 4px 24px 0; display: flex; flex-direction: column; gap: 6px; font-size: 12px; }
       #task-column .card { margin: 0; padding: 6px; border-radius: 10px; }
       #task-column button, #task-column select { min-height: 32px; font-size: 12px; }
@@ -274,6 +303,7 @@
       <output id="coins" aria-label="Coin balance">0 coins</output>
       <button id="arrange" class="head-btn" aria-pressed="false" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M3 12h18M12 3l-3 3M12 3l3 3M12 21l-3-3M12 21l3-3M3 12l3-3M3 12l3 3M21 12l-3-3M21 12l-3 3"/></svg><span id="arrange-label" class="label">Arrange</span></button>
       <button id="shop" class="head-btn" aria-label="Open shop" aria-expanded="false" aria-controls="shop-panel" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="label">Shop</span></button>
+      <button id="games-open" class="head-btn" aria-label="Open games"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7" width="19" height="10" rx="5"/><path d="M8 10v4M6 12h4"/><circle cx="15.5" cy="11" r=".6"/><circle cx="17.5" cy="13" r=".6"/></svg><span class="label">Games</span></button>
       <button id="menu-toggle" class="head-btn" aria-label="More" aria-expanded="false" aria-controls="more-panel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </header>
     <div class="workspace">
@@ -285,6 +315,7 @@
         <select id="room-select" aria-label="Room"></select>
         <span class="spacer"></span>
         <button id="scene-shop" class="head-btn" aria-label="Open shop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></button>
+        <button id="scene-games" class="head-btn" aria-label="Open games"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7" width="19" height="10" rx="5"/><path d="M8 10v4M6 12h4"/><circle cx="15.5" cy="11" r=".6"/><circle cx="17.5" cy="13" r=".6"/></svg></button>
         <button id="scene-more" class="head-btn" aria-label="More"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
       </div>
       <div id="find-toast" role="status" aria-live="polite" hidden><span id="find-icon" class="treasure-icon" aria-hidden="true"></span><div><p id="find-text"></p><p id="find-line"></p></div></div>
@@ -298,7 +329,7 @@
     <section id="outing-panel" hidden aria-label="Earned outings"><h2>Ready to visit</h2><div id="outing-list"></div></section>
     <section id="outing-actions" hidden aria-label="Outing activities">
       <p id="outing-title"></p><p id="outing-progress" role="status"></p><p id="outing-hint" class="muted"></p>
-      <div class="chips"><button id="outing-primary">Explore</button><button id="outing-secondary" hidden>Rest</button><button id="outing-book">Treasure book</button></div>
+      <div class="chips"><button id="outing-primary">Explore</button><button id="outing-secondary" hidden>Rest</button><button id="outing-book">Treasure book</button><button id="outing-games">Games</button></div>
     </section>
     <div id="arrange-bar" class="arrange-bar" hidden>
       <span id="arrange-hint">Tap a piece, then drag or rotate it. Green means it fits; touch and hold to drag.</span>
@@ -344,6 +375,7 @@
       </div>
       <button id="arrange-drawer">Arrange furniture</button>
       <button id="book-open">Treasure book</button>
+      <button id="more-games">Games</button>
       <div><a class="places-link" href="../places/?from=trial" target="_blank" rel="noopener">Places · arrange layouts <span aria-hidden="true">↗</span></a></div>
       <details id="save-details"><summary>Save &amp; restore · <span id="save-state" class="save-state">Loading…</span></summary>
         <p class="muted">Saved on this browser. Export a copy to keep or move your progress. Reloading resumes your focus; importing a backup interrupts an unfinished focus without coins.</p>
@@ -394,9 +426,26 @@
       <div id="book-grid"></div>
       <p id="book-detail" class="muted" role="status"></p>
     </aside>
+    <div id="games-backdrop" hidden></div>
+    <aside id="games-panel" role="dialog" aria-modal="true" aria-labelledby="games-heading" hidden>
+      <div class="panel-head"><h2 id="games-heading">Games</h2><button id="close-games">Close</button></div>
+      <p id="games-note" class="muted" role="status" hidden></p>
+      <div id="games-list"></div>
+      <p class="muted"><small>Just for fun: games never pay coins.</small></p>
+    </aside>
+    <div id="game-view" role="dialog" aria-modal="true" aria-labelledby="game-title" hidden>
+      <div id="game-bar"><strong id="game-title"></strong><span id="game-hud" role="status"></span><button id="game-close">Close</button></div>
+      <div id="game-stage"><canvas id="game-canvas" width="480" height="320" aria-label="Game"></canvas></div>
+      <div id="game-card" hidden>
+        <h2 id="game-card-title"></h2><p id="game-card-flag"></p><p id="game-card-score"></p>
+        <p id="game-card-how"></p><p id="game-card-summary"></p><p id="game-card-best"></p>
+        <p id="game-card-note" class="muted"></p>
+        <div class="game-actions"><button id="game-start">Start</button><button id="game-back">Other games</button></div>
+      </div>
+    </div>
     <div id="hud" hidden></div>
   </main>
-  <script>globalThis.zucchiniRelease={"version":"b5b83d3a1c6f","updateURL":"release.json","generatedBase":"../assets/art-16ed71eb2b04/","audioBase":"../assets/audio-e65c82bd7384/","destinationsBase":"../assets/destinations-79edfabf376e/","atlasParts":7,"atlasLength":5882240,"audioChunks":{"music/room_lofi_01.mp3":14,"sfx/rain_window_loop.mp3":2},"syncURL":""};</script>
-<script type="module" src="../releases/b5b83d3a1c6f/main.js"></script>
+  <script>globalThis.zucchiniRelease={"version":"8f60e5ee1de9","updateURL":"release.json","generatedBase":"../assets/art-16ed71eb2b04/","audioBase":"../assets/audio-e65c82bd7384/","destinationsBase":"../assets/destinations-79edfabf376e/","atlasParts":7,"atlasLength":5882240,"audioChunks":{"music/room_lofi_01.mp3":14,"sfx/rain_window_loop.mp3":2},"syncURL":""};</script>
+<script type="module" src="../releases/8f60e5ee1de9/main.js"></script>
 </body>
 </html>
