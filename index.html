@@ -59,6 +59,8 @@
       background: var(--frame) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%233c3033' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center; }
     #scene-tools .spacer { flex: 1; }
     #scene-shop, #scene-more { display: none; border-radius: 22px; }
+    #antic-prompt{position:absolute;left:10px;right:10px;top:54px;gap:8px;justify-content:center;z-index:3}#antic-prompt:not([hidden]){display:flex}
+    #antic-prompt button{flex:1;max-width:200px;min-height:44px;border-radius:22px;font-size:15px;font-weight:700;background:var(--frame)}
     #scene-actions { position: absolute; left: 10px; bottom: 10px; display: flex; gap: 8px; }
     #scene-actions button, #reset-view { height: 36px; border-radius: 18px; font-size: 13px; font-weight: 700; padding: 0 14px; background: var(--frame); }
     #reset-view { position: absolute; right: 10px; bottom: 10px; }
@@ -161,6 +163,21 @@
     .credit { margin: 0; font-size: 11px; } .credit a { color: inherit; }
     #hud { margin-top: 12px; font-size: 11px; } #dev { padding: 12px; background: #f1e7d9; border-radius: 12px; } #dev small { display: block; }
     #trial-outings { margin: 0; }
+    /* Sniff treasures: the find toast over the scene and the treasure book (a centred sheet, also on phones). */
+    .treasure-icon { display: inline-block; flex: none; image-rendering: pixelated; background-repeat: no-repeat; }
+    .treasure-icon.sil { filter: brightness(0) opacity(.3); }
+    #find-toast { position: absolute; z-index: 3; left: 10px; right: 10px; bottom: 56px; display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: var(--frame); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 6px 16px #3c303333; pointer-events: none; }
+    #find-toast p { margin: 0; } #find-text { font-weight: 700; } #find-line { font-size: 12px; color: var(--muted); } #find-line:empty { display: none; }
+    #book-backdrop { position: fixed; inset: 0; z-index: 30; background: #3c303373; }
+    #book-panel { position: fixed; z-index: 31; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(94vw, 520px); max-height: 88vh; overflow-y: auto; overscroll-behavior: contain; padding: 16px; background: var(--frame); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 14px 36px #3c303340; }
+    #book-panel > * + * { margin-top: 10px; }
+    #book-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; }
+    .book-tab { min-height: 44px; padding: 0 14px; white-space: nowrap; border-radius: 22px; } .book-tab[aria-selected="true"] { background: var(--ink); color: #fff; }
+    #book-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
+    .book-cell { position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; min-height: 104px; padding: 8px 4px; border-radius: 12px; font-size: 12px; }
+    .book-cell.unfound { color: var(--muted); } .book-name { text-align: center; font-weight: 650; }
+    .book-count { position: absolute; top: 4px; right: 6px; font-weight: 700; font-size: 12px; }
+    #book-detail { min-height: 2.6em; margin: 0; } #book-summary, #book-place-count { margin: 0; font-weight: 600; }
     body.drawer-open { overflow: hidden; }
     @keyframes drawer-in { from { transform: translateX(100%); } }
     @media (prefers-reduced-motion: reduce) { #shop-panel.open, #more-panel.open { animation: none; } }
@@ -223,6 +240,7 @@
       #arrange-bar, #outing-actions, #pose-review-banner { position: absolute; z-index: 2; top: 56px; left: 8px; right: 8px; margin: 0; padding: 6px 8px; font-size: 12px; }
       #arrange-bar button, #outing-actions button { min-height: 32px; padding: 2px 8px; font-size: 12px; }
       #outing-actions p { margin: 0; }
+      #antic-prompt { top: auto; bottom: 56px; }
       #scene-shop, #scene-more { display: inline-flex; }
       #task-column { margin-left: calc(var(--room-w, 60vw) + 8px); min-height: 100lvh; padding: 6px 4px 24px 0; display: flex; flex-direction: column; gap: 6px; font-size: 12px; }
       #task-column .card { margin: 0; padding: 6px; border-radius: 10px; }
@@ -269,6 +287,8 @@
         <button id="scene-shop" class="head-btn" aria-label="Open shop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></button>
         <button id="scene-more" class="head-btn" aria-label="More"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
       </div>
+      <div id="find-toast" role="status" aria-live="polite" hidden><span id="find-icon" class="treasure-icon" aria-hidden="true"></span><div><p id="find-text"></p><p id="find-line"></p></div></div>
+      <div id="antic-prompt" hidden><button id="antic-0" hidden></button><button id="antic-1" hidden></button></div>
       <div id="scene-actions"><button id="fetch" hidden>Play fetch</button><button id="park-home" hidden>Head home</button></div>
       <button id="reset-view" hidden>Reset view</button>
     </div>
@@ -278,7 +298,7 @@
     <section id="outing-panel" hidden aria-label="Earned outings"><h2>Ready to visit</h2><div id="outing-list"></div></section>
     <section id="outing-actions" hidden aria-label="Outing activities">
       <p id="outing-title"></p><p id="outing-progress" role="status"></p><p id="outing-hint" class="muted"></p>
-      <div class="chips"><button id="outing-primary">Explore</button><button id="outing-secondary" hidden>Rest</button></div>
+      <div class="chips"><button id="outing-primary">Explore</button><button id="outing-secondary" hidden>Rest</button><button id="outing-book">Treasure book</button></div>
     </section>
     <div id="arrange-bar" class="arrange-bar" hidden>
       <span id="arrange-hint">Tap a piece, then drag or rotate it. Green means it fits; touch and hold to drag.</span>
@@ -323,6 +343,7 @@
         <label>Effects <input id="effects-volume" type="range" min="0" max="1" step="0.05" value="0.35"></label>
       </div>
       <button id="arrange-drawer">Arrange furniture</button>
+      <button id="book-open">Treasure book</button>
       <div><a class="places-link" href="places/" target="_blank" rel="noopener">Places · arrange layouts <span aria-hidden="true">↗</span></a></div>
       <details id="save-details"><summary>Save &amp; restore · <span id="save-state" class="save-state">Loading…</span></summary>
         <p class="muted">Saved on this browser. Export a copy to keep or move your progress. Reloading resumes your focus; importing a backup interrupts an unfinished focus without coins.</p>
@@ -364,9 +385,18 @@
       </div>
     </aside>
     <div id="shop-backdrop" hidden></div>
+    <div id="book-backdrop" hidden></div>
+    <aside id="book-panel" role="dialog" aria-modal="true" aria-labelledby="book-heading" hidden>
+      <div class="panel-head"><h2 id="book-heading">Treasure book</h2><button id="close-book">Close</button></div>
+      <p id="book-summary" role="status"></p>
+      <div id="book-tabs" role="tablist" aria-label="Places"></div>
+      <p id="book-place-count"></p>
+      <div id="book-grid"></div>
+      <p id="book-detail" class="muted" role="status"></p>
+    </aside>
     <div id="hud" hidden></div>
   </main>
-  <script>globalThis.zucchiniRelease={"version":"8f7c03270715","updateURL":"release.json","generatedBase":"assets/art-fc94c7433c5a/","audioBase":"assets/audio-e65c82bd7384/","destinationsBase":"assets/destinations-e8b40b292b03/","atlasParts":7,"atlasLength":5882240,"audioChunks":{"music/room_lofi_01.mp3":14,"sfx/rain_window_loop.mp3":2},"syncURL":"https://zucchini-sync.zucchini-sync.workers.dev"};</script>
-<script type="module" src="releases/8f7c03270715/main.js"></script>
+  <script>globalThis.zucchiniRelease={"version":"bae2c6415d33","updateURL":"release.json","generatedBase":"assets/art-16ed71eb2b04/","audioBase":"assets/audio-e65c82bd7384/","destinationsBase":"assets/destinations-79edfabf376e/","atlasParts":7,"atlasLength":5882240,"audioChunks":{"music/room_lofi_01.mp3":14,"sfx/rain_window_loop.mp3":2},"syncURL":"https://zucchini-sync.zucchini-sync.workers.dev"};</script>
+<script type="module" src="releases/bae2c6415d33/main.js"></script>
 </body>
 </html>
